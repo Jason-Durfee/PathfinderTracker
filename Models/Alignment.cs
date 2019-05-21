@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models
+namespace PathfinderTracker.Models
 {
-    public class Alignment:NamedObject
+    public class Alignment : NamedObject
     {
         #region constructors
         public Alignment(SqlDataReader dr) {

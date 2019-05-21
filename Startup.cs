@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using PathfinderTracker.Models;
 
 namespace PathfinderTracker
 {
@@ -32,6 +34,9 @@ namespace PathfinderTracker
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+    services.AddDbContext<PathfinderTrackerContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("PathfinderTrackerContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

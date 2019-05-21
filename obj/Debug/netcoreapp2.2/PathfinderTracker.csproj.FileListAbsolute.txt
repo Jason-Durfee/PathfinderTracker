@@ -27,3 +27,8 @@ C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\ne
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\PathfinderTracker.dll
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\PathfinderTracker.pdb
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\PathfinderTracker.csproj.CopyComplete
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Alignment\Create.g.cshtml.cs
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Alignment\Delete.g.cshtml.cs
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Alignment\Details.g.cshtml.cs
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Alignment\Edit.g.cshtml.cs
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Alignment\Index.g.cshtml.cs
