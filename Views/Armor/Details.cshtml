@@ -1,0 +1,72 @@
+﻿@model PathfinderTracker.Models.Armor
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Armor</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.GPValue)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.GPValue)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ACBonus)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ACBonus)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ArmorCheckPenalty)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ArmorCheckPenalty)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Weight)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Weight)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Material)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Material.ID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ArmorType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ArmorType.ID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ArmorAddon)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ArmorAddon.ID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SpecialAttributes)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SpecialAttributes)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

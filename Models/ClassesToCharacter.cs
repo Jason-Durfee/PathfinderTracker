@@ -27,6 +27,8 @@ namespace PathfinderTracker.Models
         private Character _Character;
         private int _ClassID;
         private Class _Class;
+        private int _SubClassID;
+        private SubClass _SubClass;
 
 
         /// <summary>
@@ -92,6 +94,33 @@ namespace PathfinderTracker.Models
             }
             set {
                 _Class = value;
+            }
+        }
+
+        /// <summary>
+        /// gets and sets the SubClassID attribute for the ClassesToCharacter object
+        /// </summary>
+        public int SubClassID {
+            get {
+                return _SubClassID;
+            }
+            set {
+                _SubClassID = value;
+            }
+        }
+
+        /// <summary>
+        /// gets and sets the SubClassID attribute for the ClassesToCharacter object
+        /// </summary>
+        public SubClass SubClass {
+            get {
+                if(_SubClass == null && _SubClassID > 0) {
+                    _SubClass = DAL.GetSubClass(_SubClassID);
+                }
+                return _SubClass;
+            }
+            set {
+                _SubClass = value;
             }
         }
     }

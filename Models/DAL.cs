@@ -1010,24 +1010,24 @@ namespace PathfinderTracker.Models
         }
         #endregion
 
-        #region Classs
+        #region Classes
         /// <summary>
         /// Gets all Class objects from the database
         /// </summary>
         /// <returns></returns>
-        public static List<Class> GetClasss() {
-            List<Class> Classs = new List<Class>();
+        public static List<Class> GetClasses() {
+            List<Class> Classes = new List<Class>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
-                SqlCommand comm = new SqlCommand("sprocClasssGetAll");
+                SqlCommand comm = new SqlCommand("sprocClassesGetAll");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
                     Class Class = new Class(dr);
-                    Classs.Add(Class);
+                    Classes.Add(Class);
                 }
             }
             catch(Exception error) {
@@ -1036,7 +1036,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return Classs;
+            return Classes;
         }
 
         /// <summary>
@@ -1078,8 +1078,6 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_ClassAdd");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@Name", Class.Name);
-                comm.Parameters.AddWithValue("@SubClassID", Class.SubClassID);
-
 
                 comm.Parameters.Add("@ClassID", SqlDbType.Int);
                 comm.Parameters["@ClassID"].Direction = ParameterDirection.Output;
@@ -1118,7 +1116,6 @@ namespace PathfinderTracker.Models
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@ClassID", id);
                 comm.Parameters.AddWithValue("@Name", Class.Name);
-                comm.Parameters.AddWithValue("@SubClassID", Class.SubClassID);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -1228,6 +1225,7 @@ namespace PathfinderTracker.Models
                 comm.Parameters.AddWithValue("@ClassLevel", ClassesToCharacter.ClassLevel);
                 comm.Parameters.AddWithValue("@CharacterID", ClassesToCharacter.CharacterID);
                 comm.Parameters.AddWithValue("@ClassID", ClassesToCharacter.ClassID);
+                comm.Parameters.AddWithValue("@SubClassID", ClassesToCharacter.SubClassID);
 
                 comm.Parameters.Add("@ClassesToCharacterID", SqlDbType.Int);
                 comm.Parameters["@ClassesToCharacterID"].Direction = ParameterDirection.Output;
@@ -1268,6 +1266,7 @@ namespace PathfinderTracker.Models
                 comm.Parameters.AddWithValue("@ClassLevel", ClassesToCharacter.ClassLevel);
                 comm.Parameters.AddWithValue("@CharacterID", ClassesToCharacter.CharacterID);
                 comm.Parameters.AddWithValue("@ClassID", ClassesToCharacter.ClassID);
+                comm.Parameters.AddWithValue("@SubClassID", ClassesToCharacter.SubClassID);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -2499,13 +2498,13 @@ namespace PathfinderTracker.Models
         }
         #endregion
 
-        #region SubClasss
+        #region SubClasses
         /// <summary>
         /// Gets all SubClass objects from the database
         /// </summary>
         /// <returns></returns>
-        public static List<SubClass> GetSubClasss() {
-            List<SubClass> SubClasss = new List<SubClass>();
+        public static List<SubClass> GetSubClasses() {
+            List<SubClass> SubClasses = new List<SubClass>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -2516,7 +2515,7 @@ namespace PathfinderTracker.Models
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
                     SubClass SubClass = new SubClass(dr);
-                    SubClasss.Add(SubClass);
+                    SubClasses.Add(SubClass);
                 }
             }
             catch(Exception error) {
@@ -2525,7 +2524,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return SubClasss;
+            return SubClasses;
         }
 
         /// <summary>
