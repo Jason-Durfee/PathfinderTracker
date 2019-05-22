@@ -12,41 +12,8 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Level" class="control-label"></label>
-                <input asp-for="Level" class="form-control" />
-                <span asp-validation-for="Level" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsNPC" /> @Html.DisplayNameFor(model => model.IsNPC)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="AlignmentID" class="control-label"></label>
-                <select asp-for="AlignmentID" class="form-control" asp-items="ViewBag.AlignmentID"></select>
-                <span asp-validation-for="AlignmentID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DeityID" class="control-label"></label>
-                <select asp-for="DeityID" class="form-control" asp-items="ViewBag.DeityID"></select>
-                <span asp-validation-for="DeityID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RaceID" class="control-label"></label>
-                <select asp-for="RaceID" class="form-control" asp-items="ViewBag.RaceID"></select>
-                <span asp-validation-for="RaceID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CampaignID" class="control-label"></label>
-                <select asp-for="CampaignID" class="form-control" asp-items="ViewBag.CampaignID"></select>
-                <span asp-validation-for="CampaignID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
+            <partial name="Parts/_Form" />
+
             <input type="hidden" asp-for="ID" />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

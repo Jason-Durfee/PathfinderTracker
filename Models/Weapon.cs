@@ -37,6 +37,8 @@ namespace PathfinderTracker.Models
         private int _GPValue;
         private int _AttackRange;
         private int _Weight;
+        private int _WeaponSubTypeID;
+        private WeaponSubType _WeaponSubType;
         private int _WeaponTypeID;
         private WeaponType _WeaponType;
         private int _DamageTypeID;
@@ -127,6 +129,34 @@ namespace PathfinderTracker.Models
                 _Weight = value;
             }
         }
+
+        /// <summary>
+        /// gets and sets the WeaponSubTypeID attribute for the Weapon object
+        /// </summary>
+        public int WeaponSubTypeID {
+            get {
+                return _WeaponSubTypeID;
+            }
+            set {
+                _WeaponSubTypeID = value;
+            }
+        }
+
+        /// <summary>
+        /// gets and sets the WeaponSubType attribute for the Weapon object
+        /// </summary>
+        public WeaponSubType WeaponSubType {
+            get {
+                if(_WeaponSubType == null && _WeaponSubTypeID > 0) {
+                    _WeaponSubType = DAL.GetWeaponSubType(_WeaponSubTypeID);
+                }
+                return _WeaponSubType;
+            }
+            set {
+                _WeaponSubType = value;
+            }
+        }
+
 
         /// <summary>
         /// gets and sets the WeaponTypeID attribute for the Weapon object

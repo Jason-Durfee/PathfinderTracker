@@ -37,7 +37,7 @@ namespace PathfinderTracker
         // GET: ArmorAddon/Create
         public ActionResult Create()
         {
-            ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "ID");
+            ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name");
             return View();
         }
 
@@ -58,7 +58,7 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "ID", armorAddon.MaterialID);
+            ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name", armorAddon.MaterialID);
             return View(armorAddon);
         }
 
@@ -75,7 +75,7 @@ namespace PathfinderTracker
             {
                 return NotFound();
             }
-            ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "ID", armorAddon.MaterialID);
+            ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name", armorAddon.MaterialID);
             return View(armorAddon);
         }
 
@@ -101,7 +101,7 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "ID", armorAddon.MaterialID);
+            ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name", armorAddon.MaterialID);
             return View(armorAddon);
         }
 

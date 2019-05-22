@@ -37,10 +37,10 @@ namespace PathfinderTracker
         // GET: Character/Create
         public IActionResult Create()
         {
-            ViewData["AlignmentID"] = new SelectList(DAL.GetAlignments(), "ID", "ID");
-            ViewData["CampaignID"] = new SelectList(DAL.GetCampaigns(), "ID", "ID");
-            ViewData["DeityID"] = new SelectList(DAL.GetDeities(), "ID", "ID");
-            ViewData["RaceID"] = new SelectList(DAL.GetRaces(), "ID", "ID");
+            ViewData["AlignmentID"] = new SelectList(DAL.GetAlignments(), "ID", "Name");
+            ViewData["CampaignID"] = new SelectList(DAL.GetCampaigns(), "ID", "Name");
+            ViewData["DeityID"] = new SelectList(DAL.GetDeities(), "ID", "Name");
+            ViewData["RaceID"] = new SelectList(DAL.GetRaces(), "ID", "Name");
             return View();
         }
 
@@ -61,10 +61,10 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AlignmentID"] = new SelectList(DAL.GetAlignments(), "ID", "ID", character.AlignmentID);
-            ViewData["CampaignID"] = new SelectList(DAL.GetCampaigns(), "ID", "ID", character.CampaignID);
-            ViewData["DeityID"] = new SelectList(DAL.GetDeities(), "ID", "ID", character.DeityID);
-            ViewData["RaceID"] = new SelectList(DAL.GetRaces(), "ID", "ID", character.RaceID);
+            ViewData["AlignmentID"] = new SelectList(DAL.GetAlignments(), "ID", "Name", character.AlignmentID);
+            ViewData["CampaignID"] = new SelectList(DAL.GetCampaigns(), "ID", "Name", character.CampaignID);
+            ViewData["DeityID"] = new SelectList(DAL.GetDeities(), "ID", "Name", character.DeityID);
+            ViewData["RaceID"] = new SelectList(DAL.GetRaces(), "ID", "Name", character.RaceID);
             return View(character);
         }
 
@@ -81,10 +81,10 @@ namespace PathfinderTracker
             {
                 return NotFound();
             }
-            ViewData["AlignmentID"] = new SelectList(DAL.GetAlignments(), "ID", "ID", character.AlignmentID);
-            ViewData["CampaignID"] = new SelectList(DAL.GetCampaigns(), "ID", "ID", character.CampaignID);
-            ViewData["DeityID"] = new SelectList(DAL.GetDeities(), "ID", "ID", character.DeityID);
-            ViewData["RaceID"] = new SelectList(DAL.GetRaces(), "ID", "ID", character.RaceID);
+            ViewData["AlignmentID"] = new SelectList(DAL.GetAlignments(), "ID", "Name", character.AlignmentID);
+            ViewData["CampaignID"] = new SelectList(DAL.GetCampaigns(), "ID", "Name", character.CampaignID);
+            ViewData["DeityID"] = new SelectList(DAL.GetDeities(), "ID", "Name", character.DeityID);
+            ViewData["RaceID"] = new SelectList(DAL.GetRaces(), "ID", "Name", character.RaceID);
             return View(character);
         }
 
@@ -110,10 +110,10 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AlignmentID"] = new SelectList(DAL.GetAlignments(), "ID", "ID", character.AlignmentID);
-            ViewData["CampaignID"] = new SelectList(DAL.GetCampaigns(), "ID", "ID", character.CampaignID);
-            ViewData["DeityID"] = new SelectList(DAL.GetDeities(), "ID", "ID", character.DeityID);
-            ViewData["RaceID"] = new SelectList(DAL.GetRaces(), "ID", "ID", character.RaceID);
+            ViewData["AlignmentID"] = new SelectList(DAL.GetAlignments(), "ID", "Name", character.AlignmentID);
+            ViewData["CampaignID"] = new SelectList(DAL.GetCampaigns(), "ID", "Name", character.CampaignID);
+            ViewData["DeityID"] = new SelectList(DAL.GetDeities(), "ID", "Name", character.DeityID);
+            ViewData["RaceID"] = new SelectList(DAL.GetRaces(), "ID", "Name", character.RaceID);
             return View(character);
         }
 

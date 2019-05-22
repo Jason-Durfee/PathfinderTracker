@@ -27,5 +27,31 @@ namespace PathfinderTracker.Models
         public DbSet<PathfinderTracker.Models.Character> Character { get; set; }
 
         public DbSet<PathfinderTracker.Models.Class> Class { get; set; }
+
+        public DbSet<PathfinderTracker.Models.ClassesToCharacter> ClassesToCharacter { get; set; }
+
+        public DbSet<PathfinderTracker.Models.DamageType> DamageType { get; set; }
+
+        public DbSet<PathfinderTracker.Models.Deity> Deity { get; set; }
+
+        public DbSet<PathfinderTracker.Models.Feat> Feat { get; set; }
+
+        public DbSet<PathfinderTracker.Models.MagicSchool> MagicSchool { get; set; }
+
+        public DbSet<PathfinderTracker.Models.Material> Material { get; set; }
+
+        public DbSet<PathfinderTracker.Models.Player> Player { get; set; }
+
+        public DbSet<PathfinderTracker.Models.Race> Race { get; set; }
+
+        public DbSet<PathfinderTracker.Models.Spell> Spell { get; set; }
+
+        public DbSet<PathfinderTracker.Models.SubClass> SubClass { get; set; }
+
+        public DbSet<PathfinderTracker.Models.Weapon> Weapon { get; set; }
+
+        public DbSet<PathfinderTracker.Models.WeaponSubType> WeaponSubType { get; set; }
+
+        public DbSet<PathfinderTracker.Models.WeaponType> WeaponType { get; set; }
     }
 }

@@ -1,0 +1,101 @@
+﻿@model IEnumerable<PathfinderTracker.Models.Weapon>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AttackDiceSmall)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AttackDiceMedium)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Critical)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpecialAttributes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GPValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AttackRange)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Weight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WeaponSubType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WeaponType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DamageType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Material)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AttackDiceSmall)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AttackDiceMedium)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Critical)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpecialAttributes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GPValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AttackRange)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WeaponSubType.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WeaponType.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DamageType.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Material.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

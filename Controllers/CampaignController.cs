@@ -125,11 +125,21 @@ namespace PathfinderTracker
         {
             if(DAL.DeleteCampaign(id) > 0) {
                 //success
+                if(CurrentVariables.CurrentCampaignID == id) {
+                    CurrentVariables.CurrentCampaignID = -1;
+                }
             }
             else {
                 //error
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        public ActionResult Load(int id) {
+            if(id > 0) {
+                CurrentVariables.CurrentCampaignID = id;
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }
