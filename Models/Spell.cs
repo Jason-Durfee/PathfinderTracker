@@ -13,6 +13,7 @@ namespace PathfinderTracker.Models
         public Spell(SqlDataReader dr) {
             ID = (int)dr["SpellID"];
             Name = (string)dr["Name"];
+            Description = (string)dr["Description"];
             MagicSchoolID = (int)dr["MagicSchoolID"];
             CastingTime = (string)dr["CastingTime"];
             RangeDistance = (string)dr["RangeDistance"];

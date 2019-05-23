@@ -9,68 +9,37 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<div class="divSearchBoxContainer">
+    <label>Search</label>
+    <input type="text" id="txtSearchBox"/>
+    <a id="SearchLink" asp-action="Search" asp-controller="Spell"></a>
+</div>
+<table class="table" id="tableSearchable">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.MagicSchool)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CastingTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RangeDistance)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Target)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Duration)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SavingThrow)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SpellResistance)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
+            <th>Actions</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="tbodySearchable">
 @foreach (var item in Model) {
-        <tr>
+        <tr class="trSearchable">
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MagicSchool.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CastingTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RangeDistance)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Target)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Duration)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SavingThrow)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpellResistance)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

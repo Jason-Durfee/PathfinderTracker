@@ -135,5 +135,22 @@ namespace PathfinderTracker
             }
             return RedirectToAction(nameof(Index));
         }
+
+        public IActionResult Search(string searchText) {
+            List<Spell> spells = new List<Spell>();
+            List<Spell> allSpells = DAL.GetSpells();
+            if(searchText == null || searchText == "") {
+                return View("Index", allSpells);
+            }
+            foreach(Spell spell in allSpells) {
+                if(spell.Name.ToLower().Contains(searchText.ToLower())) {
+                    spells.Add(spell);
+                }
+                else if(spell.MagicSchool.Name.ToLower().Contains(searchText.ToLower())) {
+                    spells.Add(spell);
+                }
+            }
+            return View("Index", spells);
+        }
     }
 }
