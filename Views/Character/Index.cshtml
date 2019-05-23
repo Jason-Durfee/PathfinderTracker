@@ -1,10 +1,6 @@
 ﻿@model IEnumerable<PathfinderTracker.Models.Character>
 
-@{
-    ViewData["Title"] = "Index";
-}
-
-<h1>Index</h1>
+<h1>Characters</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -18,25 +14,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Level)
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsNPC)
+                Class - @Html.DisplayNameFor(model => model.Level)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Alignment)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Deity)
+                @Html.DisplayNameFor(model => model.Player)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Race)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Campaign)
+                @Html.DisplayNameFor(model => model.Deity)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Alignment)
             </th>
             <th>Actions</th>
         </tr>
@@ -45,25 +38,22 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Level)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsNPC)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Alignment.Abbreviation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Deity.Name)
+                @Html.DisplayFor(modelItem => item.Player.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Race.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Campaign.Name)
+                @Html.DisplayFor(modelItem => item.Deity.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Alignment.Abbreviation)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

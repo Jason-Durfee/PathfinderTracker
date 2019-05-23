@@ -1,10 +1,6 @@
 ﻿@model IEnumerable<PathfinderTracker.Models.Player>
 
-@{
-    ViewData["Title"] = "Index";
-}
-
-<h1>Index</h1>
+<h1>Players</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -18,18 +14,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.HPMax)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HPCurrent)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Character)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Bonuses)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>Actions</th>
@@ -38,18 +22,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.HPMax)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HPCurrent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Character.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Bonuses)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>

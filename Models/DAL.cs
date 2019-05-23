@@ -918,7 +918,16 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_CharacterAdd");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@Name", character.Name);
-
+                comm.Parameters.AddWithValue("@AlignmentID", character.AlignmentID);
+                comm.Parameters.AddWithValue("@Bonuses", character.Bonuses);
+                comm.Parameters.AddWithValue("@CampaignID", character.CampaignID);
+                comm.Parameters.AddWithValue("@DeityID", character.DeityID);
+                comm.Parameters.AddWithValue("@IsNPC", character.IsNPC);
+                comm.Parameters.AddWithValue("@Level", character.Level);
+                comm.Parameters.AddWithValue("@RaceID", character.RaceID);
+                comm.Parameters.AddWithValue("@CharacterID", character.PlayerID);
+                comm.Parameters.AddWithValue("@HPCurrent", character.HPCurrent);
+                comm.Parameters.AddWithValue("@HPMax", character.HPMax);
 
                 comm.Parameters.Add("@CharacterID", SqlDbType.Int);
                 comm.Parameters["@CharacterID"].Direction = ParameterDirection.Output;
@@ -956,6 +965,16 @@ namespace PathfinderTracker.Models
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@CharacterID", id);
                 comm.Parameters.AddWithValue("@Name", character.Name);
+                comm.Parameters.AddWithValue("@AlignmentID", character.AlignmentID);
+                comm.Parameters.AddWithValue("@Bonuses", character.Bonuses);
+                comm.Parameters.AddWithValue("@CampaignID", character.CampaignID);
+                comm.Parameters.AddWithValue("@DeityID", character.DeityID);
+                comm.Parameters.AddWithValue("@IsNPC", character.IsNPC);
+                comm.Parameters.AddWithValue("@Level", character.Level);
+                comm.Parameters.AddWithValue("@RaceID", character.RaceID);
+                comm.Parameters.AddWithValue("@CharacterID", character.PlayerID);
+                comm.Parameters.AddWithValue("@HPCurrent", character.HPCurrent);
+                comm.Parameters.AddWithValue("@HPMax", character.HPMax);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -1645,6 +1664,8 @@ namespace PathfinderTracker.Models
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@Name", feat.Name);
                 comm.Parameters.AddWithValue("@Description", feat.Description);
+                comm.Parameters.AddWithValue("@Prerequisites", feat.Prerequisites);
+                comm.Parameters.AddWithValue("@FeatTypeID", feat.FeatTypeID);
 
                 comm.Parameters.Add("@FeatID", SqlDbType.Int);
                 comm.Parameters["@FeatID"].Direction = ParameterDirection.Output;
@@ -1683,6 +1704,8 @@ namespace PathfinderTracker.Models
                 comm.Parameters.AddWithValue("@FeatID", id);
                 comm.Parameters.AddWithValue("@Name", feat.Name);
                 comm.Parameters.AddWithValue("@Description", feat.Description);
+                comm.Parameters.AddWithValue("@Prerequisites", feat.Prerequisites);
+                comm.Parameters.AddWithValue("@FeatTypeID", feat.FeatTypeID);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -2220,10 +2243,6 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_PlayerAdd");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@Name", player.Name);
-                comm.Parameters.AddWithValue("@Bonuses", player.Bonuses);
-                comm.Parameters.AddWithValue("@CharacterID", player.CharacterID);
-                comm.Parameters.AddWithValue("@HPCurrent", player.HPCurrent);
-                comm.Parameters.AddWithValue("@HPMax", player.HPMax);
 
                 comm.Parameters.Add("@PlayerID", SqlDbType.Int);
                 comm.Parameters["@PlayerID"].Direction = ParameterDirection.Output;
@@ -2261,10 +2280,6 @@ namespace PathfinderTracker.Models
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@PlayerID", id);
                 comm.Parameters.AddWithValue("@Name", player.Name);
-                comm.Parameters.AddWithValue("@Bonuses", player.Bonuses);
-                comm.Parameters.AddWithValue("@CharacterID", player.CharacterID);
-                comm.Parameters.AddWithValue("@HPCurrent", player.HPCurrent);
-                comm.Parameters.AddWithValue("@HPMax", player.HPMax);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }

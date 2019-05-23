@@ -1,6 +1,20 @@
 ﻿@model Character
 
 <dl class="row">
+    @if(Model.Player != null) {
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Player)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Player.Name)
+        </dd>
+    }
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Campaign)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Campaign.Name)
+    </dd>
     <dt class="col-sm-2">
         @Html.DisplayNameFor(model => model.Level)
     </dt>
@@ -19,12 +33,14 @@
     <dd class="col-sm-10">
         @Html.DisplayFor(model => model.Alignment.Abbreviation)
     </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.Deity)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.Deity.Name)
-    </dd>
+    @if(Model.Deity != null) {
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Deity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Deity.Name)
+        </dd>
+    }
     <dt class="col-sm-2">
         @Html.DisplayNameFor(model => model.Race)
     </dt>
@@ -32,15 +48,27 @@
         @Html.DisplayFor(model => model.Race.Name)
     </dd>
     <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.Campaign)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.Campaign.Name)
-    </dd>
-    <dt class="col-sm-2">
         @Html.DisplayNameFor(model => model.Name)
     </dt>
     <dd class="col-sm-10">
         @Html.DisplayFor(model => model.Name)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.HPMax)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.HPMax)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.HPCurrent)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.HPCurrent)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Bonuses)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Bonuses)
     </dd>
 </dl>

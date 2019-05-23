@@ -19,6 +19,10 @@ namespace PathfinderTracker.Models
             DeityID = (int)dr["DeityID"];
             RaceID = (int)dr["RaceID"];
             CampaignID = (int)dr["CampaignID"];
+            HPCurrent = (int)dr["HPCurrent"];
+            HPMax = (int)dr["HPMax"];
+            PlayerID = (int)dr["PlayerID"];
+            Bonuses = (string)dr["Bonuses"];
         }
 
         public Character() {
@@ -36,6 +40,11 @@ namespace PathfinderTracker.Models
         private Race _Race;
         private int _CampaignID;
         private Campaign _Campaign;
+        private int _HPMax;
+        private int _HPCurrent;
+        private int _PlayerID;
+        private Player _Player;
+        private string _Bonuses;
 
         /// <summary>
         /// gets and sets the Character objects Level attribute
@@ -166,6 +175,69 @@ namespace PathfinderTracker.Models
             }
             set {
                 _Campaign = value;
+            }
+        }
+
+        /// <summary>
+        /// gets and sets the HPMax attribute for the Character object
+        /// </summary>
+        public int HPMax {
+            get {
+                return _HPMax;
+            }
+            set {
+                _HPMax = value;
+            }
+        }
+
+        /// <summary>
+        /// gets and sets the HPCurrent attribute for the Character object
+        /// </summary>
+        public int HPCurrent {
+            get {
+                return _HPCurrent;
+            }
+            set {
+                _HPCurrent = value;
+            }
+        }
+
+        /// <summary>
+        /// gets and sets the PlayerID attribute for the Character object
+        /// </summary>
+        public int PlayerID {
+            get {
+                return _PlayerID;
+            }
+            set {
+                _PlayerID = value;
+            }
+        }
+
+        /// <summary>
+        /// gets and sets the Player attribute for the Character object
+        /// </summary>
+        public Player Player {
+            get {
+                if(_Player == null && _PlayerID > 0) {
+                    _Player = DAL.GetPlayer(_PlayerID);
+                }
+                return _Player;
+            }
+            set {
+                _Player = value;
+            }
+        }
+
+        /// <summary>
+        /// gets and sets the Bonuses attribute for the Character object
+        /// </summary>
+        public string Bonuses {
+            get {
+                return _Bonuses;
+            }
+            set {
+                _Bonuses = value;
             }
         }
     }

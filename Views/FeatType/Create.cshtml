@@ -1,25 +1,18 @@
 ﻿@model PathfinderTracker.Models.FeatType
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Create";
 }
 
-<!DOCTYPE html>
+<h1>Create</h1>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
-</head>
-<body>
-
-<h4>FeatType</h4>
+<h4>Feat Type</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <partial name="Parts/_Form"/>
+            <partial name="Parts/_Form" />
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -32,5 +25,6 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-</body>
-</html>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,5 +1,22 @@
 ﻿@model Character
 
+@if(CurrentVariables.CurrentCampaignID > 0) {
+    <div hidden class="form-group">
+        <label asp-for="Campaign" class="control-label"></label>
+        <input asp-for="CampaignID" value="@CurrentVariables.CurrentCampaignID" />
+    </div>
+}
+else {
+    <div class="form-group">
+        <label asp-for="Campaign" class="control-label"></label>
+        <select asp-for="CampaignID" class="form-control" asp-items="ViewBag.CampaignID"></select>
+    </div>
+}
+<div class="form-group">
+    <label asp-for="Player" class="control-label"></label>
+    <select asp-for="PlayerID" class="form-control" asp-items="ViewBag.PlayerID"></select>
+    <span asp-validation-for="PlayerID" class="text-danger"></span>
+</div>
 <div class="form-group">
     <label asp-for="Level" class="control-label"></label>
     <input asp-for="Level" class="form-control" />
@@ -11,23 +28,34 @@
     </label>
 </div>
 <div class="form-group">
-    <label asp-for="AlignmentID" class="control-label"></label>
+    <label asp-for="Alignment" class="control-label"></label>
     <select asp-for="AlignmentID" class="form-control" asp-items="ViewBag.AlignmentID"></select>
 </div>
 <div class="form-group">
-    <label asp-for="DeityID" class="control-label"></label>
+    <label asp-for="Deity" class="control-label"></label>
     <select asp-for="DeityID" class="form-control" asp-items="ViewBag.DeityID"></select>
 </div>
 <div class="form-group">
-    <label asp-for="RaceID" class="control-label"></label>
+    <label asp-for="Race" class="control-label"></label>
     <select asp-for="RaceID" class="form-control" asp-items="ViewBag.RaceID"></select>
-</div>
-<div class="form-group">
-    <label asp-for="CampaignID" class="control-label"></label>
-    <select asp-for="CampaignID" class="form-control" asp-items="ViewBag.CampaignID"></select>
 </div>
 <div class="form-group">
     <label asp-for="Name" class="control-label"></label>
     <input asp-for="Name" class="form-control" />
     <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="HPMax" class="control-label"></label>
+    <input asp-for="HPMax" class="form-control" />
+    <span asp-validation-for="HPMax" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="HPCurrent" class="control-label"></label>
+    <input asp-for="HPCurrent" class="form-control" />
+    <span asp-validation-for="HPCurrent" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Bonuses" class="control-label"></label>
+    <input asp-for="Bonuses" class="form-control" />
+    <span asp-validation-for="Bonuses" class="text-danger"></span>
 </div>

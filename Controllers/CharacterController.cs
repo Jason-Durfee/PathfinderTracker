@@ -41,6 +41,7 @@ namespace PathfinderTracker
             ViewData["CampaignID"] = new SelectList(DAL.GetCampaigns(), "ID", "Name");
             ViewData["DeityID"] = new SelectList(DAL.GetDeities(), "ID", "Name");
             ViewData["RaceID"] = new SelectList(DAL.GetRaces(), "ID", "Name");
+            ViewData["PlayerID"] = new SelectList(DAL.GetPlayers(), "ID", "Name");
             return View();
         }
 
@@ -49,7 +50,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Level,IsNPC,AlignmentID,DeityID,RaceID,CampaignID,Name,ID")] Character character)
+        public ActionResult Create([Bind("Level,IsNPC,AlignmentID,DeityID,RaceID,CampaignID,HPMax,HPCurrent,PlayerID,Bonuses,Name,ID")] Character character)
         {
             if (ModelState.IsValid)
             {
@@ -65,6 +66,7 @@ namespace PathfinderTracker
             ViewData["CampaignID"] = new SelectList(DAL.GetCampaigns(), "ID", "Name", character.CampaignID);
             ViewData["DeityID"] = new SelectList(DAL.GetDeities(), "ID", "Name", character.DeityID);
             ViewData["RaceID"] = new SelectList(DAL.GetRaces(), "ID", "Name", character.RaceID);
+            ViewData["PlayerID"] = new SelectList(DAL.GetPlayers(), "ID", "Name", character.PlayerID);
             return View(character);
         }
 
@@ -85,6 +87,7 @@ namespace PathfinderTracker
             ViewData["CampaignID"] = new SelectList(DAL.GetCampaigns(), "ID", "Name", character.CampaignID);
             ViewData["DeityID"] = new SelectList(DAL.GetDeities(), "ID", "Name", character.DeityID);
             ViewData["RaceID"] = new SelectList(DAL.GetRaces(), "ID", "Name", character.RaceID);
+            ViewData["PlayerID"] = new SelectList(DAL.GetPlayers(), "ID", "Name", character.PlayerID);
             return View(character);
         }
 
@@ -93,7 +96,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("Level,IsNPC,AlignmentID,DeityID,RaceID,CampaignID,Name,ID")] Character character)
+        public ActionResult Edit(int id, [Bind("Level,IsNPC,AlignmentID,DeityID,RaceID,CampaignID,HPMax,HPCurrent,PlayerID,Bonuses,Name,ID")] Character character)
         {
             if (id != character.ID)
             {
@@ -114,6 +117,7 @@ namespace PathfinderTracker
             ViewData["CampaignID"] = new SelectList(DAL.GetCampaigns(), "ID", "Name", character.CampaignID);
             ViewData["DeityID"] = new SelectList(DAL.GetDeities(), "ID", "Name", character.DeityID);
             ViewData["RaceID"] = new SelectList(DAL.GetRaces(), "ID", "Name", character.RaceID);
+            ViewData["PlayerID"] = new SelectList(DAL.GetPlayers(), "ID", "Name", character.PlayerID);
             return View(character);
         }
 
@@ -163,7 +167,7 @@ namespace PathfinderTracker
                 if(character.Name.ToLower().Contains(searchText.ToLower())) {
                     characters.Add(character);
                 }
-                else if(character.Name.ToLower().Contains(searchText.ToLower())) {
+                if(character.Player != null && character.Player.Name.ToLower().Contains(searchText.ToLower())) {
                     characters.Add(character);
                 }
                 else if(character.Race != null && character.Race.Name.ToLower().Contains(searchText.ToLower())) {

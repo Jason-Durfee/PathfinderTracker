@@ -37,7 +37,6 @@ namespace PathfinderTracker
         // GET: Player/Create
         public IActionResult Create()
         {
-            ViewData["CharacterID"] = new SelectList(DAL.GetCharacters(), "ID", "Name");
             return View();
         }
 
@@ -46,7 +45,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("HPMax,HPCurrent,CharacterID,Bonuses,Name,ID")] Player player)
+        public ActionResult Create([Bind("Name,ID")] Player player)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +57,6 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CharacterID"] = new SelectList(DAL.GetCharacters(), "ID", "Name", player.CharacterID);
             return View(player);
         }
 
@@ -75,7 +73,6 @@ namespace PathfinderTracker
             {
                 return NotFound();
             }
-            ViewData["CharacterID"] = new SelectList(DAL.GetCharacters(), "ID", "Name", player.CharacterID);
             return View(player);
         }
 
@@ -84,7 +81,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("HPMax,HPCurrent,CharacterID,Bonuses,Name,ID")] Player player)
+        public ActionResult Edit(int id, [Bind("Name,ID")] Player player)
         {
             if (id != player.ID)
             {
@@ -101,7 +98,6 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CharacterID"] = new SelectList(DAL.GetCharacters(), "ID", "Name", player.CharacterID);
             return View(player);
         }
 
@@ -149,18 +145,6 @@ namespace PathfinderTracker
             }
             foreach(Player player in allPlayers) {
                 if(player.Name.ToLower().Contains(searchText.ToLower())) {
-                    players.Add(player);
-                }
-                else if(player.Character != null && player.Character.Name.ToLower().Contains(searchText.ToLower())) {
-                    players.Add(player);
-                }
-                else if(player.Character.Race != null && player.Character.Race.Name.ToLower().Contains(searchText.ToLower())) {
-                    players.Add(player);
-                }
-                else if(player.Character.Alignment != null && player.Character.Alignment.Name.ToLower().Contains(searchText.ToLower())) {
-                    players.Add(player);
-                }
-                else if(player.Character.Deity != null && player.Character.Deity.Name.ToLower().Contains(searchText.ToLower())) {
                     players.Add(player);
                 }
             }
