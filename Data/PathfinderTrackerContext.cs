@@ -26,7 +26,7 @@ namespace PathfinderTracker.Models
 
         public DbSet<PathfinderTracker.Models.Character> Character { get; set; }
 
-        public DbSet<PathfinderTracker.Models.Class> Class { get; set; }
+        public DbSet<PathfinderTracker.Models.CharacterClass> Class { get; set; }
 
         public DbSet<PathfinderTracker.Models.ClassesToCharacter> ClassesToCharacter { get; set; }
 

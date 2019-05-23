@@ -15,13 +15,10 @@ namespace PathfinderTracker.Models
             ID = (int)dr["ClassesToCharacterID"];
             ClassLevel = (int)dr["ClassLevel"];
             CharacterID = (int)dr["CharacterID"];
-            ClassID = (int)dr["ClassID"];
+            CharacterClassID = (int)dr["CharacterClassID"];
             BloodlineID = (int)dr["BloodlineID"];
             DomainID = (int)dr["DomainID"];
             MagicSchoolID = (int)dr["MagicSchoolID"];
-            HasBloodline = (bool)dr["HasBloodline"];
-            HasDomain = (bool)dr["HasDomain"];
-            HasMagicSchool = (bool)dr["HasMagicSchool"];
         }
 
         public ClassesToCharacter() {
@@ -32,17 +29,14 @@ namespace PathfinderTracker.Models
         private int _ClassLevel;
         private int _CharacterID;
         private Character _Character;
-        private int _ClassID;
-        private Class _Class;
+        private int _CharacterClassID;
+        private CharacterClass _CharacterClass;
         private int _BloodlineID;
         private Bloodline _Bloodline;
         private int _DomainID;
         private Domain _Domain;
         private int _MagicSchoolID;
         private MagicSchool _MagicSchool;
-        private bool _HasBloodline;
-        private bool _HasDomain;
-        private bool _HasMagicSchool;
 
 
         /// <summary>
@@ -87,27 +81,27 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the ClassID attribute for the ClassesToCharacter object
         /// </summary>
-        public int ClassID {
+        public int CharacterClassID {
             get {
-                return _ClassID;
+                return _CharacterClassID;
             }
             set {
-                _ClassID = value;
+                _CharacterClassID = value;
             }
         }
 
         /// <summary>
         /// gets and sets the ClassID attribute for the ClassesToClass object
         /// </summary>
-        public Class Class {
+        public CharacterClass CharacterClass {
             get {
-                if(_Class == null && _ClassID > 0) {
-                    _Class = DAL.GetClass(_ClassID);
+                if(_CharacterClass == null && _CharacterClassID > 0) {
+                    _CharacterClass = DAL.GetCharacterClass(_CharacterClassID);
                 }
-                return _Class;
+                return _CharacterClass;
             }
             set {
-                _Class = value;
+                _CharacterClass = value;
             }
         }
 
@@ -189,45 +183,6 @@ namespace PathfinderTracker.Models
             }
             set {
                 _MagicSchool = value;
-            }
-        }
-
-        /// <summary>
-        /// gets and sets the HasBloodline attribute for the ClassesToCharacter object
-        /// </summary>
-        [Display(Name = "Has Bloodline")]
-        public bool HasBloodline {
-            get {
-                return _HasBloodline;
-            }
-            set {
-                _HasBloodline = value;
-            }
-        }
-
-        /// <summary>
-        /// gets and sets the HasDomain attribute for the ClassesToCharacter object
-        /// </summary>
-        [Display(Name = "Has Domain")]
-        public bool HasDomain {
-            get {
-                return _HasDomain;
-            }
-            set {
-                _HasDomain = value;
-            }
-        }
-
-        /// <summary>
-        /// gets and sets the HasMagicSchool attribute for the ClassesToCharacter object
-        /// </summary>
-        [Display( Name = "Has Magic School")]
-        public bool HasMagicSchool {
-            get {
-                return _HasMagicSchool;
-            }
-            set {
-                _HasMagicSchool = value;
             }
         }
     }

@@ -9,15 +9,15 @@ using PathfinderTracker.Models;
 
 namespace PathfinderTracker
 {
-    public class ClassController : Controller
+    public class CharacterClassController : Controller
     {
-        // GET: Class
+        // GET: CharacterClass
         public ActionResult Index()
         {
-            return View(DAL.GetClasses());
+            return View(DAL.GetCharacterClasses());
         }
 
-        // GET: Class/Details/5
+        // GET: CharacterClass/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -25,31 +25,31 @@ namespace PathfinderTracker
                 return NotFound();
             }
 
-            Class charClass = DAL.GetClass((int)id);
-            if (charClass == null)
+            CharacterClass characterClass = DAL.GetCharacterClass((int)id);
+            if (characterClass == null)
             {
                 return NotFound();
             }
 
-            return View(charClass);
+            return View(characterClass);
         }
 
-        // GET: Class/Create
+        // GET: CharacterClass/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Class/Create
+        // POST: CharacterClass/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Name,ID")] Class charClass)
+        public ActionResult Create([Bind("Name,HasBloodline,HasDomain,HasMagicSchool,ID")] CharacterClass characterClass)
         {
             if (ModelState.IsValid)
             {
-                if(DAL.CreateClass(charClass) > 0) {
+                if(DAL.CreateCharacterClass(characterClass) > 0) {
                     //success
                 }
                 else {
@@ -57,10 +57,10 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(charClass);
+            return View(characterClass);
         }
 
-        // GET: Class/Edit/5
+        // GET: CharacterClass/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -68,29 +68,29 @@ namespace PathfinderTracker
                 return NotFound();
             }
 
-            Class charClass = DAL.GetClass((int)id);
-            if (charClass == null)
+            CharacterClass characterClass = DAL.GetCharacterClass((int)id);
+            if (characterClass == null)
             {
                 return NotFound();
             }
-            return View(charClass);
+            return View(characterClass);
         }
 
-        // POST: Class/Edit/5
+        // POST: CharacterClass/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("Name,ID")] Class charClass)
+        public ActionResult Edit(int id, [Bind("Name,HasBloodline,HasDomain,HasMagicSchool,ID")] CharacterClass characterClass)
         {
-            if (id != charClass.ID)
+            if (id != characterClass.ID)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                if(DAL.UpdateClass(charClass, id) > 0) {
+                if(DAL.UpdateCharacterClass(characterClass, id) > 0) {
                     //success
                 }
                 else {
@@ -98,10 +98,10 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(charClass);
+            return View(characterClass);
         }
 
-        // GET: Class/Delete/5
+        // GET: CharacterClass/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,21 +109,21 @@ namespace PathfinderTracker
                 return NotFound();
             }
 
-            Class charClass = DAL.GetClass((int)id);
-            if (charClass == null)
+            CharacterClass characterClass = DAL.GetCharacterClass((int)id);
+            if (characterClass == null)
             {
                 return NotFound();
             }
 
-            return View(charClass);
+            return View(characterClass);
         }
 
-        // POST: Class/Delete/5
+        // POST: CharacterClass/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if(DAL.DeleteClass(id) > 0) {
+            if(DAL.DeleteCharacterClass(id) > 0) {
                 //success
             }
             else {

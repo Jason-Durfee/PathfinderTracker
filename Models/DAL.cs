@@ -1159,24 +1159,24 @@ namespace PathfinderTracker.Models
         }
         #endregion
 
-        #region Classes
+        #region CharacterClasses
         /// <summary>
-        /// Gets all Class objects from the database
+        /// Gets all CharacterClass objects from the database
         /// </summary>
         /// <returns></returns>
-        public static List<Class> GetClasses() {
-            List<Class> classes = new List<Class>();
+        public static List<CharacterClass> GetCharacterClasses() {
+            List<CharacterClass> characterClasses = new List<CharacterClass>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
-                SqlCommand comm = new SqlCommand("sprocClassesGetAll");
+                SqlCommand comm = new SqlCommand("sprocCharacterClassesGetAll");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    Class characterClass = new Class(dr);
-                    classes.Add(characterClass);
+                    CharacterClass characterClass = new CharacterClass(dr);
+                    characterClasses.Add(characterClass);
                 }
             }
             catch(Exception error) {
@@ -1185,22 +1185,22 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return classes;
+            return characterClasses;
         }
 
         /// <summary>
-        /// gets a specific Class from the database
+        /// gets a specific CharacterClass from the database
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Class GetClass(int id) {
-            SqlCommand comm = new SqlCommand("sprocClassGet");
-            Class retObj = null;
+        public static CharacterClass GetCharacterClass(int id) {
+            SqlCommand comm = new SqlCommand("sprocCharacterClassGet");
+            CharacterClass retObj = null;
             try {
-                comm.Parameters.AddWithValue("@ClassID", id);
+                comm.Parameters.AddWithValue("@CharacterClassID", id);
                 SqlDataReader dr = GetDataReader(comm);
                 while(dr.Read()) {
-                    retObj = new Class(dr);
+                    retObj = new CharacterClass(dr);
                 }
                 comm.Connection.Close();
             }
@@ -1213,26 +1213,29 @@ namespace PathfinderTracker.Models
         }
 
         /// <summary>
-        /// inserts an Class object in the database
+        /// inserts an CharacterClass object in the database
         /// </summary>
-        /// <param name="characterClass"></param>
+        /// <param name="characterCharacterClass"></param>
         /// <returns></returns>
-        public static int CreateClass(Class characterClass) {
+        public static int CreateCharacterClass(CharacterClass characterClass) {
             int retVal = -1;
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
-                SqlCommand comm = new SqlCommand("sproc_ClassAdd");
+                SqlCommand comm = new SqlCommand("sproc_CharacterClassAdd");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@Name", characterClass.Name);
+                comm.Parameters.AddWithValue("@HasBloodline", characterClass.HasBloodline);
+                comm.Parameters.AddWithValue("@HasDomain", characterClass.HasDomain);
+                comm.Parameters.AddWithValue("@HasMagicSchool", characterClass.HasMagicSchool);
 
-                comm.Parameters.Add("@ClassID", SqlDbType.Int);
-                comm.Parameters["@ClassID"].Direction = ParameterDirection.Output;
+                comm.Parameters.Add("@CharacterClassID", SqlDbType.Int);
+                comm.Parameters["@CharacterClassID"].Direction = ParameterDirection.Output;
 
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
-                int ID = (int)comm.Parameters["@ClassID"].Value;
+                int ID = (int)comm.Parameters["@CharacterClassID"].Value;
                 characterClass.ID = ID;
             }
             catch(Exception error) {
@@ -1245,12 +1248,12 @@ namespace PathfinderTracker.Models
         }
 
         /// <summary>
-        /// updates a specific Class object in the database
+        /// updates a specific CharacterClass object in the database
         /// </summary>
-        /// <param name="characterClass"></param>
+        /// <param name="characterCharacterClass"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateClass(Class characterClass, int id) {
+        public static int UpdateCharacterClass(CharacterClass characterClass, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
@@ -1259,10 +1262,13 @@ namespace PathfinderTracker.Models
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
-                SqlCommand comm = new SqlCommand("sproc_ClassUpdate");
+                SqlCommand comm = new SqlCommand("sproc_CharacterClassUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@ClassID", id);
+                comm.Parameters.AddWithValue("@CharacterClassID", id);
                 comm.Parameters.AddWithValue("@Name", characterClass.Name);
+                comm.Parameters.AddWithValue("@HasBloodline", characterClass.HasBloodline);
+                comm.Parameters.AddWithValue("@HasDomain", characterClass.HasDomain);
+                comm.Parameters.AddWithValue("@HasMagicSchool", characterClass.HasMagicSchool);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -1276,19 +1282,19 @@ namespace PathfinderTracker.Models
         }
 
         /// <summary>
-        /// deletes a specific Class object from the database
+        /// deletes a specific CharacterClass object from the database
         /// </summary>
         /// <param name="ID"></param>
         /// <returns></returns>
-        public static int DeleteClass(int ID) {
+        public static int DeleteCharacterClass(int ID) {
             int retVal = -1;
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
-                SqlCommand comm = new SqlCommand("sproc_ClassDelete");
+                SqlCommand comm = new SqlCommand("sproc_CharacterClassDelete");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@ClassID", ID);
+                comm.Parameters.AddWithValue("@CharacterClassID", ID);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -1370,13 +1376,10 @@ namespace PathfinderTracker.Models
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@ClassLevel", classesToCharacter.ClassLevel);
                 comm.Parameters.AddWithValue("@CharacterID", classesToCharacter.CharacterID);
-                comm.Parameters.AddWithValue("@ClassID", classesToCharacter.ClassID);
+                comm.Parameters.AddWithValue("@CharacterClassID", classesToCharacter.CharacterClassID);
                 comm.Parameters.AddWithValue("@BloodlineID", classesToCharacter.BloodlineID);
                 comm.Parameters.AddWithValue("@DomainID", classesToCharacter.DomainID);
                 comm.Parameters.AddWithValue("@MagicSchoolID", classesToCharacter.MagicSchoolID);
-                comm.Parameters.AddWithValue("@HasBloodline", classesToCharacter.HasBloodline);
-                comm.Parameters.AddWithValue("@HasDomain", classesToCharacter.HasDomain);
-                comm.Parameters.AddWithValue("@HasMagicSchool", classesToCharacter.HasMagicSchool);
 
                 comm.Parameters.Add("@ClassesToCharacterID", SqlDbType.Int);
                 comm.Parameters["@ClassesToCharacterID"].Direction = ParameterDirection.Output;
@@ -1415,13 +1418,10 @@ namespace PathfinderTracker.Models
                 comm.Parameters.AddWithValue("@ClassesToCharacterID", id);
                 comm.Parameters.AddWithValue("@ClassLevel", classesToCharacter.ClassLevel);
                 comm.Parameters.AddWithValue("@CharacterID", classesToCharacter.CharacterID);
-                comm.Parameters.AddWithValue("@ClassID", classesToCharacter.ClassID);
+                comm.Parameters.AddWithValue("@CharacterClassID", classesToCharacter.CharacterClassID);
                 comm.Parameters.AddWithValue("@BloodlineID", classesToCharacter.BloodlineID);
                 comm.Parameters.AddWithValue("@DomainID", classesToCharacter.DomainID);
                 comm.Parameters.AddWithValue("@MagicSchoolID", classesToCharacter.MagicSchoolID);
-                comm.Parameters.AddWithValue("@HasBloodline", classesToCharacter.HasBloodline);
-                comm.Parameters.AddWithValue("@HasDomain", classesToCharacter.HasDomain);
-                comm.Parameters.AddWithValue("@HasMagicSchool", classesToCharacter.HasMagicSchool);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
