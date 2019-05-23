@@ -32,6 +32,9 @@ namespace PathfinderTracker.Models
                 blankCampaign.ID = -1;
                 return blankCampaign;
             }
+            set {
+                _CurrentCampaign = value;
+            }
         }
 
     }

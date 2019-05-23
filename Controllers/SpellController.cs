@@ -136,6 +136,11 @@ namespace PathfinderTracker
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// searches for a list of spells containing the search text
+        /// </summary>
+        /// <param name="searchText"></param>
+        /// <returns></returns>
         public IActionResult Search(string searchText) {
             List<Spell> spells = new List<Spell>();
             List<Spell> allSpells = DAL.GetSpells();

@@ -147,5 +147,36 @@ namespace PathfinderTracker
             }
             return RedirectToAction(nameof(Index));
         }
+
+        /// <summary>
+        /// searches for a list of Characters containing the search text
+        /// </summary>
+        /// <param name="searchText"></param>
+        /// <returns></returns>
+        public IActionResult Search(string searchText) {
+            List<Character> characters = new List<Character>();
+            List<Character> allCharacters = DAL.GetCharacters();
+            if(searchText == null || searchText == "") {
+                return View("Index", allCharacters);
+            }
+            foreach(Character character in allCharacters) {
+                if(character.Name.ToLower().Contains(searchText.ToLower())) {
+                    characters.Add(character);
+                }
+                else if(character.Name.ToLower().Contains(searchText.ToLower())) {
+                    characters.Add(character);
+                }
+                else if(character.Race != null && character.Race.Name.ToLower().Contains(searchText.ToLower())) {
+                    characters.Add(character);
+                }
+                else if(character.Alignment != null && character.Alignment.Name.ToLower().Contains(searchText.ToLower())) {
+                    characters.Add(character);
+                }
+                else if(character.Deity != null && character.Deity.Name.ToLower().Contains(searchText.ToLower())) {
+                    characters.Add(character);
+                }
+            }
+            return View("Index", characters);
+        }
     }
 }

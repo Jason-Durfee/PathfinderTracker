@@ -137,9 +137,29 @@ namespace PathfinderTracker
 
         public ActionResult Load(int id) {
             if(id > 0) {
+                CurrentVariables.CurrentCampaign = null;
                 CurrentVariables.CurrentCampaignID = id;
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        /// <summary>
+        /// searches for a list of campaigns containing the search text
+        /// </summary>
+        /// <param name="searchText"></param>
+        /// <returns></returns>
+        public IActionResult Search(string searchText) {
+            List<Campaign> campaigns = new List<Campaign>();
+            List<Campaign> allCampaigns = DAL.GetCampaigns();
+            if(searchText == null || searchText == "") {
+                return View("Index", allCampaigns);
+            }
+            foreach(Campaign campaign in allCampaigns) {
+                if(campaign.Name.ToLower().Contains(searchText.ToLower())) {
+                    campaigns.Add(campaign);
+                }
+            }
+            return View("Index", campaigns);
         }
     }
 }
