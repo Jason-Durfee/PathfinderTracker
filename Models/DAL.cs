@@ -1461,6 +1461,151 @@ namespace PathfinderTracker.Models
         }
         #endregion
 
+        #region Conditions
+        /// <summary>
+        /// Gets all Condition objects from the database
+        /// </summary>
+        /// <returns></returns>
+        public static List<Condition> GetConditions() {
+            List<Condition> conditions = new List<Condition>();
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sprocConditionsGetAll");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Connection = conn;
+                SqlDataReader dr = comm.ExecuteReader();
+                while(dr.Read()) {
+                    Condition condition = new Condition(dr);
+                    conditions.Add(condition);
+                }
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return conditions;
+        }
+
+        /// <summary>
+        /// gets a specific Condition from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static Condition GetCondition(int id) {
+            SqlCommand comm = new SqlCommand("sprocConditionGet");
+            Condition retObj = null;
+            try {
+                comm.Parameters.AddWithValue("@ConditionID", id);
+                SqlDataReader dr = GetDataReader(comm);
+                while(dr.Read()) {
+                    retObj = new Condition(dr);
+                }
+                comm.Connection.Close();
+            }
+            catch(Exception ex) {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+
+        }
+
+        /// <summary>
+        /// inserts an Condition object in the database
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        public static int CreateCondition(Condition condition) {
+            int retVal = -1;
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_ConditionAdd");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@Name", condition.Name);
+                comm.Parameters.AddWithValue("@Effect", condition.Effect);
+
+                comm.Parameters.Add("@ConditionID", SqlDbType.Int);
+                comm.Parameters["@ConditionID"].Direction = ParameterDirection.Output;
+
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+                int ID = (int)comm.Parameters["@ConditionID"].Value;
+                condition.ID = ID;
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// updates a specific Condition object in the database
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static int UpdateCondition(Condition condition, int id) {
+            int retVal = -1;
+            if(id < 0) {
+                return retVal;
+            }
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_ConditionUpdate");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@ConditionID", id);
+                comm.Parameters.AddWithValue("@Name", condition.Name);
+                comm.Parameters.AddWithValue("@Effect", condition.Effect);
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// deletes a specific Condition object from the database
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public static int DeleteCondition(int ID) {
+            int retVal = -1;
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_ConditionDelete");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@ConditionID", ID);
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+        #endregion
+
         #region DamageTypes
         /// <summary>
         /// Gets all DamageType objects from the database
@@ -2175,6 +2320,157 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_FeatTypeDelete");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@FeatTypeID", ID);
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+        #endregion
+
+        #region Items
+        /// <summary>
+        /// Gets all Item objects from the database
+        /// </summary>
+        /// <returns></returns>
+        public static List<Item> GetItems() {
+            List<Item> items = new List<Item>();
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sprocItemsGetAll");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Connection = conn;
+                SqlDataReader dr = comm.ExecuteReader();
+                while(dr.Read()) {
+                    Item item = new Item(dr);
+                    items.Add(item);
+                }
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return items;
+        }
+
+        /// <summary>
+        /// gets a specific Item from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static Item GetItem(int id) {
+            SqlCommand comm = new SqlCommand("sprocItemGet");
+            Item retObj = null;
+            try {
+                comm.Parameters.AddWithValue("@ItemID", id);
+                SqlDataReader dr = GetDataReader(comm);
+                while(dr.Read()) {
+                    retObj = new Item(dr);
+                }
+                comm.Connection.Close();
+            }
+            catch(Exception ex) {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+
+        }
+
+        /// <summary>
+        /// inserts an Item object in the database
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public static int CreateItem(Item item) {
+            int retVal = -1;
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_ItemAdd");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@Name", item.Name);
+                comm.Parameters.AddWithValue("@Description", item.Description);
+                comm.Parameters.AddWithValue("@ConstructionRequirements", item.ConstructionRequirements);
+                comm.Parameters.AddWithValue("@GPValue", item.GPValue);
+                comm.Parameters.AddWithValue("@SlotID", item.SlotID);
+
+                comm.Parameters.Add("@ItemID", SqlDbType.Int);
+                comm.Parameters["@ItemID"].Direction = ParameterDirection.Output;
+
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+                int ID = (int)comm.Parameters["@ItemID"].Value;
+                item.ID = ID;
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// updates a specific Item object in the database
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static int UpdateItem(Item item, int id) {
+            int retVal = -1;
+            if(id < 0) {
+                return retVal;
+            }
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_ItemUpdate");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@ItemID", id);
+                comm.Parameters.AddWithValue("@Name", item.Name);
+                comm.Parameters.AddWithValue("@Description", item.Description);
+                comm.Parameters.AddWithValue("@ConstructionRequirements", item.ConstructionRequirements);
+                comm.Parameters.AddWithValue("@GPValue", item.GPValue);
+                comm.Parameters.AddWithValue("@SlotID", item.SlotID);
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// deletes a specific Item object from the database
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public static int DeleteItem(int ID) {
+            int retVal = -1;
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_ItemDelete");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@ItemID", ID);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -2921,6 +3217,148 @@ namespace PathfinderTracker.Models
         }
         #endregion
 
+        #region Slots
+        /// <summary>
+        /// Gets all Slot objects from the database
+        /// </summary>
+        /// <returns></returns>
+        public static List<Slot> GetSlots() {
+            List<Slot> slots = new List<Slot>();
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sprocSlotsGetAll");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Connection = conn;
+                SqlDataReader dr = comm.ExecuteReader();
+                while(dr.Read()) {
+                    Slot slot = new Slot(dr);
+                    slots.Add(slot);
+                }
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return slots;
+        }
+
+        /// <summary>
+        /// gets a specific Slot from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static Slot GetSlot(int id) {
+            SqlCommand comm = new SqlCommand("sprocSlotGet");
+            Slot retObj = null;
+            try {
+                comm.Parameters.AddWithValue("@SlotID", id);
+                SqlDataReader dr = GetDataReader(comm);
+                while(dr.Read()) {
+                    retObj = new Slot(dr);
+                }
+                comm.Connection.Close();
+            }
+            catch(Exception ex) {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+
+        }
+
+        /// <summary>
+        /// inserts an Slot object in the database
+        /// </summary>
+        /// <param name="slot"></param>
+        /// <returns></returns>
+        public static int CreateSlot(Slot slot) {
+            int retVal = -1;
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_SlotAdd");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@Name", slot.Name);
+
+                comm.Parameters.Add("@SlotID", SqlDbType.Int);
+                comm.Parameters["@SlotID"].Direction = ParameterDirection.Output;
+
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+                int ID = (int)comm.Parameters["@SlotID"].Value;
+                slot.ID = ID;
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// updates a specific Slot object in the database
+        /// </summary>
+        /// <param name="slot"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static int UpdateSlot(Slot slot, int id) {
+            int retVal = -1;
+            if(id < 0) {
+                return retVal;
+            }
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_SlotUpdate");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@SlotID", id);
+                comm.Parameters.AddWithValue("@Name", slot.Name);
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// deletes a specific Slot object from the database
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public static int DeleteSlot(int ID) {
+            int retVal = -1;
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_SlotDelete");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@SlotID", ID);
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+        #endregion
 
         #region Weapons
         /// <summary>

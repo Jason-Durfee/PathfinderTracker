@@ -55,5 +55,11 @@ namespace PathfinderTracker.Models
         public DbSet<PathfinderTracker.Models.WeaponType> WeaponType { get; set; }
 
         public DbSet<PathfinderTracker.Models.FeatType> FeatType { get; set; }
+
+        public DbSet<PathfinderTracker.Models.Condition> Condition { get; set; }
+
+        public DbSet<PathfinderTracker.Models.Item> Item { get; set; }
+
+        public DbSet<PathfinderTracker.Models.Slot> Slot { get; set; }
     }
 }

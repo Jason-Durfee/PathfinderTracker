@@ -54,7 +54,7 @@ namespace PathfinderTracker.Models
         }
 
         /// <summary>
-        /// gets and sets the Prerequisites attribute for the Feat object
+        /// gets and sets the FeatTypeID attribute for the Feat object
         /// </summary>
         public int FeatTypeID {
             get {
