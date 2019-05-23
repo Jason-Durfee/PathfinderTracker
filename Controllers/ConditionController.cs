@@ -131,5 +131,24 @@ namespace PathfinderTracker
             }
             return RedirectToAction(nameof(Index));
         }
+
+        /// <summary>
+        /// searches for a list of Conditions containing the search text
+        /// </summary>
+        /// <param name="searchText"></param>
+        /// <returns></returns>
+        public IActionResult Search(string searchText) {
+            List<Condition> conditions = new List<Condition>();
+            List<Condition> allConditions = DAL.GetConditions();
+            if(searchText == null || searchText == "") {
+                return View("Index", allConditions);
+            }
+            foreach(Condition condition in allConditions) {
+                if(condition.Name.ToLower().Contains(searchText.ToLower())) {
+                    conditions.Add(condition);
+                }
+            }
+            return View("Index", conditions);
+        }
     }
 }
