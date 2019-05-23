@@ -1461,6 +1461,149 @@ namespace PathfinderTracker.Models
         }
         #endregion
 
+        #region CoreTypes
+        /// <summary>
+        /// Gets all CoreType objects from the database
+        /// </summary>
+        /// <returns></returns>
+        public static List<CoreType> GetCoreTypes() {
+            List<CoreType> coreTypes = new List<CoreType>();
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sprocCoreTypesGetAll");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Connection = conn;
+                SqlDataReader dr = comm.ExecuteReader();
+                while(dr.Read()) {
+                    CoreType coreType = new CoreType(dr);
+                    coreTypes.Add(coreType);
+                }
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return coreTypes;
+        }
+
+        /// <summary>
+        /// gets a specific CoreType from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static CoreType GetCoreType(int id) {
+            SqlCommand comm = new SqlCommand("sprocCoreTypeGet");
+            CoreType retObj = null;
+            try {
+                comm.Parameters.AddWithValue("@CoreTypeID", id);
+                SqlDataReader dr = GetDataReader(comm);
+                while(dr.Read()) {
+                    retObj = new CoreType(dr);
+                }
+                comm.Connection.Close();
+            }
+            catch(Exception ex) {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+
+        }
+
+        /// <summary>
+        /// inserts an CoreType object in the database
+        /// </summary>
+        /// <param name="coreType"></param>
+        /// <returns></returns>
+        public static int CreateCoreType(CoreType coreType) {
+            int retVal = -1;
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_CoreTypeAdd");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@Name", coreType.Name);
+
+                comm.Parameters.Add("@CoreTypeID", SqlDbType.Int);
+                comm.Parameters["@CoreTypeID"].Direction = ParameterDirection.Output;
+
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+                int ID = (int)comm.Parameters["@CoreTypeID"].Value;
+                coreType.ID = ID;
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// updates a specific CoreType object in the database
+        /// </summary>
+        /// <param name="coreType"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static int UpdateCoreType(CoreType coreType, int id) {
+            int retVal = -1;
+            if(id < 0) {
+                return retVal;
+            }
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_CoreTypeUpdate");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@CoreTypeID", id);
+                comm.Parameters.AddWithValue("@Name", coreType.Name);
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// deletes a specific CoreType object from the database
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public static int DeleteCoreType(int ID) {
+            int retVal = -1;
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_CoreTypeDelete");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@CoreTypeID", ID);
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+        #endregion
+
         #region Conditions
         /// <summary>
         /// Gets all Condition objects from the database
@@ -3426,17 +3569,9 @@ namespace PathfinderTracker.Models
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_WeaponAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", weapon.Name);
-                comm.Parameters.AddWithValue("@AttackDiceMedium", weapon.AttackDiceMedium);
-                comm.Parameters.AddWithValue("@AttackDiceSmall", weapon.AttackDiceSmall);
-                comm.Parameters.AddWithValue("@AttackRange", weapon.AttackRange);
-                comm.Parameters.AddWithValue("@Critical", weapon.Critical);
-                comm.Parameters.AddWithValue("@DamageTypeID", weapon.DamageTypeID);
-                comm.Parameters.AddWithValue("@GPValue", weapon.GPValue);
                 comm.Parameters.AddWithValue("@MaterialID", weapon.MaterialID);
                 comm.Parameters.AddWithValue("@SpecialAttributes", weapon.SpecialAttributes);
                 comm.Parameters.AddWithValue("@WeaponTypeID", weapon.WeaponTypeID);
-                comm.Parameters.AddWithValue("@Weight", weapon.Weight);
 
                 comm.Parameters.Add("@WeaponID", SqlDbType.Int);
                 comm.Parameters["@WeaponID"].Direction = ParameterDirection.Output;
@@ -3473,17 +3608,9 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_WeaponUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@WeaponID", id);
-                comm.Parameters.AddWithValue("@Name", weapon.Name);
-                comm.Parameters.AddWithValue("@AttackDiceMedium", weapon.AttackDiceMedium);
-                comm.Parameters.AddWithValue("@AttackDiceSmall", weapon.AttackDiceSmall);
-                comm.Parameters.AddWithValue("@AttackRange", weapon.AttackRange);
-                comm.Parameters.AddWithValue("@Critical", weapon.Critical);
-                comm.Parameters.AddWithValue("@DamageTypeID", weapon.DamageTypeID);
-                comm.Parameters.AddWithValue("@GPValue", weapon.GPValue);
                 comm.Parameters.AddWithValue("@MaterialID", weapon.MaterialID);
                 comm.Parameters.AddWithValue("@SpecialAttributes", weapon.SpecialAttributes);
                 comm.Parameters.AddWithValue("@WeaponTypeID", weapon.WeaponTypeID);
-                comm.Parameters.AddWithValue("@Weight", weapon.Weight);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -3733,6 +3860,13 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_WeaponTypeAdd");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@Name", weaponType.Name);
+                comm.Parameters.AddWithValue("@AttackDiceMedium", weaponType.AttackDiceMedium);
+                comm.Parameters.AddWithValue("@AttackDiceSmall", weaponType.AttackDiceSmall);
+                comm.Parameters.AddWithValue("@AttackRange", weaponType.AttackRange);
+                comm.Parameters.AddWithValue("@Critical", weaponType.Critical);
+                comm.Parameters.AddWithValue("@GPValue", weaponType.GPValue);
+                comm.Parameters.AddWithValue("@Weight", weaponType.Weight);
+                comm.Parameters.AddWithValue("@WeaponCategoryID", weaponType.WeaponCategoryID);
 
                 comm.Parameters.Add("@WeaponTypeID", SqlDbType.Int);
                 comm.Parameters["@WeaponTypeID"].Direction = ParameterDirection.Output;
@@ -3770,6 +3904,13 @@ namespace PathfinderTracker.Models
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@WeaponTypeID", id);
                 comm.Parameters.AddWithValue("@Name", weaponType.Name);
+                comm.Parameters.AddWithValue("@AttackDiceMedium", weaponType.AttackDiceMedium);
+                comm.Parameters.AddWithValue("@AttackDiceSmall", weaponType.AttackDiceSmall);
+                comm.Parameters.AddWithValue("@AttackRange", weaponType.AttackRange);
+                comm.Parameters.AddWithValue("@Critical", weaponType.Critical);
+                comm.Parameters.AddWithValue("@GPValue", weaponType.GPValue);
+                comm.Parameters.AddWithValue("@Weight", weaponType.Weight);
+                comm.Parameters.AddWithValue("@WeaponCategoryID", weaponType.WeaponCategoryID);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }

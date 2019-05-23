@@ -37,6 +37,8 @@ namespace PathfinderTracker
         // GET: WeaponType/Create
         public IActionResult Create()
         {
+            ViewData["WeaponCategoryID"] = new SelectList(DAL.GetWeaponCategories(), "ID", "Name");
+            ViewData["CoreTypeID"] = new SelectList(DAL.GetCoreTypes(), "ID", "Name");
             return View();
         }
 
@@ -45,7 +47,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Name,ID")] WeaponType weaponType)
+        public ActionResult Create([Bind("Name,AttackDiceSmall,AttackDiceMedium,AttackRange,Critical,GPValue,Weight,ID")] WeaponType weaponType)
         {
             if (ModelState.IsValid)
             {
@@ -57,6 +59,8 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["WeaponCategoryID"] = new SelectList(DAL.GetWeaponCategories(), "ID", "Name", weaponType.WeaponCategoryID);
+            ViewData["CoreTypeID"] = new SelectList(DAL.GetCoreTypes(), "ID", "Name", weaponType.CoreTypeID);
             return View(weaponType);
         }
 
@@ -81,7 +85,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("Name,ID")] WeaponType weaponType)
+        public ActionResult Edit(int id, [Bind("Name,AttackDiceSmall,AttackDiceMedium,AttackRange,Critical,GPValue,Weight,ID")] WeaponType weaponType)
         {
             if (id != weaponType.ID)
             {
@@ -98,6 +102,8 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["WeaponCategoryID"] = new SelectList(DAL.GetWeaponCategories(), "ID", "Name", weaponType.WeaponCategoryID);
+            ViewData["CoreTypeID"] = new SelectList(DAL.GetCoreTypes(), "ID", "Name", weaponType.CoreTypeID);
             return View(weaponType);
         }
 

@@ -14,22 +14,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Details)
             </th>
             <th>
-                Attack Dice
+                @Html.DisplayNameFor(model => model.Damage)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Critical)
+                @Html.DisplayNameFor(model => model.WeaponType.AttackRange)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Material)
+                @Html.DisplayNameFor(model => model.WeaponType.Critical)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AttackRange)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DamageType)
+                @Html.DisplayNameFor(model => model.SpecialAttributes)
             </th>
             <th>Actions</th>
         </tr>
@@ -38,23 +35,19 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Details)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AttackDiceSmall)/
-                @Html.DisplayFor(modelItem => item.AttackDiceMedium)
+                @Html.DisplayFor(modelItem => item.Damage)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Critical)
+                @Html.DisplayFor(modelItem => item.WeaponType.AttackRange)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Material.Name)
+                @Html.DisplayFor(modelItem => item.WeaponType.Critical)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AttackRange)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DamageType.Name)
+                @Html.DisplayFor(modelItem => item.SpecialAttributes)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
