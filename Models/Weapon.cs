@@ -151,7 +151,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the WeaponCategory attribute for the Weapon object
         /// </summary>
-        [Display( Name = "Weapon Sub Type")]
+        [Display( Name = "Weapon Category")]
         public WeaponCategory WeaponCategory {
             get {
                 if(_WeaponCategory == null && _WeaponCategoryID > 0) {
@@ -180,7 +180,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the WeaponType attribute for the Weapon object
         /// </summary>
-        [Display( Name = "Weapon Category")]
+        [Display( Name = "Weapon Type")]
         public WeaponType WeaponType {
             get {
                 if(_WeaponType == null && _WeaponTypeID > 0) {

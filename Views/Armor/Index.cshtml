@@ -14,64 +14,47 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.GPValue)
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ACBonus)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ArmorCheckPenalty)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Weight)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Material)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.GPValue)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ArmorType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ArmorAddon)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SpecialAttributes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach(var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.GPValue)
-            </td>
+            @if(item.ArmorAddon != null) {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name) with @Html.DisplayFor(modelItem => item.ArmorAddon.Name)
+                </td>
+            }
+            else {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.ACBonus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArmorCheckPenalty)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Weight)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Material.ID)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.GPValue)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.ArmorType.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArmorAddon.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpecialAttributes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
@@ -79,6 +62,6 @@
                 <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>
