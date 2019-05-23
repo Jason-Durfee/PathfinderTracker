@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PathfinderTracker.Models
 {
@@ -117,7 +114,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<Alignment> GetAlignments() {
-            List<Alignment> Alignments = new List<Alignment>();
+            List<Alignment> alignments = new List<Alignment>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -127,8 +124,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    Alignment Alignment = new Alignment(dr);
-                    Alignments.Add(Alignment);
+                    Alignment alignment = new Alignment(dr);
+                    alignments.Add(alignment);
                 }
             }
             catch(Exception error) {
@@ -137,7 +134,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return Alignments;
+            return alignments;
         }
 
         /// <summary>
@@ -167,20 +164,19 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an Alignment object in the database
         /// </summary>
-        /// <param name="Alignment"></param>
+        /// <param name="alignment"></param>
         /// <returns></returns>
-        public static int CreateAlignment(Alignment Alignment) {
+        public static int CreateAlignment(Alignment alignment) {
             int retVal = -1;
-            Alignment AlignmentToSave = new Alignment();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_AlignmentAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", Alignment.Name);
-                comm.Parameters.AddWithValue("@Description", Alignment.Description);
-                comm.Parameters.AddWithValue("@Abbreviation", Alignment.Abbreviation);
+                comm.Parameters.AddWithValue("@Name", alignment.Name);
+                comm.Parameters.AddWithValue("@Description", alignment.Description);
+                comm.Parameters.AddWithValue("@Abbreviation", alignment.Abbreviation);
 
                 comm.Parameters.Add("@AlignmentID", SqlDbType.Int);
                 comm.Parameters["@AlignmentID"].Direction = ParameterDirection.Output;
@@ -188,7 +184,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@AlignmentID"].Value;
-                Alignment.ID = ID;
+                alignment.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -202,15 +198,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific Alignment object in the database
         /// </summary>
-        /// <param name="Alignment"></param>
+        /// <param name="alignment"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateAlignment(Alignment Alignment, int id) {
+        public static int UpdateAlignment(Alignment alignment, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            Alignment AlignmentToSave = new Alignment();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -218,9 +213,9 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_AlignmentUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@AlignmentID", id);
-                comm.Parameters.AddWithValue("@Name", Alignment.Name);
-                comm.Parameters.AddWithValue("@Description", Alignment.Description);
-                comm.Parameters.AddWithValue("@Abbreviation", Alignment.Abbreviation);
+                comm.Parameters.AddWithValue("@Name", alignment.Name);
+                comm.Parameters.AddWithValue("@Description", alignment.Description);
+                comm.Parameters.AddWithValue("@Abbreviation", alignment.Abbreviation);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -266,7 +261,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<Armor> GetArmors() {
-            List<Armor> Armors = new List<Armor>();
+            List<Armor> armors = new List<Armor>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -276,8 +271,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    Armor Armor = new Armor(dr);
-                    Armors.Add(Armor);
+                    Armor armor = new Armor(dr);
+                    armors.Add(armor);
                 }
             }
             catch(Exception error) {
@@ -286,7 +281,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return Armors;
+            return armors;
         }
 
         /// <summary>
@@ -316,26 +311,25 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an Armor object in the database
         /// </summary>
-        /// <param name="Armor"></param>
+        /// <param name="armor"></param>
         /// <returns></returns>
-        public static int CreateArmor(Armor Armor) {
+        public static int CreateArmor(Armor armor) {
             int retVal = -1;
-            Armor ArmorToSave = new Armor();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_ArmorAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", Armor.Name);
-                comm.Parameters.AddWithValue("@GPValue", Armor.GPValue);
-                comm.Parameters.AddWithValue("@ACBonus", Armor.ACBonus);
-                comm.Parameters.AddWithValue("@ArmorCheckPenalty", Armor.ArmorCheckPenalty);
-                comm.Parameters.AddWithValue("@Weight", Armor.Weight);
-                comm.Parameters.AddWithValue("@MaterialID", Armor.MaterialID);
-                comm.Parameters.AddWithValue("@ArmorTypeID", Armor.ArmorTypeID);
-                comm.Parameters.AddWithValue("@ArmorAddonID", Armor.ArmorAddonID);
-                comm.Parameters.AddWithValue("@SpecialAttributes", Armor.SpecialAttributes);
+                comm.Parameters.AddWithValue("@Name", armor.Name);
+                comm.Parameters.AddWithValue("@GPValue", armor.GPValue);
+                comm.Parameters.AddWithValue("@ACBonus", armor.ACBonus);
+                comm.Parameters.AddWithValue("@ArmorCheckPenalty", armor.ArmorCheckPenalty);
+                comm.Parameters.AddWithValue("@Weight", armor.Weight);
+                comm.Parameters.AddWithValue("@MaterialID", armor.MaterialID);
+                comm.Parameters.AddWithValue("@ArmorTypeID", armor.ArmorTypeID);
+                comm.Parameters.AddWithValue("@ArmorAddonID", armor.ArmorAddonID);
+                comm.Parameters.AddWithValue("@SpecialAttributes", armor.SpecialAttributes);
 
                 comm.Parameters.Add("@ArmorID", SqlDbType.Int);
                 comm.Parameters["@ArmorID"].Direction = ParameterDirection.Output;
@@ -343,7 +337,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@ArmorID"].Value;
-                Armor.ID = ID;
+                armor.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -365,7 +359,6 @@ namespace PathfinderTracker.Models
             if(id < 0) {
                 return retVal;
             }
-            Armor ArmorToSave = new Armor();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -427,7 +420,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<ArmorAddon> GetArmorAddons() {
-            List<ArmorAddon> ArmorAddons = new List<ArmorAddon>();
+            List<ArmorAddon> armorAddons = new List<ArmorAddon>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -437,8 +430,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    ArmorAddon ArmorAddon = new ArmorAddon(dr);
-                    ArmorAddons.Add(ArmorAddon);
+                    ArmorAddon armorAddon = new ArmorAddon(dr);
+                    armorAddons.Add(armorAddon);
                 }
             }
             catch(Exception error) {
@@ -447,7 +440,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return ArmorAddons;
+            return armorAddons;
         }
 
         /// <summary>
@@ -477,22 +470,21 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an ArmorAddon object in the database
         /// </summary>
-        /// <param name="ArmorAddon"></param>
+        /// <param name="armorAddon"></param>
         /// <returns></returns>
-        public static int CreateArmorAddon(ArmorAddon ArmorAddon) {
+        public static int CreateArmorAddon(ArmorAddon armorAddon) {
             int retVal = -1;
-            ArmorAddon ArmorAddonToSave = new ArmorAddon();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_ArmorAddonAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", ArmorAddon.Name);
-                comm.Parameters.AddWithValue("@GPValue", ArmorAddon.GPValue);
-                comm.Parameters.AddWithValue("@Weight", ArmorAddon.Weight);
-                comm.Parameters.AddWithValue("@MaterialID", ArmorAddon.MaterialID);
-                comm.Parameters.AddWithValue("@ArmorCheckPenalty", ArmorAddon.ArmorCheckPenalty);
+                comm.Parameters.AddWithValue("@Name", armorAddon.Name);
+                comm.Parameters.AddWithValue("@GPValue", armorAddon.GPValue);
+                comm.Parameters.AddWithValue("@Weight", armorAddon.Weight);
+                comm.Parameters.AddWithValue("@MaterialID", armorAddon.MaterialID);
+                comm.Parameters.AddWithValue("@ArmorCheckPenalty", armorAddon.ArmorCheckPenalty);
 
                 comm.Parameters.Add("@ArmorAddonID", SqlDbType.Int);
                 comm.Parameters["@ArmorAddonID"].Direction = ParameterDirection.Output;
@@ -500,7 +492,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@ArmorAddonID"].Value;
-                ArmorAddon.ID = ID;
+                armorAddon.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -514,15 +506,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific ArmorAddon object in the database
         /// </summary>
-        /// <param name="ArmorAddon"></param>
+        /// <param name="armorAddon"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateArmorAddon(ArmorAddon ArmorAddon, int id) {
+        public static int UpdateArmorAddon(ArmorAddon armorAddon, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            ArmorAddon ArmorAddonToSave = new ArmorAddon();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -530,11 +521,11 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_ArmorAddonUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@ArmorAddonID", id);
-                comm.Parameters.AddWithValue("@Name", ArmorAddon.Name);
-                comm.Parameters.AddWithValue("@GPValue", ArmorAddon.GPValue);
-                comm.Parameters.AddWithValue("@Weight", ArmorAddon.Weight);
-                comm.Parameters.AddWithValue("@MaterialID", ArmorAddon.MaterialID);
-                comm.Parameters.AddWithValue("@ArmorCheckPenalty", ArmorAddon.ArmorCheckPenalty);
+                comm.Parameters.AddWithValue("@Name", armorAddon.Name);
+                comm.Parameters.AddWithValue("@GPValue", armorAddon.GPValue);
+                comm.Parameters.AddWithValue("@Weight", armorAddon.Weight);
+                comm.Parameters.AddWithValue("@MaterialID", armorAddon.MaterialID);
+                comm.Parameters.AddWithValue("@ArmorCheckPenalty", armorAddon.ArmorCheckPenalty);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -580,7 +571,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<ArmorType> GetArmorTypes() {
-            List<ArmorType> ArmorTypes = new List<ArmorType>();
+            List<ArmorType> armorTypes = new List<ArmorType>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -590,8 +581,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    ArmorType ArmorType = new ArmorType(dr);
-                    ArmorTypes.Add(ArmorType);
+                    ArmorType armorType = new ArmorType(dr);
+                    armorTypes.Add(armorType);
                 }
             }
             catch(Exception error) {
@@ -600,7 +591,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return ArmorTypes;
+            return armorTypes;
         }
 
         /// <summary>
@@ -630,18 +621,17 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an ArmorType object in the database
         /// </summary>
-        /// <param name="ArmorType"></param>
+        /// <param name="armorType"></param>
         /// <returns></returns>
-        public static int CreateArmorType(ArmorType ArmorType) {
+        public static int CreateArmorType(ArmorType armorType) {
             int retVal = -1;
-            ArmorType ArmorTypeToSave = new ArmorType();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_ArmorTypeAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", ArmorType.Name);
+                comm.Parameters.AddWithValue("@Name", armorType.Name);
 
                 comm.Parameters.Add("@ArmorTypeID", SqlDbType.Int);
                 comm.Parameters["@ArmorTypeID"].Direction = ParameterDirection.Output;
@@ -649,7 +639,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@ArmorTypeID"].Value;
-                ArmorType.ID = ID;
+                armorType.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -663,15 +653,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific ArmorType object in the database
         /// </summary>
-        /// <param name="ArmorType"></param>
+        /// <param name="armorType"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateArmorType(ArmorType ArmorType, int id) {
+        public static int UpdateArmorType(ArmorType armorType, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            ArmorType ArmorTypeToSave = new ArmorType();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -679,7 +668,7 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_ArmorTypeUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@ArmorTypeID", id);
-                comm.Parameters.AddWithValue("@Name", ArmorType.Name);
+                comm.Parameters.AddWithValue("@Name", armorType.Name);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -725,7 +714,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<Campaign> GetCampaigns() {
-            List<Campaign> Campaigns = new List<Campaign>();
+            List<Campaign> campaigns = new List<Campaign>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -735,8 +724,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    Campaign Campaign = new Campaign(dr);
-                    Campaigns.Add(Campaign);
+                    Campaign campaign = new Campaign(dr);
+                    campaigns.Add(campaign);
                 }
             }
             catch(Exception error) {
@@ -745,7 +734,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return Campaigns;
+            return campaigns;
         }
 
         /// <summary>
@@ -775,18 +764,17 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an Campaign object in the database
         /// </summary>
-        /// <param name="Campaign"></param>
+        /// <param name="campaign"></param>
         /// <returns></returns>
-        public static int CreateCampaign(Campaign Campaign) {
+        public static int CreateCampaign(Campaign campaign) {
             int retVal = -1;
-            Campaign CampaignToSave = new Campaign();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_CampaignAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", Campaign.Name);
+                comm.Parameters.AddWithValue("@Name", campaign.Name);
 
                 comm.Parameters.Add("@CampaignID", SqlDbType.Int);
                 comm.Parameters["@CampaignID"].Direction = ParameterDirection.Output;
@@ -794,7 +782,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@CampaignID"].Value;
-                Campaign.ID = ID;
+                campaign.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -808,15 +796,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific Campaign object in the database
         /// </summary>
-        /// <param name="Campaign"></param>
+        /// <param name="campaign"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateCampaign(Campaign Campaign, int id) {
+        public static int UpdateCampaign(Campaign campaign, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            Campaign CampaignToSave = new Campaign();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -824,7 +811,7 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_CampaignUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@CampaignID", id);
-                comm.Parameters.AddWithValue("@Name", Campaign.Name);
+                comm.Parameters.AddWithValue("@Name", campaign.Name);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -870,7 +857,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<Character> GetCharacters() {
-            List<Character> Characters = new List<Character>();
+            List<Character> characters = new List<Character>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -880,8 +867,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    Character Character = new Character(dr);
-                    Characters.Add(Character);
+                    Character character = new Character(dr);
+                    characters.Add(character);
                 }
             }
             catch(Exception error) {
@@ -890,7 +877,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return Characters;
+            return characters;
         }
 
         /// <summary>
@@ -920,18 +907,17 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an Character object in the database
         /// </summary>
-        /// <param name="Character"></param>
+        /// <param name="character"></param>
         /// <returns></returns>
-        public static int CreateCharacter(Character Character) {
+        public static int CreateCharacter(Character character) {
             int retVal = -1;
-            Character CharacterToSave = new Character();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_CharacterAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", Character.Name);
+                comm.Parameters.AddWithValue("@Name", character.Name);
 
 
                 comm.Parameters.Add("@CharacterID", SqlDbType.Int);
@@ -940,7 +926,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@CharacterID"].Value;
-                Character.ID = ID;
+                character.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -954,15 +940,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific Character object in the database
         /// </summary>
-        /// <param name="Character"></param>
+        /// <param name="character"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateCharacter(Character Character, int id) {
+        public static int UpdateCharacter(Character character, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            Character CharacterToSave = new Character();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -970,7 +955,7 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_CharacterUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@CharacterID", id);
-                comm.Parameters.AddWithValue("@Name", Character.Name);
+                comm.Parameters.AddWithValue("@Name", character.Name);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -1016,7 +1001,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<Class> GetClasses() {
-            List<Class> Classes = new List<Class>();
+            List<Class> classes = new List<Class>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -1026,8 +1011,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    Class Class = new Class(dr);
-                    Classes.Add(Class);
+                    Class characterClass = new Class(dr);
+                    classes.Add(characterClass);
                 }
             }
             catch(Exception error) {
@@ -1036,7 +1021,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return Classes;
+            return classes;
         }
 
         /// <summary>
@@ -1066,18 +1051,17 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an Class object in the database
         /// </summary>
-        /// <param name="Class"></param>
+        /// <param name="characterClass"></param>
         /// <returns></returns>
-        public static int CreateClass(Class Class) {
+        public static int CreateClass(Class characterClass) {
             int retVal = -1;
-            Class ClassToSave = new Class();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_ClassAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", Class.Name);
+                comm.Parameters.AddWithValue("@Name", characterClass.Name);
 
                 comm.Parameters.Add("@ClassID", SqlDbType.Int);
                 comm.Parameters["@ClassID"].Direction = ParameterDirection.Output;
@@ -1085,7 +1069,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@ClassID"].Value;
-                Class.ID = ID;
+                characterClass.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -1099,15 +1083,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific Class object in the database
         /// </summary>
-        /// <param name="Class"></param>
+        /// <param name="characterClass"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateClass(Class Class, int id) {
+        public static int UpdateClass(Class characterClass, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            Class ClassToSave = new Class();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -1115,7 +1098,7 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_ClassUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@ClassID", id);
-                comm.Parameters.AddWithValue("@Name", Class.Name);
+                comm.Parameters.AddWithValue("@Name", characterClass.Name);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -1161,7 +1144,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<ClassesToCharacter> GetClassesToCharacters() {
-            List<ClassesToCharacter> ClassesToCharacters = new List<ClassesToCharacter>();
+            List<ClassesToCharacter> classesToCharacters = new List<ClassesToCharacter>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -1171,8 +1154,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    ClassesToCharacter ClassesToCharacter = new ClassesToCharacter(dr);
-                    ClassesToCharacters.Add(ClassesToCharacter);
+                    ClassesToCharacter classesToCharacter = new ClassesToCharacter(dr);
+                    classesToCharacters.Add(classesToCharacter);
                 }
             }
             catch(Exception error) {
@@ -1181,7 +1164,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return ClassesToCharacters;
+            return classesToCharacters;
         }
 
         /// <summary>
@@ -1211,21 +1194,20 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an ClassesToCharacter object in the database
         /// </summary>
-        /// <param name="ClassesToCharacter"></param>
+        /// <param name="classesToCharacter"></param>
         /// <returns></returns>
-        public static int CreateClassesToCharacter(ClassesToCharacter ClassesToCharacter) {
+        public static int CreateClassesToCharacter(ClassesToCharacter classesToCharacter) {
             int retVal = -1;
-            ClassesToCharacter ClassesToCharacterToSave = new ClassesToCharacter();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_ClassesToCharacterAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@ClassLevel", ClassesToCharacter.ClassLevel);
-                comm.Parameters.AddWithValue("@CharacterID", ClassesToCharacter.CharacterID);
-                comm.Parameters.AddWithValue("@ClassID", ClassesToCharacter.ClassID);
-                comm.Parameters.AddWithValue("@SubClassID", ClassesToCharacter.SubClassID);
+                comm.Parameters.AddWithValue("@ClassLevel", classesToCharacter.ClassLevel);
+                comm.Parameters.AddWithValue("@CharacterID", classesToCharacter.CharacterID);
+                comm.Parameters.AddWithValue("@ClassID", classesToCharacter.ClassID);
+                comm.Parameters.AddWithValue("@SubClassID", classesToCharacter.SubClassID);
 
                 comm.Parameters.Add("@ClassesToCharacterID", SqlDbType.Int);
                 comm.Parameters["@ClassesToCharacterID"].Direction = ParameterDirection.Output;
@@ -1233,7 +1215,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@ClassesToCharacterID"].Value;
-                ClassesToCharacter.ID = ID;
+                classesToCharacter.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -1247,15 +1229,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific ClassesToCharacter object in the database
         /// </summary>
-        /// <param name="ClassesToCharacter"></param>
+        /// <param name="classesToCharacter"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateClassesToCharacter(ClassesToCharacter ClassesToCharacter, int id) {
+        public static int UpdateClassesToCharacter(ClassesToCharacter classesToCharacter, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            ClassesToCharacter ClassesToCharacterToSave = new ClassesToCharacter();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -1263,10 +1244,10 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_ClassesToCharacterUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@ClassesToCharacterID", id);
-                comm.Parameters.AddWithValue("@ClassLevel", ClassesToCharacter.ClassLevel);
-                comm.Parameters.AddWithValue("@CharacterID", ClassesToCharacter.CharacterID);
-                comm.Parameters.AddWithValue("@ClassID", ClassesToCharacter.ClassID);
-                comm.Parameters.AddWithValue("@SubClassID", ClassesToCharacter.SubClassID);
+                comm.Parameters.AddWithValue("@ClassLevel", classesToCharacter.ClassLevel);
+                comm.Parameters.AddWithValue("@CharacterID", classesToCharacter.CharacterID);
+                comm.Parameters.AddWithValue("@ClassID", classesToCharacter.ClassID);
+                comm.Parameters.AddWithValue("@SubClassID", classesToCharacter.SubClassID);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -1312,7 +1293,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<DamageType> GetDamageTypes() {
-            List<DamageType> DamageTypes = new List<DamageType>();
+            List<DamageType> damageTypes = new List<DamageType>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -1322,8 +1303,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    DamageType DamageType = new DamageType(dr);
-                    DamageTypes.Add(DamageType);
+                    DamageType damageType = new DamageType(dr);
+                    damageTypes.Add(damageType);
                 }
             }
             catch(Exception error) {
@@ -1332,7 +1313,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return DamageTypes;
+            return damageTypes;
         }
 
         /// <summary>
@@ -1362,18 +1343,17 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an DamageType object in the database
         /// </summary>
-        /// <param name="DamageType"></param>
+        /// <param name="damageType"></param>
         /// <returns></returns>
-        public static int CreateDamageType(DamageType DamageType) {
+        public static int CreateDamageType(DamageType damageType) {
             int retVal = -1;
-            DamageType DamageTypeToSave = new DamageType();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_DamageTypeAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", DamageType.Name);
+                comm.Parameters.AddWithValue("@Name", damageType.Name);
 
                 comm.Parameters.Add("@DamageTypeID", SqlDbType.Int);
                 comm.Parameters["@DamageTypeID"].Direction = ParameterDirection.Output;
@@ -1381,7 +1361,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@DamageTypeID"].Value;
-                DamageType.ID = ID;
+                damageType.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -1395,15 +1375,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific DamageType object in the database
         /// </summary>
-        /// <param name="DamageType"></param>
+        /// <param name="damageType"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateDamageType(DamageType DamageType, int id) {
+        public static int UpdateDamageType(DamageType damageType, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            DamageType DamageTypeToSave = new DamageType();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -1411,7 +1390,7 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_DamageTypeUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@DamageTypeID", id);
-                comm.Parameters.AddWithValue("@Name", DamageType.Name);
+                comm.Parameters.AddWithValue("@Name", damageType.Name);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -1457,7 +1436,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<Deity> GetDeities() {
-            List<Deity> Deitys = new List<Deity>();
+            List<Deity> deitys = new List<Deity>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -1467,8 +1446,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    Deity Deity = new Deity(dr);
-                    Deitys.Add(Deity);
+                    Deity deity = new Deity(dr);
+                    deitys.Add(deity);
                 }
             }
             catch(Exception error) {
@@ -1477,7 +1456,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return Deitys;
+            return deitys;
         }
 
         /// <summary>
@@ -1507,20 +1486,19 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an Deity object in the database
         /// </summary>
-        /// <param name="Deity"></param>
+        /// <param name="deity"></param>
         /// <returns></returns>
-        public static int CreateDeity(Deity Deity) {
+        public static int CreateDeity(Deity deity) {
             int retVal = -1;
-            Deity DeityToSave = new Deity();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_DeityAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", Deity.Name);
-                comm.Parameters.AddWithValue("@AlignmentID", Deity.AlignmentID);
-                comm.Parameters.AddWithValue("@Description", Deity.Description);
+                comm.Parameters.AddWithValue("@Name", deity.Name);
+                comm.Parameters.AddWithValue("@AlignmentID", deity.AlignmentID);
+                comm.Parameters.AddWithValue("@Description", deity.Description);
 
                 comm.Parameters.Add("@DeityID", SqlDbType.Int);
                 comm.Parameters["@DeityID"].Direction = ParameterDirection.Output;
@@ -1528,7 +1506,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@DeityID"].Value;
-                Deity.ID = ID;
+                deity.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -1542,15 +1520,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific Deity object in the database
         /// </summary>
-        /// <param name="Deity"></param>
+        /// <param name="deity"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateDeity(Deity Deity, int id) {
+        public static int UpdateDeity(Deity deity, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            Deity DeityToSave = new Deity();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -1558,9 +1535,9 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_DeityUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@DeityID", id);
-                comm.Parameters.AddWithValue("@Name", Deity.Name);
-                comm.Parameters.AddWithValue("@AlignmentID", Deity.AlignmentID);
-                comm.Parameters.AddWithValue("@Description", Deity.Description);
+                comm.Parameters.AddWithValue("@Name", deity.Name);
+                comm.Parameters.AddWithValue("@AlignmentID", deity.AlignmentID);
+                comm.Parameters.AddWithValue("@Description", deity.Description);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -1606,7 +1583,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<Feat> GetFeats() {
-            List<Feat> Feats = new List<Feat>();
+            List<Feat> feats = new List<Feat>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -1616,8 +1593,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    Feat Feat = new Feat(dr);
-                    Feats.Add(Feat);
+                    Feat feat = new Feat(dr);
+                    feats.Add(feat);
                 }
             }
             catch(Exception error) {
@@ -1626,7 +1603,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return Feats;
+            return feats;
         }
 
         /// <summary>
@@ -1656,19 +1633,18 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an Feat object in the database
         /// </summary>
-        /// <param name="Feat"></param>
+        /// <param name="feat"></param>
         /// <returns></returns>
-        public static int CreateFeat(Feat Feat) {
+        public static int CreateFeat(Feat feat) {
             int retVal = -1;
-            Feat FeatToSave = new Feat();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_FeatAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", Feat.Name);
-                comm.Parameters.AddWithValue("@Description", Feat.Description);
+                comm.Parameters.AddWithValue("@Name", feat.Name);
+                comm.Parameters.AddWithValue("@Description", feat.Description);
 
                 comm.Parameters.Add("@FeatID", SqlDbType.Int);
                 comm.Parameters["@FeatID"].Direction = ParameterDirection.Output;
@@ -1676,7 +1652,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@FeatID"].Value;
-                Feat.ID = ID;
+                feat.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -1690,15 +1666,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific Feat object in the database
         /// </summary>
-        /// <param name="Feat"></param>
+        /// <param name="feat"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateFeat(Feat Feat, int id) {
+        public static int UpdateFeat(Feat feat, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            Feat FeatToSave = new Feat();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -1706,8 +1681,8 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_FeatUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@FeatID", id);
-                comm.Parameters.AddWithValue("@Name", Feat.Name);
-                comm.Parameters.AddWithValue("@Description", Feat.Description);
+                comm.Parameters.AddWithValue("@Name", feat.Name);
+                comm.Parameters.AddWithValue("@Description", feat.Description);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -1747,13 +1722,156 @@ namespace PathfinderTracker.Models
         }
         #endregion
 
+        #region FeatTypes
+        /// <summary>
+        /// Gets all FeatType objects from the database
+        /// </summary>
+        /// <returns></returns>
+        public static List<FeatType> GetFeatTypes() {
+            List<FeatType> featTypees = new List<FeatType>();
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sprocFeatTypesGetAll");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Connection = conn;
+                SqlDataReader dr = comm.ExecuteReader();
+                while(dr.Read()) {
+                    FeatType featType = new FeatType(dr);
+                    featTypees.Add(featType);
+                }
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return featTypees;
+        }
+
+        /// <summary>
+        /// gets a specific FeatType from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static FeatType GetFeatType(int id) {
+            SqlCommand comm = new SqlCommand("sprocFeatTypeGet");
+            FeatType retObj = null;
+            try {
+                comm.Parameters.AddWithValue("@FeatTypeID", id);
+                SqlDataReader dr = GetDataReader(comm);
+                while(dr.Read()) {
+                    retObj = new FeatType(dr);
+                }
+                comm.Connection.Close();
+            }
+            catch(Exception ex) {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+
+        }
+
+        /// <summary>
+        /// inserts an FeatType object in the database
+        /// </summary>
+        /// <param name="featType"></param>
+        /// <returns></returns>
+        public static int CreateFeatType(FeatType featType) {
+            int retVal = -1;
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_FeatTypeAdd");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@Name", featType.Name);
+
+                comm.Parameters.Add("@FeatTypeID", SqlDbType.Int);
+                comm.Parameters["@FeatTypeID"].Direction = ParameterDirection.Output;
+
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+                int ID = (int)comm.Parameters["@FeatTypeID"].Value;
+                featType.ID = ID;
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// updates a specific FeatType object in the database
+        /// </summary>
+        /// <param name="featType"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static int UpdateFeatType(FeatType featType, int id) {
+            int retVal = -1;
+            if(id < 0) {
+                return retVal;
+            }
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_FeatTypeUpdate");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@FeatTypeID", id);
+                comm.Parameters.AddWithValue("@Name", featType.Name);
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// deletes a specific FeatType object from the database
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public static int DeleteFeatType(int ID) {
+            int retVal = -1;
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_FeatTypeDelete");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@FeatTypeID", ID);
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+        #endregion
+
         #region MagicSchools
         /// <summary>
         /// Gets all MagicSchool objects from the database
         /// </summary>
         /// <returns></returns>
         public static List<MagicSchool> GetMagicSchools() {
-            List<MagicSchool> MagicSchools = new List<MagicSchool>();
+            List<MagicSchool> magicSchools = new List<MagicSchool>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -1763,8 +1881,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    MagicSchool MagicSchool = new MagicSchool(dr);
-                    MagicSchools.Add(MagicSchool);
+                    MagicSchool magicSchool = new MagicSchool(dr);
+                    magicSchools.Add(magicSchool);
                 }
             }
             catch(Exception error) {
@@ -1773,7 +1891,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return MagicSchools;
+            return magicSchools;
         }
 
         /// <summary>
@@ -1803,19 +1921,18 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an MagicSchool object in the database
         /// </summary>
-        /// <param name="MagicSchool"></param>
+        /// <param name="magicSchool"></param>
         /// <returns></returns>
-        public static int CreateMagicSchool(MagicSchool MagicSchool) {
+        public static int CreateMagicSchool(MagicSchool magicSchool) {
             int retVal = -1;
-            MagicSchool MagicSchoolToSave = new MagicSchool();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_MagicSchoolAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", MagicSchool.Name);
-                comm.Parameters.AddWithValue("@Description", MagicSchool.Description);
+                comm.Parameters.AddWithValue("@Name", magicSchool.Name);
+                comm.Parameters.AddWithValue("@Description", magicSchool.Description);
 
                 comm.Parameters.Add("@MagicSchoolID", SqlDbType.Int);
                 comm.Parameters["@MagicSchoolID"].Direction = ParameterDirection.Output;
@@ -1823,7 +1940,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@MagicSchoolID"].Value;
-                MagicSchool.ID = ID;
+                magicSchool.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -1837,15 +1954,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific MagicSchool object in the database
         /// </summary>
-        /// <param name="MagicSchool"></param>
+        /// <param name="magicSchool"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateMagicSchool(MagicSchool MagicSchool, int id) {
+        public static int UpdateMagicSchool(MagicSchool magicSchool, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            MagicSchool MagicSchoolToSave = new MagicSchool();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -1853,8 +1969,8 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_MagicSchoolUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@MagicSchoolID", id);
-                comm.Parameters.AddWithValue("@Name", MagicSchool.Name);
-                comm.Parameters.AddWithValue("@Description", MagicSchool.Description);
+                comm.Parameters.AddWithValue("@Name", magicSchool.Name);
+                comm.Parameters.AddWithValue("@Description", magicSchool.Description);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -1900,7 +2016,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<Material> GetMaterials() {
-            List<Material> Materials = new List<Material>();
+            List<Material> materials = new List<Material>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -1910,8 +2026,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    Material Material = new Material(dr);
-                    Materials.Add(Material);
+                    Material material = new Material(dr);
+                    materials.Add(material);
                 }
             }
             catch(Exception error) {
@@ -1920,7 +2036,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return Materials;
+            return materials;
         }
 
         /// <summary>
@@ -1950,18 +2066,17 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an Material object in the database
         /// </summary>
-        /// <param name="Material"></param>
+        /// <param name="material"></param>
         /// <returns></returns>
-        public static int CreateMaterial(Material Material) {
+        public static int CreateMaterial(Material material) {
             int retVal = -1;
-            Material MaterialToSave = new Material();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_MaterialAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", Material.Name);
+                comm.Parameters.AddWithValue("@Name", material.Name);
 
                 comm.Parameters.Add("@MaterialID", SqlDbType.Int);
                 comm.Parameters["@MaterialID"].Direction = ParameterDirection.Output;
@@ -1969,7 +2084,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@MaterialID"].Value;
-                Material.ID = ID;
+                material.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -1983,15 +2098,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific Material object in the database
         /// </summary>
-        /// <param name="Material"></param>
+        /// <param name="material"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateMaterial(Material Material, int id) {
+        public static int UpdateMaterial(Material material, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            Material MaterialToSave = new Material();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -1999,7 +2113,7 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_MaterialUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@MaterialID", id);
-                comm.Parameters.AddWithValue("@Name", Material.Name);
+                comm.Parameters.AddWithValue("@Name", material.Name);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -2045,7 +2159,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<Player> GetPlayers() {
-            List<Player> Players = new List<Player>();
+            List<Player> players = new List<Player>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -2055,8 +2169,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    Player Player = new Player(dr);
-                    Players.Add(Player);
+                    Player player = new Player(dr);
+                    players.Add(player);
                 }
             }
             catch(Exception error) {
@@ -2065,7 +2179,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return Players;
+            return players;
         }
 
         /// <summary>
@@ -2095,22 +2209,21 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an Player object in the database
         /// </summary>
-        /// <param name="Player"></param>
+        /// <param name="player"></param>
         /// <returns></returns>
-        public static int CreatePlayer(Player Player) {
+        public static int CreatePlayer(Player player) {
             int retVal = -1;
-            Player PlayerToSave = new Player();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_PlayerAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", Player.Name);
-                comm.Parameters.AddWithValue("@Bonuses", Player.Bonuses);
-                comm.Parameters.AddWithValue("@CharacterID", Player.CharacterID);
-                comm.Parameters.AddWithValue("@HPCurrent", Player.HPCurrent);
-                comm.Parameters.AddWithValue("@HPMax", Player.HPMax);
+                comm.Parameters.AddWithValue("@Name", player.Name);
+                comm.Parameters.AddWithValue("@Bonuses", player.Bonuses);
+                comm.Parameters.AddWithValue("@CharacterID", player.CharacterID);
+                comm.Parameters.AddWithValue("@HPCurrent", player.HPCurrent);
+                comm.Parameters.AddWithValue("@HPMax", player.HPMax);
 
                 comm.Parameters.Add("@PlayerID", SqlDbType.Int);
                 comm.Parameters["@PlayerID"].Direction = ParameterDirection.Output;
@@ -2118,7 +2231,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@PlayerID"].Value;
-                Player.ID = ID;
+                player.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -2132,15 +2245,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific Player object in the database
         /// </summary>
-        /// <param name="Player"></param>
+        /// <param name="player"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdatePlayer(Player Player, int id) {
+        public static int UpdatePlayer(Player player, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            Player PlayerToSave = new Player();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -2148,11 +2260,11 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_PlayerUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@PlayerID", id);
-                comm.Parameters.AddWithValue("@Name", Player.Name);
-                comm.Parameters.AddWithValue("@Bonuses", Player.Bonuses);
-                comm.Parameters.AddWithValue("@CharacterID", Player.CharacterID);
-                comm.Parameters.AddWithValue("@HPCurrent", Player.HPCurrent);
-                comm.Parameters.AddWithValue("@HPMax", Player.HPMax);
+                comm.Parameters.AddWithValue("@Name", player.Name);
+                comm.Parameters.AddWithValue("@Bonuses", player.Bonuses);
+                comm.Parameters.AddWithValue("@CharacterID", player.CharacterID);
+                comm.Parameters.AddWithValue("@HPCurrent", player.HPCurrent);
+                comm.Parameters.AddWithValue("@HPMax", player.HPMax);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -2198,7 +2310,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<Race> GetRaces() {
-            List<Race> Races = new List<Race>();
+            List<Race> races = new List<Race>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -2208,8 +2320,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    Race Race = new Race(dr);
-                    Races.Add(Race);
+                    Race race = new Race(dr);
+                    races.Add(race);
                 }
             }
             catch(Exception error) {
@@ -2218,7 +2330,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return Races;
+            return races;
         }
 
         /// <summary>
@@ -2248,18 +2360,17 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an Race object in the database
         /// </summary>
-        /// <param name="Race"></param>
+        /// <param name="race"></param>
         /// <returns></returns>
-        public static int CreateRace(Race Race) {
+        public static int CreateRace(Race race) {
             int retVal = -1;
-            Race RaceToSave = new Race();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_RaceAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", Race.Name);
+                comm.Parameters.AddWithValue("@Name", race.Name);
 
                 comm.Parameters.Add("@RaceID", SqlDbType.Int);
                 comm.Parameters["@RaceID"].Direction = ParameterDirection.Output;
@@ -2267,7 +2378,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@RaceID"].Value;
-                Race.ID = ID;
+                race.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -2281,15 +2392,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific Race object in the database
         /// </summary>
-        /// <param name="Race"></param>
+        /// <param name="race"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateRace(Race Race, int id) {
+        public static int UpdateRace(Race race, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            Race RaceToSave = new Race();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -2297,7 +2407,7 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_RaceUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@RaceID", id);
-                comm.Parameters.AddWithValue("@Name", Race.Name);
+                comm.Parameters.AddWithValue("@Name", race.Name);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -2343,7 +2453,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<Spell> GetSpells() {
-            List<Spell> Spells = new List<Spell>();
+            List<Spell> spells = new List<Spell>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -2353,8 +2463,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    Spell Spell = new Spell(dr);
-                    Spells.Add(Spell);
+                    Spell spell = new Spell(dr);
+                    spells.Add(spell);
                 }
             }
             catch(Exception error) {
@@ -2363,7 +2473,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return Spells;
+            return spells;
         }
 
         /// <summary>
@@ -2393,26 +2503,25 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an Spell object in the database
         /// </summary>
-        /// <param name="Spell"></param>
+        /// <param name="spell"></param>
         /// <returns></returns>
-        public static int CreateSpell(Spell Spell) {
+        public static int CreateSpell(Spell spell) {
             int retVal = -1;
-            Spell SpellToSave = new Spell();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_SpellAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", Spell.Name);
-                comm.Parameters.AddWithValue("@CastingTime", Spell.CastingTime);
-                comm.Parameters.AddWithValue("@Description", Spell.Description);
-                comm.Parameters.AddWithValue("@Duration", Spell.Duration);
-                comm.Parameters.AddWithValue("@MagicSchoolID", Spell.MagicSchoolID);
-                comm.Parameters.AddWithValue("@RangeDistance", Spell.RangeDistance);
-                comm.Parameters.AddWithValue("@SavingThrow", Spell.SavingThrow);
-                comm.Parameters.AddWithValue("@SpellResistance", Spell.SpellResistance);
-                comm.Parameters.AddWithValue("@Target", Spell.Target);
+                comm.Parameters.AddWithValue("@Name", spell.Name);
+                comm.Parameters.AddWithValue("@CastingTime", spell.CastingTime);
+                comm.Parameters.AddWithValue("@Description", spell.Description);
+                comm.Parameters.AddWithValue("@Duration", spell.Duration);
+                comm.Parameters.AddWithValue("@MagicSchoolID", spell.MagicSchoolID);
+                comm.Parameters.AddWithValue("@RangeDistance", spell.RangeDistance);
+                comm.Parameters.AddWithValue("@SavingThrow", spell.SavingThrow);
+                comm.Parameters.AddWithValue("@SpellResistance", spell.SpellResistance);
+                comm.Parameters.AddWithValue("@Target", spell.Target);
 
                 comm.Parameters.Add("@SpellID", SqlDbType.Int);
                 comm.Parameters["@SpellID"].Direction = ParameterDirection.Output;
@@ -2420,7 +2529,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@SpellID"].Value;
-                Spell.ID = ID;
+                spell.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -2434,15 +2543,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific Spell object in the database
         /// </summary>
-        /// <param name="Spell"></param>
+        /// <param name="spell"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateSpell(Spell Spell, int id) {
+        public static int UpdateSpell(Spell spell, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            Spell SpellToSave = new Spell();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -2450,15 +2558,15 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_SpellUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@SpellID", id);
-                comm.Parameters.AddWithValue("@Name", Spell.Name);
-                comm.Parameters.AddWithValue("@CastingTime", Spell.CastingTime);
-                comm.Parameters.AddWithValue("@Description", Spell.Description);
-                comm.Parameters.AddWithValue("@Duration", Spell.Duration);
-                comm.Parameters.AddWithValue("@MagicSchoolID", Spell.MagicSchoolID);
-                comm.Parameters.AddWithValue("@RangeDistance", Spell.RangeDistance);
-                comm.Parameters.AddWithValue("@SavingThrow", Spell.SavingThrow);
-                comm.Parameters.AddWithValue("@SpellResistance", Spell.SpellResistance);
-                comm.Parameters.AddWithValue("@Target", Spell.Target);
+                comm.Parameters.AddWithValue("@Name", spell.Name);
+                comm.Parameters.AddWithValue("@CastingTime", spell.CastingTime);
+                comm.Parameters.AddWithValue("@Description", spell.Description);
+                comm.Parameters.AddWithValue("@Duration", spell.Duration);
+                comm.Parameters.AddWithValue("@MagicSchoolID", spell.MagicSchoolID);
+                comm.Parameters.AddWithValue("@RangeDistance", spell.RangeDistance);
+                comm.Parameters.AddWithValue("@SavingThrow", spell.SavingThrow);
+                comm.Parameters.AddWithValue("@SpellResistance", spell.SpellResistance);
+                comm.Parameters.AddWithValue("@Target", spell.Target);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -2504,7 +2612,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<SubClass> GetSubClasses() {
-            List<SubClass> SubClasses = new List<SubClass>();
+            List<SubClass> subClasses = new List<SubClass>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -2515,7 +2623,7 @@ namespace PathfinderTracker.Models
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
                     SubClass SubClass = new SubClass(dr);
-                    SubClasses.Add(SubClass);
+                    subClasses.Add(SubClass);
                 }
             }
             catch(Exception error) {
@@ -2524,7 +2632,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return SubClasses;
+            return subClasses;
         }
 
         /// <summary>
@@ -2554,19 +2662,18 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an SubClass object in the database
         /// </summary>
-        /// <param name="SubClass"></param>
+        /// <param name="subClass"></param>
         /// <returns></returns>
-        public static int CreateSubClass(SubClass SubClass) {
+        public static int CreateSubClass(SubClass subClass) {
             int retVal = -1;
-            SubClass SubClassToSave = new SubClass();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_SubClassAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", SubClass.Name);
-                comm.Parameters.AddWithValue("@Description", SubClass.Description);
+                comm.Parameters.AddWithValue("@Name", subClass.Name);
+                comm.Parameters.AddWithValue("@Description", subClass.Description);
 
                 comm.Parameters.Add("@SubClassID", SqlDbType.Int);
                 comm.Parameters["@SubClassID"].Direction = ParameterDirection.Output;
@@ -2574,7 +2681,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@SubClassID"].Value;
-                SubClass.ID = ID;
+                subClass.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -2588,15 +2695,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific SubClass object in the database
         /// </summary>
-        /// <param name="SubClass"></param>
+        /// <param name="subClass"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateSubClass(SubClass SubClass, int id) {
+        public static int UpdateSubClass(SubClass subClass, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            SubClass SubClassToSave = new SubClass();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -2604,8 +2710,8 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_SubClassUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@SubClassID", id);
-                comm.Parameters.AddWithValue("@Name", SubClass.Name);
-                comm.Parameters.AddWithValue("@Description", SubClass.Description);
+                comm.Parameters.AddWithValue("@Name", subClass.Name);
+                comm.Parameters.AddWithValue("@Description", subClass.Description);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -2651,7 +2757,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<Weapon> GetWeapons() {
-            List<Weapon> Weapons = new List<Weapon>();
+            List<Weapon> weapons = new List<Weapon>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -2661,8 +2767,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    Weapon Weapon = new Weapon(dr);
-                    Weapons.Add(Weapon);
+                    Weapon weapon = new Weapon(dr);
+                    weapons.Add(weapon);
                 }
             }
             catch(Exception error) {
@@ -2671,7 +2777,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return Weapons;
+            return weapons;
         }
 
         /// <summary>
@@ -2701,28 +2807,27 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an Weapon object in the database
         /// </summary>
-        /// <param name="Weapon"></param>
+        /// <param name="weapon"></param>
         /// <returns></returns>
-        public static int CreateWeapon(Weapon Weapon) {
+        public static int CreateWeapon(Weapon weapon) {
             int retVal = -1;
-            Weapon WeaponToSave = new Weapon();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_WeaponAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", Weapon.Name);
-                comm.Parameters.AddWithValue("@AttackDiceMedium", Weapon.AttackDiceMedium);
-                comm.Parameters.AddWithValue("@AttackDiceSmall", Weapon.AttackDiceSmall);
-                comm.Parameters.AddWithValue("@AttackRange", Weapon.AttackRange);
-                comm.Parameters.AddWithValue("@Critical", Weapon.Critical);
-                comm.Parameters.AddWithValue("@DamageTypeID", Weapon.DamageTypeID);
-                comm.Parameters.AddWithValue("@GPValue", Weapon.GPValue);
-                comm.Parameters.AddWithValue("@MaterialID", Weapon.MaterialID);
-                comm.Parameters.AddWithValue("@SpecialAttributes", Weapon.SpecialAttributes);
-                comm.Parameters.AddWithValue("@WeaponTypeID", Weapon.WeaponTypeID);
-                comm.Parameters.AddWithValue("@Weight", Weapon.Weight);
+                comm.Parameters.AddWithValue("@Name", weapon.Name);
+                comm.Parameters.AddWithValue("@AttackDiceMedium", weapon.AttackDiceMedium);
+                comm.Parameters.AddWithValue("@AttackDiceSmall", weapon.AttackDiceSmall);
+                comm.Parameters.AddWithValue("@AttackRange", weapon.AttackRange);
+                comm.Parameters.AddWithValue("@Critical", weapon.Critical);
+                comm.Parameters.AddWithValue("@DamageTypeID", weapon.DamageTypeID);
+                comm.Parameters.AddWithValue("@GPValue", weapon.GPValue);
+                comm.Parameters.AddWithValue("@MaterialID", weapon.MaterialID);
+                comm.Parameters.AddWithValue("@SpecialAttributes", weapon.SpecialAttributes);
+                comm.Parameters.AddWithValue("@WeaponTypeID", weapon.WeaponTypeID);
+                comm.Parameters.AddWithValue("@Weight", weapon.Weight);
 
                 comm.Parameters.Add("@WeaponID", SqlDbType.Int);
                 comm.Parameters["@WeaponID"].Direction = ParameterDirection.Output;
@@ -2730,7 +2835,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@WeaponID"].Value;
-                Weapon.ID = ID;
+                weapon.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -2744,15 +2849,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific Weapon object in the database
         /// </summary>
-        /// <param name="Weapon"></param>
+        /// <param name="weapon"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateWeapon(Weapon Weapon, int id) {
+        public static int UpdateWeapon(Weapon weapon, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            Weapon WeaponToSave = new Weapon();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -2760,17 +2864,17 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_WeaponUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@WeaponID", id);
-                comm.Parameters.AddWithValue("@Name", Weapon.Name);
-                comm.Parameters.AddWithValue("@AttackDiceMedium", Weapon.AttackDiceMedium);
-                comm.Parameters.AddWithValue("@AttackDiceSmall", Weapon.AttackDiceSmall);
-                comm.Parameters.AddWithValue("@AttackRange", Weapon.AttackRange);
-                comm.Parameters.AddWithValue("@Critical", Weapon.Critical);
-                comm.Parameters.AddWithValue("@DamageTypeID", Weapon.DamageTypeID);
-                comm.Parameters.AddWithValue("@GPValue", Weapon.GPValue);
-                comm.Parameters.AddWithValue("@MaterialID", Weapon.MaterialID);
-                comm.Parameters.AddWithValue("@SpecialAttributes", Weapon.SpecialAttributes);
-                comm.Parameters.AddWithValue("@WeaponTypeID", Weapon.WeaponTypeID);
-                comm.Parameters.AddWithValue("@Weight", Weapon.Weight);
+                comm.Parameters.AddWithValue("@Name", weapon.Name);
+                comm.Parameters.AddWithValue("@AttackDiceMedium", weapon.AttackDiceMedium);
+                comm.Parameters.AddWithValue("@AttackDiceSmall", weapon.AttackDiceSmall);
+                comm.Parameters.AddWithValue("@AttackRange", weapon.AttackRange);
+                comm.Parameters.AddWithValue("@Critical", weapon.Critical);
+                comm.Parameters.AddWithValue("@DamageTypeID", weapon.DamageTypeID);
+                comm.Parameters.AddWithValue("@GPValue", weapon.GPValue);
+                comm.Parameters.AddWithValue("@MaterialID", weapon.MaterialID);
+                comm.Parameters.AddWithValue("@SpecialAttributes", weapon.SpecialAttributes);
+                comm.Parameters.AddWithValue("@WeaponTypeID", weapon.WeaponTypeID);
+                comm.Parameters.AddWithValue("@Weight", weapon.Weight);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -2816,7 +2920,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<WeaponSubType> GetWeaponSubTypes() {
-            List<WeaponSubType> WeaponSubTypes = new List<WeaponSubType>();
+            List<WeaponSubType> weaponSubTypes = new List<WeaponSubType>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -2826,8 +2930,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    WeaponSubType WeaponSubType = new WeaponSubType(dr);
-                    WeaponSubTypes.Add(WeaponSubType);
+                    WeaponSubType weaponSubType = new WeaponSubType(dr);
+                    weaponSubTypes.Add(weaponSubType);
                 }
             }
             catch(Exception error) {
@@ -2836,7 +2940,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return WeaponSubTypes;
+            return weaponSubTypes;
         }
 
         /// <summary>
@@ -2866,18 +2970,17 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an WeaponSubType object in the database
         /// </summary>
-        /// <param name="WeaponSubType"></param>
+        /// <param name="weaponSubType"></param>
         /// <returns></returns>
-        public static int CreateWeaponSubType(WeaponSubType WeaponSubType) {
+        public static int CreateWeaponSubType(WeaponSubType weaponSubType) {
             int retVal = -1;
-            WeaponSubType WeaponSubTypeToSave = new WeaponSubType();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_WeaponSubTypeAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", WeaponSubType.Name);
+                comm.Parameters.AddWithValue("@Name", weaponSubType.Name);
 
                 comm.Parameters.Add("@WeaponSubTypeID", SqlDbType.Int);
                 comm.Parameters["@WeaponSubTypeID"].Direction = ParameterDirection.Output;
@@ -2885,7 +2988,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@WeaponSubTypeID"].Value;
-                WeaponSubType.ID = ID;
+                weaponSubType.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -2899,15 +3002,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific WeaponSubType object in the database
         /// </summary>
-        /// <param name="WeaponSubType"></param>
+        /// <param name="weaponSubType"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateWeaponSubType(WeaponSubType WeaponSubType, int id) {
+        public static int UpdateWeaponSubType(WeaponSubType weaponSubType, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            WeaponSubType WeaponSubTypeToSave = new WeaponSubType();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -2915,7 +3017,7 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_WeaponSubTypeUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@WeaponSubTypeID", id);
-                comm.Parameters.AddWithValue("@Name", WeaponSubType.Name);
+                comm.Parameters.AddWithValue("@Name", weaponSubType.Name);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -2961,7 +3063,7 @@ namespace PathfinderTracker.Models
         /// </summary>
         /// <returns></returns>
         public static List<WeaponType> GetWeaponTypes() {
-            List<WeaponType> WeaponTypes = new List<WeaponType>();
+            List<WeaponType> weaponTypes = new List<WeaponType>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -2971,8 +3073,8 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    WeaponType WeaponType = new WeaponType(dr);
-                    WeaponTypes.Add(WeaponType);
+                    WeaponType weaponType = new WeaponType(dr);
+                    weaponTypes.Add(weaponType);
                 }
             }
             catch(Exception error) {
@@ -2981,7 +3083,7 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return WeaponTypes;
+            return weaponTypes;
         }
 
         /// <summary>
@@ -3011,18 +3113,17 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// inserts an WeaponType object in the database
         /// </summary>
-        /// <param name="WeaponType"></param>
+        /// <param name="weaponType"></param>
         /// <returns></returns>
-        public static int CreateWeaponType(WeaponType WeaponType) {
+        public static int CreateWeaponType(WeaponType weaponType) {
             int retVal = -1;
-            WeaponType WeaponTypeToSave = new WeaponType();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_WeaponTypeAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", WeaponType.Name);
+                comm.Parameters.AddWithValue("@Name", weaponType.Name);
 
                 comm.Parameters.Add("@WeaponTypeID", SqlDbType.Int);
                 comm.Parameters["@WeaponTypeID"].Direction = ParameterDirection.Output;
@@ -3030,7 +3131,7 @@ namespace PathfinderTracker.Models
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
                 int ID = (int)comm.Parameters["@WeaponTypeID"].Value;
-                WeaponType.ID = ID;
+                weaponType.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -3044,15 +3145,14 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// updates a specific WeaponType object in the database
         /// </summary>
-        /// <param name="WeaponType"></param>
+        /// <param name="weaponType"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateWeaponType(WeaponType WeaponType, int id) {
+        public static int UpdateWeaponType(WeaponType weaponType, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
             }
-            WeaponType WeaponTypeToSave = new WeaponType();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
@@ -3060,7 +3160,7 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_WeaponTypeUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@WeaponTypeID", id);
-                comm.Parameters.AddWithValue("@Name", WeaponType.Name);
+                comm.Parameters.AddWithValue("@Name", weaponType.Name);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }

@@ -37,6 +37,7 @@ namespace PathfinderTracker
         // GET: Feat/Create
         public IActionResult Create()
         {
+            ViewData["FeatTypeID"] = new SelectList(DAL.GetFeatTypes(), "ID", "Name");
             return View();
         }
 
@@ -45,7 +46,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Description,Name,ID")] Feat feat)
+        public ActionResult Create([Bind("FeatTypeID,Prerequisites,Description,Name,ID")] Feat feat)
         {
             if (ModelState.IsValid)
             {
@@ -57,6 +58,7 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["FeatTypeID"] = new SelectList(DAL.GetFeatTypes(), "ID", "Name", feat.FeatTypeID);
             return View(feat);
         }
 
@@ -73,6 +75,7 @@ namespace PathfinderTracker
             {
                 return NotFound();
             }
+            ViewData["FeatTypeID"] = new SelectList(DAL.GetFeatTypes(), "ID", "Name", feat.FeatTypeID);
             return View(feat);
         }
 
@@ -81,7 +84,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("Description,Name,ID")] Feat feat)
+        public ActionResult Edit(int id, [Bind("FeatTypeID,Prerequisites,Description,Name,ID")] Feat feat)
         {
             if (id != feat.ID)
             {
@@ -98,6 +101,7 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["FeatTypeID"] = new SelectList(DAL.GetFeatTypes(), "ID", "Name", feat.FeatTypeID);
             return View(feat);
         }
 

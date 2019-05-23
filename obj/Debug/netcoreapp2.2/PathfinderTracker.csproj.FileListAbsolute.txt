@@ -167,3 +167,10 @@ C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\ne
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\WeaponType\Parts\_Form.g.cshtml.cs
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Weapon\Parts\_Details.g.cshtml.cs
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Weapon\Parts\_Form.g.cshtml.cs
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\FeatTypes\Create.g.cshtml.cs
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\FeatTypes\Delete.g.cshtml.cs
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\FeatTypes\Details.g.cshtml.cs
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\FeatTypes\Edit.g.cshtml.cs
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\FeatTypes\Index.g.cshtml.cs
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\FeatTypes\Parts\_Details.g.cshtml.cs
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\FeatTypes\Parts\_Form.g.cshtml.cs

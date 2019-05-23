@@ -135,6 +135,11 @@ namespace PathfinderTracker
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// sets a selected campaign as the current one
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Load(int id) {
             if(id > 0) {
                 CurrentVariables.CurrentCampaign = null;

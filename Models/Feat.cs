@@ -14,6 +14,8 @@ namespace PathfinderTracker.Models
             ID = (int)dr["FeatID"];
             Name = (string)dr["Name"];
             Description = (string)dr["Description"];
+            FeatTypeID = (int)dr["FeatTypeID"];
+            Prerequisites = (string)dr["Prerequisites"];
         }
 
         public Feat() {
@@ -22,7 +24,9 @@ namespace PathfinderTracker.Models
         #endregion
 
         private string _Description;
-
+        private string _Prerequisites;
+        private int _FeatTypeID;
+        private FeatType _FeatType;
 
         /// <summary>
         /// gets and sets the Description attribute for the Feat object
@@ -33,6 +37,45 @@ namespace PathfinderTracker.Models
             }
             set {
                 _Description = value;
+            }
+        }
+
+        /// <summary>
+        /// gets and sets the Prerequisites attribute for the Feat object
+        /// </summary>
+        public string Prerequisites {
+            get {
+                return _Prerequisites;
+            }
+            set {
+                _Prerequisites = value;
+            }
+        }
+
+        /// <summary>
+        /// gets and sets the Prerequisites attribute for the Feat object
+        /// </summary>
+        public int FeatTypeID {
+            get {
+                return _FeatTypeID;
+            }
+            set {
+                _FeatTypeID = value;
+            }
+        }
+
+        /// <summary>
+        /// gets and sets the FeatType attribute for the Feat object
+        /// </summary>
+        public FeatType FeatType {
+            get {
+                if(_FeatType == null && _FeatTypeID > 0) {
+                    _FeatType = DAL.GetFeatType(_FeatTypeID);
+                }
+                return _FeatType;
+            }
+            set {
+                _FeatType = value;
             }
         }
     }
