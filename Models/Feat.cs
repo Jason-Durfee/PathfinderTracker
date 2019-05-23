@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -67,6 +68,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the FeatType attribute for the Feat object
         /// </summary>
+        [Display( Name = "Feat Type")]
         public FeatType FeatType {
             get {
                 if(_FeatType == null && _FeatTypeID > 0) {

@@ -9,15 +9,15 @@ using PathfinderTracker.Models;
 
 namespace PathfinderTracker
 {
-    public class WeaponSubTypeController : Controller
+    public class WeaponCategoryController : Controller
     {
-        // GET: WeaponSubType
+        // GET: WeaponCategory
         public ActionResult Index()
         {
-            return View(DAL.GetWeaponSubTypes());
+            return View(DAL.GetWeaponCategories());
         }
 
-        // GET: WeaponSubType/Details/5
+        // GET: WeaponCategory/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -25,31 +25,31 @@ namespace PathfinderTracker
                 return NotFound();
             }
 
-            WeaponSubType weaponSubType = DAL.GetWeaponSubType((int)id);
-            if (weaponSubType == null)
+            WeaponCategory WeaponCategory = DAL.GetWeaponCategory((int)id);
+            if (WeaponCategory == null)
             {
                 return NotFound();
             }
 
-            return View(weaponSubType);
+            return View(WeaponCategory);
         }
 
-        // GET: WeaponSubType/Create
+        // GET: WeaponCategory/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: WeaponSubType/Create
+        // POST: WeaponCategory/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Name,ID")] WeaponSubType weaponSubType)
+        public ActionResult Create([Bind("Name,ID")] WeaponCategory WeaponCategory)
         {
             if (ModelState.IsValid)
             {
-                if(DAL.CreateWeaponSubType(weaponSubType) > 0) {
+                if(DAL.CreateWeaponCategory(WeaponCategory) > 0) {
                     //success
                 }
                 else {
@@ -57,10 +57,10 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(weaponSubType);
+            return View(WeaponCategory);
         }
 
-        // GET: WeaponSubType/Edit/5
+        // GET: WeaponCategory/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -68,29 +68,29 @@ namespace PathfinderTracker
                 return NotFound();
             }
 
-            WeaponSubType weaponSubType = DAL.GetWeaponSubType((int)id);
-            if (weaponSubType == null)
+            WeaponCategory WeaponCategory = DAL.GetWeaponCategory((int)id);
+            if (WeaponCategory == null)
             {
                 return NotFound();
             }
-            return View(weaponSubType);
+            return View(WeaponCategory);
         }
 
-        // POST: WeaponSubType/Edit/5
+        // POST: WeaponCategory/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("Name,ID")] WeaponSubType weaponSubType)
+        public ActionResult Edit(int id, [Bind("Name,ID")] WeaponCategory WeaponCategory)
         {
-            if (id != weaponSubType.ID)
+            if (id != WeaponCategory.ID)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                if(DAL.UpdateWeaponSubType(weaponSubType, id) > 0) {
+                if(DAL.UpdateWeaponCategory(WeaponCategory, id) > 0) {
                     //success
                 }
                 else {
@@ -98,10 +98,10 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(weaponSubType);
+            return View(WeaponCategory);
         }
 
-        // GET: WeaponSubType/Delete/5
+        // GET: WeaponCategory/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,21 +109,21 @@ namespace PathfinderTracker
                 return NotFound();
             }
 
-            WeaponSubType weaponSubType = DAL.GetWeaponSubType((int)id);
-            if(weaponSubType == null)
+            WeaponCategory WeaponCategory = DAL.GetWeaponCategory((int)id);
+            if(WeaponCategory == null)
             {
                 return NotFound();
             }
 
-            return View(weaponSubType);
+            return View(WeaponCategory);
         }
 
-        // POST: WeaponSubType/Delete/5
+        // POST: WeaponCategory/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if(DAL.DeleteWeaponSubType(id) > 0) {
+            if(DAL.DeleteWeaponCategory(id) > 0) {
                 //success
             }
             else {

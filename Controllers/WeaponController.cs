@@ -39,7 +39,7 @@ namespace PathfinderTracker
         {
             ViewData["DamageTypeID"] = new SelectList(DAL.GetDamageTypes(), "ID", "Name");
             ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name");
-            ViewData["WeaponSubTypeID"] = new SelectList(DAL.GetWeaponSubTypes(), "ID", "Name");
+            ViewData["WeaponCategoryID"] = new SelectList(DAL.GetWeaponCategories(), "ID", "Name");
             ViewData["WeaponTypeID"] = new SelectList(DAL.GetWeaponTypes(), "ID", "Name");
             return View();
         }
@@ -49,7 +49,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("AttackDiceSmall,AttackDiceMedium,Critical,SpecialAttributes,GPValue,AttackRange,Weight,WeaponSubTypeID,WeaponTypeID,DamageTypeID,MaterialID,Name,ID")] Weapon weapon)
+        public ActionResult Create([Bind("AttackDiceSmall,AttackDiceMedium,Critical,SpecialAttributes,GPValue,AttackRange,Weight,WeaponCategoryID,WeaponTypeID,DamageTypeID,MaterialID,Name,ID")] Weapon weapon)
         {
             if (ModelState.IsValid)
             {
@@ -63,7 +63,7 @@ namespace PathfinderTracker
             }
             ViewData["DamageTypeID"] = new SelectList(DAL.GetDamageTypes(), "ID", "Name", weapon.DamageTypeID);
             ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name", weapon.MaterialID);
-            ViewData["WeaponSubTypeID"] = new SelectList(DAL.GetWeaponSubTypes(), "ID", "Name", weapon.WeaponSubTypeID);
+            ViewData["WeaponCategoryID"] = new SelectList(DAL.GetWeaponCategories(), "ID", "Name", weapon.WeaponCategoryID);
             ViewData["WeaponTypeID"] = new SelectList(DAL.GetWeaponTypes(), "ID", "Name", weapon.WeaponTypeID);
             return View(weapon);
         }
@@ -83,7 +83,7 @@ namespace PathfinderTracker
             }
             ViewData["DamageTypeID"] = new SelectList(DAL.GetDamageTypes(), "ID", "Name", weapon.DamageTypeID);
             ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name", weapon.MaterialID);
-            ViewData["WeaponSubTypeID"] = new SelectList(DAL.GetWeaponSubTypes(), "ID", "Name", weapon.WeaponSubTypeID);
+            ViewData["WeaponCategoryID"] = new SelectList(DAL.GetWeaponCategories(), "ID", "Name", weapon.WeaponCategoryID);
             ViewData["WeaponTypeID"] = new SelectList(DAL.GetWeaponTypes(), "ID", "Name", weapon.WeaponTypeID);
             return View(weapon);
         }
@@ -93,7 +93,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("AttackDiceSmall,AttackDiceMedium,Critical,SpecialAttributes,GPValue,AttackRange,Weight,WeaponSubTypeID,WeaponTypeID,DamageTypeID,MaterialID,Name,ID")] Weapon weapon)
+        public ActionResult Edit(int id, [Bind("AttackDiceSmall,AttackDiceMedium,Critical,SpecialAttributes,GPValue,AttackRange,Weight,WeaponCategoryID,WeaponTypeID,DamageTypeID,MaterialID,Name,ID")] Weapon weapon)
         {
             if (id != weapon.ID)
             {
@@ -112,7 +112,7 @@ namespace PathfinderTracker
             }
             ViewData["DamageTypeID"] = new SelectList(DAL.GetDamageTypes(), "ID", "Name", weapon.DamageTypeID);
             ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name", weapon.MaterialID);
-            ViewData["WeaponSubTypeID"] = new SelectList(DAL.GetWeaponSubTypes(), "ID", "Name", weapon.WeaponSubTypeID);
+            ViewData["WeaponCategoryID"] = new SelectList(DAL.GetWeaponCategories(), "ID", "Name", weapon.WeaponCategoryID);
             ViewData["WeaponTypeID"] = new SelectList(DAL.GetWeaponTypes(), "ID", "Name", weapon.WeaponTypeID);
             return View(weapon);
         }

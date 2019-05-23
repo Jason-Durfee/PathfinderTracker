@@ -9,15 +9,15 @@ using PathfinderTracker.Models;
 
 namespace PathfinderTracker
 {
-    public class SubClassController : Controller
+    public class BloodlineController : Controller
     {
-        // GET: SubClass
+        // GET: Bloodline
         public ActionResult Index()
         {
-            return View(DAL.GetSubClasses());
+            return View(DAL.GetBloodlines());
         }
 
-        // GET: SubClass/Details/5
+        // GET: Bloodline/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -25,31 +25,31 @@ namespace PathfinderTracker
                 return NotFound();
             }
 
-            SubClass subClass = DAL.GetSubClass((int)id);
-            if (subClass == null)
+            Bloodline Bloodline = DAL.GetBloodline((int)id);
+            if (Bloodline == null)
             {
                 return NotFound();
             }
 
-            return View(subClass);
+            return View(Bloodline);
         }
 
-        // GET: SubClass/Create
+        // GET: Bloodline/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: SubClass/Create
+        // POST: Bloodline/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Description,Name,ID")] SubClass subClass)
+        public ActionResult Create([Bind("Description,Name,ID")] Bloodline Bloodline)
         {
             if (ModelState.IsValid)
             {
-                if(DAL.CreateSubClass(subClass) > 0) {
+                if(DAL.CreateBloodline(Bloodline) > 0) {
                     //success
                 }
                 else {
@@ -57,10 +57,10 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(subClass);
+            return View(Bloodline);
         }
 
-        // GET: SubClass/Edit/5
+        // GET: Bloodline/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -68,29 +68,29 @@ namespace PathfinderTracker
                 return NotFound();
             }
 
-            SubClass subClass = DAL.GetSubClass((int)id);
-            if(subClass == null)
+            Bloodline Bloodline = DAL.GetBloodline((int)id);
+            if(Bloodline == null)
             {
                 return NotFound();
             }
-            return View(subClass);
+            return View(Bloodline);
         }
 
-        // POST: SubClass/Edit/5
+        // POST: Bloodline/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("Description,Name,ID")] SubClass subClass)
+        public ActionResult Edit(int id, [Bind("Description,Name,ID")] Bloodline Bloodline)
         {
-            if (id != subClass.ID)
+            if (id != Bloodline.ID)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                if(DAL.UpdateSubClass(subClass, id) > 0) {
+                if(DAL.UpdateBloodline(Bloodline, id) > 0) {
                     //success
                 }
                 else {
@@ -98,10 +98,10 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(subClass);
+            return View(Bloodline);
         }
 
-        // GET: SubClass/Delete/5
+        // GET: Bloodline/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,21 +109,21 @@ namespace PathfinderTracker
                 return NotFound();
             }
 
-            SubClass subClass = DAL.GetSubClass((int)id);
-            if(subClass == null)
+            Bloodline Bloodline = DAL.GetBloodline((int)id);
+            if(Bloodline == null)
             {
                 return NotFound();
             }
 
-            return View(subClass);
+            return View(Bloodline);
         }
 
-        // POST: SubClass/Delete/5
+        // POST: Bloodline/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if(DAL.DeleteSubClass(id) > 0) {
+            if(DAL.DeleteBloodline(id) > 0) {
                 //success
             }
             else {

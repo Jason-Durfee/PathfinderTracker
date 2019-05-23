@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -37,8 +38,8 @@ namespace PathfinderTracker.Models
         private int _GPValue;
         private int _AttackRange;
         private int _Weight;
-        private int _WeaponSubTypeID;
-        private WeaponSubType _WeaponSubType;
+        private int _WeaponCategoryID;
+        private WeaponCategory _WeaponCategory;
         private int _WeaponTypeID;
         private WeaponType _WeaponType;
         private int _DamageTypeID;
@@ -49,6 +50,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the AttackDiceSmall attribute for the Weapon object
         /// </summary>
+        [Display( Name = "Attack Dice Small")]
         public string AttackDiceSmall {
             get {
                 return _AttackDiceSmall;
@@ -61,6 +63,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the AttackDiceMedium attribute for the Weapon object
         /// </summary>
+        [Display( Name = "Attack Dice Medium")]
         public string AttackDiceMedium {
             get {
                 return _AttackDiceMedium;
@@ -85,6 +88,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the SpecialAttributes attribute for the Weapon object
         /// </summary>
+        [Display( Name = "Special Attributes")]
         public string SpecialAttributes {
             get {
                 return _SpecialAttributes;
@@ -97,6 +101,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the GPValue attribute for the Weapon object
         /// </summary>
+        [Display( Name = "Gold Value")]
         public int GPValue {
             get {
                 return _GPValue;
@@ -109,6 +114,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the AttackRange attribute for the Weapon object
         /// </summary>
+        [Display( Name = "Attack Range")]
         public int AttackRange {
             get {
                 return _AttackRange;
@@ -131,29 +137,30 @@ namespace PathfinderTracker.Models
         }
 
         /// <summary>
-        /// gets and sets the WeaponSubTypeID attribute for the Weapon object
+        /// gets and sets the WeaponCategoryID attribute for the Weapon object
         /// </summary>
-        public int WeaponSubTypeID {
+        public int WeaponCategoryID {
             get {
-                return _WeaponSubTypeID;
+                return _WeaponCategoryID;
             }
             set {
-                _WeaponSubTypeID = value;
+                _WeaponCategoryID = value;
             }
         }
 
         /// <summary>
-        /// gets and sets the WeaponSubType attribute for the Weapon object
+        /// gets and sets the WeaponCategory attribute for the Weapon object
         /// </summary>
-        public WeaponSubType WeaponSubType {
+        [Display( Name = "Weapon Sub Type")]
+        public WeaponCategory WeaponCategory {
             get {
-                if(_WeaponSubType == null && _WeaponSubTypeID > 0) {
-                    _WeaponSubType = DAL.GetWeaponSubType(_WeaponSubTypeID);
+                if(_WeaponCategory == null && _WeaponCategoryID > 0) {
+                    _WeaponCategory = DAL.GetWeaponCategory(_WeaponCategoryID);
                 }
-                return _WeaponSubType;
+                return _WeaponCategory;
             }
             set {
-                _WeaponSubType = value;
+                _WeaponCategory = value;
             }
         }
 
@@ -173,6 +180,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the WeaponType attribute for the Weapon object
         /// </summary>
+        [Display( Name = "Weapon Category")]
         public WeaponType WeaponType {
             get {
                 if(_WeaponType == null && _WeaponTypeID > 0) {
@@ -201,6 +209,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the DamageType attribute for the Weapon object
         /// </summary>
+        [Display( Name = "Damage Type")]
         public DamageType DamageType {
             get {
                 if(_DamageType == null && _DamageTypeID > 0) {

@@ -46,11 +46,11 @@ namespace PathfinderTracker.Models
 
         public DbSet<PathfinderTracker.Models.Spell> Spell { get; set; }
 
-        public DbSet<PathfinderTracker.Models.SubClass> SubClass { get; set; }
+        public DbSet<PathfinderTracker.Models.Bloodline> Bloodline { get; set; }
 
         public DbSet<PathfinderTracker.Models.Weapon> Weapon { get; set; }
 
-        public DbSet<PathfinderTracker.Models.WeaponSubType> WeaponSubType { get; set; }
+        public DbSet<PathfinderTracker.Models.WeaponCategory> WeaponCategory { get; set; }
 
         public DbSet<PathfinderTracker.Models.WeaponType> WeaponType { get; set; }
 

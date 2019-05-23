@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -33,6 +34,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the ArmorAddon object GPValue attribute
         /// </summary>
+        [Display( Name = "Gold Value")]
         public int GPValue {
             get {
                 return _GPValue;
@@ -45,6 +47,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the ArmorAddon object ArmorCheckPenalty attribute
         /// </summary>
+        [Display( Name = "AC Penalty")]
         public int ArmorCheckPenalty {
             get {
                 return _ArmorCheckPenalty;

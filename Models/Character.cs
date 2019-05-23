@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -61,6 +62,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the Character objects IsNPC attribute
         /// </summary>
+        [Display( Name = "Is an NPC")]
         public bool IsNPC {
             get {
                 return _IsNPC;
@@ -181,6 +183,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the HPMax attribute for the Character object
         /// </summary>
+        [Display( Name = "Max HP")]
         public int HPMax {
             get {
                 return _HPMax;
@@ -193,6 +196,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the HPCurrent attribute for the Character object
         /// </summary>
+        [Display( Name = "Current HP")]
         public int HPCurrent {
             get {
                 return _HPCurrent;

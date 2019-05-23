@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -43,6 +44,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the GPValue attribute for the Armor object
         /// </summary>
+        [Display( Name = "Gold Value")]
         public int GPValue {
             get {
                 return _GPValue;
@@ -55,6 +57,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the ACBonus attribute for the Armor object
         /// </summary>
+        [Display( Name = "AC Bonus")]
         public int ACBonus {
             get {
                 return _ACBonus;
@@ -67,6 +70,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the ArmorCheckPenalty attribute for the Armor object
         /// </summary>
+        [Display( Name = "AC Penalty")]
         public int ArmorCheckPenalty {
             get {
                 return _ArmorCheckPenalty;
@@ -130,6 +134,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the ArmorType attribute for the Armor object
         /// </summary>
+        [Display( Name = "Armor Type")]
         public ArmorType ArmorType {
             get {
                 if(_ArmorType == null && _ArmorTypeID > 0) {
@@ -157,6 +162,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the ArmorAddon attribute for the Armor object
         /// </summary>
+        [Display( Name = "Armor Addon")]
         public ArmorAddon ArmorAddon {
             get {
                 if(_ArmorAddon == null && _ArmorAddonID > 0) {
@@ -172,6 +178,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the SpecialAttributes attribute for the Armor object
         /// </summary>
+        [Display( Name = "Special Attributes")]
         public string SpecialAttributes {
             get {
                 return _SpecialAttributes;

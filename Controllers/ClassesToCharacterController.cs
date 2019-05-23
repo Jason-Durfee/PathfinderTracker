@@ -39,7 +39,9 @@ namespace PathfinderTracker
         {
             ViewData["CharacterID"] = new SelectList(DAL.GetCharacters(), "ID", "Name");
             ViewData["ClassID"] = new SelectList(DAL.GetClasses(), "ID", "Name");
-            ViewData["SubClassID"] = new SelectList(DAL.GetSubClasses(), "ID", "Name");
+            ViewData["BloodlineID"] = new SelectList(DAL.GetBloodlines(), "ID", "Name");
+            ViewData["DomainID"] = new SelectList(DAL.GetDomains(), "ID", "Name");
+            ViewData["MagicSchoolID"] = new SelectList(DAL.GetMagicSchools(), "ID", "Name");
             return View();
         }
 
@@ -48,7 +50,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("ClassLevel,CharacterID,ClassID,SubClassID,ID")] ClassesToCharacter classesToCharacter)
+        public ActionResult Create([Bind("ClassLevel,CharacterID,ClassID,BloodlineID,DomainID,MagicSchoolID,HasBloodline,HasDomain,HasMagicSchool,ID")] ClassesToCharacter classesToCharacter)
         {
             if (ModelState.IsValid)
             {
@@ -62,7 +64,9 @@ namespace PathfinderTracker
             }
             ViewData["CharacterID"] = new SelectList(DAL.GetCharacters(), "ID", "Name", classesToCharacter.CharacterID);
             ViewData["ClassID"] = new SelectList(DAL.GetClasses(), "ID", "Name", classesToCharacter.ClassID);
-            ViewData["SubClassID"] = new SelectList(DAL.GetSubClasses(), "ID", "Name", classesToCharacter.SubClassID);
+            ViewData["BloodlineID"] = new SelectList(DAL.GetBloodlines(), "ID", "Name", classesToCharacter.BloodlineID);
+            ViewData["DomainID"] = new SelectList(DAL.GetDomains(), "ID", "Name", classesToCharacter.DomainID);
+            ViewData["MagicSchoolID"] = new SelectList(DAL.GetMagicSchools(), "ID", "Name", classesToCharacter.MagicSchoolID);
             return View(classesToCharacter);
         }
 
@@ -81,7 +85,9 @@ namespace PathfinderTracker
             }
             ViewData["CharacterID"] = new SelectList(DAL.GetCharacters(), "ID", "Name", classesToCharacter.CharacterID);
             ViewData["ClassID"] = new SelectList(DAL.GetClasses(), "ID", "Name", classesToCharacter.ClassID);
-            ViewData["SubClassID"] = new SelectList(DAL.GetSubClasses(), "ID", "Name", classesToCharacter.SubClassID);
+            ViewData["BloodlineID"] = new SelectList(DAL.GetBloodlines(), "ID", "Name", classesToCharacter.BloodlineID);
+            ViewData["DomainID"] = new SelectList(DAL.GetDomains(), "ID", "Name", classesToCharacter.DomainID);
+            ViewData["MagicSchoolID"] = new SelectList(DAL.GetMagicSchools(), "ID", "Name", classesToCharacter.MagicSchoolID);
             return View(classesToCharacter);
         }
 
@@ -90,7 +96,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("ClassLevel,CharacterID,ClassID,SubClassID,ID")] ClassesToCharacter classesToCharacter)
+        public ActionResult Edit(int id, [Bind("ClassLevel,CharacterID,ClassID,BloodlineID,DomainID,MagicSchoolID,HasBloodline,HasDomain,HasMagicSchool,ID")] ClassesToCharacter classesToCharacter)
         {
             if (id != classesToCharacter.ID)
             {
@@ -109,7 +115,9 @@ namespace PathfinderTracker
             }
             ViewData["CharacterID"] = new SelectList(DAL.GetCharacters(), "ID", "Name", classesToCharacter.CharacterID);
             ViewData["ClassID"] = new SelectList(DAL.GetClasses(), "ID", "Name", classesToCharacter.ClassID);
-            ViewData["SubClassID"] = new SelectList(DAL.GetSubClasses(), "ID", "Name", classesToCharacter.SubClassID);
+            ViewData["BloodlineID"] = new SelectList(DAL.GetBloodlines(), "ID", "Name", classesToCharacter.BloodlineID);
+            ViewData["DomainID"] = new SelectList(DAL.GetDomains(), "ID", "Name", classesToCharacter.DomainID);
+            ViewData["MagicSchoolID"] = new SelectList(DAL.GetMagicSchools(), "ID", "Name", classesToCharacter.MagicSchoolID);
             return View(classesToCharacter);
         }
 

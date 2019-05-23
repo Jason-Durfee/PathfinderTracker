@@ -708,6 +708,151 @@ namespace PathfinderTracker.Models
         }
         #endregion
 
+        #region Bloodlines
+        /// <summary>
+        /// Gets all Bloodline objects from the database
+        /// </summary>
+        /// <returns></returns>
+        public static List<Bloodline> GetBloodlines() {
+            List<Bloodline> bloodlines = new List<Bloodline>();
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sprocBloodlinesGetAll");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Connection = conn;
+                SqlDataReader dr = comm.ExecuteReader();
+                while(dr.Read()) {
+                    Bloodline bloodline = new Bloodline(dr);
+                    bloodlines.Add(bloodline);
+                }
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return bloodlines;
+        }
+
+        /// <summary>
+        /// gets a specific Bloodline from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static Bloodline GetBloodline(int id) {
+            SqlCommand comm = new SqlCommand("sprocBloodlineGet");
+            Bloodline retObj = null;
+            try {
+                comm.Parameters.AddWithValue("@BloodlineID", id);
+                SqlDataReader dr = GetDataReader(comm);
+                while(dr.Read()) {
+                    retObj = new Bloodline(dr);
+                }
+                comm.Connection.Close();
+            }
+            catch(Exception ex) {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+
+        }
+
+        /// <summary>
+        /// inserts an Bloodline object in the database
+        /// </summary>
+        /// <param name="bloodline"></param>
+        /// <returns></returns>
+        public static int CreateBloodline(Bloodline bloodline) {
+            int retVal = -1;
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_BloodlineAdd");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@Name", bloodline.Name);
+                comm.Parameters.AddWithValue("@Description", bloodline.Description);
+
+                comm.Parameters.Add("@BloodlineID", SqlDbType.Int);
+                comm.Parameters["@BloodlineID"].Direction = ParameterDirection.Output;
+
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+                int ID = (int)comm.Parameters["@BloodlineID"].Value;
+                bloodline.ID = ID;
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// updates a specific Bloodline object in the database
+        /// </summary>
+        /// <param name="bloodline"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static int UpdateBloodline(Bloodline bloodline, int id) {
+            int retVal = -1;
+            if(id < 0) {
+                return retVal;
+            }
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_BloodlineUpdate");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@BloodlineID", id);
+                comm.Parameters.AddWithValue("@Name", bloodline.Name);
+                comm.Parameters.AddWithValue("@Description", bloodline.Description);
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// deletes a specific Bloodline object from the database
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public static int DeleteBloodline(int ID) {
+            int retVal = -1;
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_BloodlineDelete");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@BloodlineID", ID);
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+        #endregion
+
         #region Campaigns
         /// <summary>
         /// Gets all Campaign objects from the database
@@ -1226,7 +1371,12 @@ namespace PathfinderTracker.Models
                 comm.Parameters.AddWithValue("@ClassLevel", classesToCharacter.ClassLevel);
                 comm.Parameters.AddWithValue("@CharacterID", classesToCharacter.CharacterID);
                 comm.Parameters.AddWithValue("@ClassID", classesToCharacter.ClassID);
-                comm.Parameters.AddWithValue("@SubClassID", classesToCharacter.SubClassID);
+                comm.Parameters.AddWithValue("@BloodlineID", classesToCharacter.BloodlineID);
+                comm.Parameters.AddWithValue("@DomainID", classesToCharacter.DomainID);
+                comm.Parameters.AddWithValue("@MagicSchoolID", classesToCharacter.MagicSchoolID);
+                comm.Parameters.AddWithValue("@HasBloodline", classesToCharacter.HasBloodline);
+                comm.Parameters.AddWithValue("@HasDomain", classesToCharacter.HasDomain);
+                comm.Parameters.AddWithValue("@HasMagicSchool", classesToCharacter.HasMagicSchool);
 
                 comm.Parameters.Add("@ClassesToCharacterID", SqlDbType.Int);
                 comm.Parameters["@ClassesToCharacterID"].Direction = ParameterDirection.Output;
@@ -1266,7 +1416,12 @@ namespace PathfinderTracker.Models
                 comm.Parameters.AddWithValue("@ClassLevel", classesToCharacter.ClassLevel);
                 comm.Parameters.AddWithValue("@CharacterID", classesToCharacter.CharacterID);
                 comm.Parameters.AddWithValue("@ClassID", classesToCharacter.ClassID);
-                comm.Parameters.AddWithValue("@SubClassID", classesToCharacter.SubClassID);
+                comm.Parameters.AddWithValue("@BloodlineID", classesToCharacter.BloodlineID);
+                comm.Parameters.AddWithValue("@DomainID", classesToCharacter.DomainID);
+                comm.Parameters.AddWithValue("@MagicSchoolID", classesToCharacter.MagicSchoolID);
+                comm.Parameters.AddWithValue("@HasBloodline", classesToCharacter.HasBloodline);
+                comm.Parameters.AddWithValue("@HasDomain", classesToCharacter.HasDomain);
+                comm.Parameters.AddWithValue("@HasMagicSchool", classesToCharacter.HasMagicSchool);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -1583,6 +1738,151 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_DeityDelete");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@DeityID", ID);
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+        #endregion
+
+        #region Domains
+        /// <summary>
+        /// Gets all Domain objects from the database
+        /// </summary>
+        /// <returns></returns>
+        public static List<Domain> GetDomains() {
+            List<Domain> domains = new List<Domain>();
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sprocDomainsGetAll");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Connection = conn;
+                SqlDataReader dr = comm.ExecuteReader();
+                while(dr.Read()) {
+                    Domain Domain = new Domain(dr);
+                    domains.Add(Domain);
+                }
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return domains;
+        }
+
+        /// <summary>
+        /// gets a specific Domain from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static Domain GetDomain(int id) {
+            SqlCommand comm = new SqlCommand("sprocDomainGet");
+            Domain retObj = null;
+            try {
+                comm.Parameters.AddWithValue("@DomainID", id);
+                SqlDataReader dr = GetDataReader(comm);
+                while(dr.Read()) {
+                    retObj = new Domain(dr);
+                }
+                comm.Connection.Close();
+            }
+            catch(Exception ex) {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+
+        }
+
+        /// <summary>
+        /// inserts an Domain object in the database
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <returns></returns>
+        public static int CreateDomain(Domain domain) {
+            int retVal = -1;
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_DomainAdd");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@Name", domain.Name);
+                comm.Parameters.AddWithValue("@Description", domain.Description);
+
+                comm.Parameters.Add("@DomainID", SqlDbType.Int);
+                comm.Parameters["@DomainID"].Direction = ParameterDirection.Output;
+
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+                int ID = (int)comm.Parameters["@DomainID"].Value;
+                domain.ID = ID;
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// updates a specific Domain object in the database
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static int UpdateDomain(Domain domain, int id) {
+            int retVal = -1;
+            if(id < 0) {
+                return retVal;
+            }
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_DomainUpdate");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@DomainID", id);
+                comm.Parameters.AddWithValue("@Name", domain.Name);
+                comm.Parameters.AddWithValue("@Description", domain.Description);
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// deletes a specific Domain object from the database
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public static int DeleteDomain(int ID) {
+            int retVal = -1;
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_DomainDelete");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@DomainID", ID);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -2621,150 +2921,6 @@ namespace PathfinderTracker.Models
         }
         #endregion
 
-        #region SubClasses
-        /// <summary>
-        /// Gets all SubClass objects from the database
-        /// </summary>
-        /// <returns></returns>
-        public static List<SubClass> GetSubClasses() {
-            List<SubClass> subClasses = new List<SubClass>();
-            SqlConnection conn = null;
-            try {
-                conn = new SqlConnection(ConnectionString);
-                conn.Open();
-                SqlCommand comm = new SqlCommand("sprocSubClasssGetAll");
-                comm.CommandType = CommandType.StoredProcedure;
-                comm.Connection = conn;
-                SqlDataReader dr = comm.ExecuteReader();
-                while(dr.Read()) {
-                    SubClass SubClass = new SubClass(dr);
-                    subClasses.Add(SubClass);
-                }
-            }
-            catch(Exception error) {
-                System.Diagnostics.Debug.WriteLine(error.Message);
-            }
-            finally {
-                if(conn != null) conn.Close();
-            }
-            return subClasses;
-        }
-
-        /// <summary>
-        /// gets a specific SubClass from the database
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public static SubClass GetSubClass(int id) {
-            SqlCommand comm = new SqlCommand("sprocSubClassGet");
-            SubClass retObj = null;
-            try {
-                comm.Parameters.AddWithValue("@SubClassID", id);
-                SqlDataReader dr = GetDataReader(comm);
-                while(dr.Read()) {
-                    retObj = new SubClass(dr);
-                }
-                comm.Connection.Close();
-            }
-            catch(Exception ex) {
-                comm.Connection.Close();
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-            }
-            return retObj;
-
-        }
-
-        /// <summary>
-        /// inserts an SubClass object in the database
-        /// </summary>
-        /// <param name="subClass"></param>
-        /// <returns></returns>
-        public static int CreateSubClass(SubClass subClass) {
-            int retVal = -1;
-            SqlConnection conn = null;
-            try {
-                conn = new SqlConnection(ConnectionString);
-                conn.Open();
-                SqlCommand comm = new SqlCommand("sproc_SubClassAdd");
-                comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", subClass.Name);
-                comm.Parameters.AddWithValue("@Description", subClass.Description);
-
-                comm.Parameters.Add("@SubClassID", SqlDbType.Int);
-                comm.Parameters["@SubClassID"].Direction = ParameterDirection.Output;
-
-                comm.Connection = conn;
-                retVal = comm.ExecuteNonQuery();
-                int ID = (int)comm.Parameters["@SubClassID"].Value;
-                subClass.ID = ID;
-            }
-            catch(Exception error) {
-                System.Diagnostics.Debug.WriteLine(error.Message);
-            }
-            finally {
-                if(conn != null) conn.Close();
-            }
-            return retVal;
-        }
-
-        /// <summary>
-        /// updates a specific SubClass object in the database
-        /// </summary>
-        /// <param name="subClass"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public static int UpdateSubClass(SubClass subClass, int id) {
-            int retVal = -1;
-            if(id < 0) {
-                return retVal;
-            }
-            SqlConnection conn = null;
-            try {
-                conn = new SqlConnection(ConnectionString);
-                conn.Open();
-                SqlCommand comm = new SqlCommand("sproc_SubClassUpdate");
-                comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@SubClassID", id);
-                comm.Parameters.AddWithValue("@Name", subClass.Name);
-                comm.Parameters.AddWithValue("@Description", subClass.Description);
-                comm.Connection = conn;
-                retVal = comm.ExecuteNonQuery();
-            }
-            catch(Exception error) {
-                System.Diagnostics.Debug.WriteLine(error.Message);
-            }
-            finally {
-                if(conn != null) conn.Close();
-            }
-            return retVal;
-        }
-
-        /// <summary>
-        /// deletes a specific SubClass object from the database
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <returns></returns>
-        public static int DeleteSubClass(int ID) {
-            int retVal = -1;
-            SqlConnection conn = null;
-            try {
-                conn = new SqlConnection(ConnectionString);
-                conn.Open();
-                SqlCommand comm = new SqlCommand("sproc_SubClassDelete");
-                comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@SubClassID", ID);
-                comm.Connection = conn;
-                retVal = comm.ExecuteNonQuery();
-            }
-            catch(Exception error) {
-                System.Diagnostics.Debug.WriteLine(error.Message);
-            }
-            finally {
-                if(conn != null) conn.Close();
-            }
-            return retVal;
-        }
-        #endregion
 
         #region Weapons
         /// <summary>
@@ -2929,24 +3085,24 @@ namespace PathfinderTracker.Models
         }
         #endregion
 
-        #region WeaponSubTypes
+        #region WeaponCategories
         /// <summary>
-        /// Gets all WeaponSubType objects from the database
+        /// Gets all WeaponCategory objects from the database
         /// </summary>
         /// <returns></returns>
-        public static List<WeaponSubType> GetWeaponSubTypes() {
-            List<WeaponSubType> weaponSubTypes = new List<WeaponSubType>();
+        public static List<WeaponCategory> GetWeaponCategories() {
+            List<WeaponCategory> weaponCategories = new List<WeaponCategory>();
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
-                SqlCommand comm = new SqlCommand("sprocWeaponSubTypesGetAll");
+                SqlCommand comm = new SqlCommand("sprocWeaponCategoriesGetAll");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Connection = conn;
                 SqlDataReader dr = comm.ExecuteReader();
                 while(dr.Read()) {
-                    WeaponSubType weaponSubType = new WeaponSubType(dr);
-                    weaponSubTypes.Add(weaponSubType);
+                    WeaponCategory weaponCategory = new WeaponCategory(dr);
+                    weaponCategories.Add(weaponCategory);
                 }
             }
             catch(Exception error) {
@@ -2955,22 +3111,22 @@ namespace PathfinderTracker.Models
             finally {
                 if(conn != null) conn.Close();
             }
-            return weaponSubTypes;
+            return weaponCategories;
         }
 
         /// <summary>
-        /// gets a specific WeaponSubType from the database
+        /// gets a specific WeaponCategory from the database
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static WeaponSubType GetWeaponSubType(int id) {
-            SqlCommand comm = new SqlCommand("sprocWeaponSubTypeGet");
-            WeaponSubType retObj = null;
+        public static WeaponCategory GetWeaponCategory(int id) {
+            SqlCommand comm = new SqlCommand("sprocWeaponCategoryGet");
+            WeaponCategory retObj = null;
             try {
-                comm.Parameters.AddWithValue("@WeaponSubTypeID", id);
+                comm.Parameters.AddWithValue("@WeaponCategoryID", id);
                 SqlDataReader dr = GetDataReader(comm);
                 while(dr.Read()) {
-                    retObj = new WeaponSubType(dr);
+                    retObj = new WeaponCategory(dr);
                 }
                 comm.Connection.Close();
             }
@@ -2983,27 +3139,27 @@ namespace PathfinderTracker.Models
         }
 
         /// <summary>
-        /// inserts an WeaponSubType object in the database
+        /// inserts an WeaponCategory object in the database
         /// </summary>
-        /// <param name="weaponSubType"></param>
+        /// <param name="weaponCategory"></param>
         /// <returns></returns>
-        public static int CreateWeaponSubType(WeaponSubType weaponSubType) {
+        public static int CreateWeaponCategory(WeaponCategory weaponCategory) {
             int retVal = -1;
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
-                SqlCommand comm = new SqlCommand("sproc_WeaponSubTypeAdd");
+                SqlCommand comm = new SqlCommand("sproc_WeaponCategoryAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", weaponSubType.Name);
+                comm.Parameters.AddWithValue("@Name", weaponCategory.Name);
 
-                comm.Parameters.Add("@WeaponSubTypeID", SqlDbType.Int);
-                comm.Parameters["@WeaponSubTypeID"].Direction = ParameterDirection.Output;
+                comm.Parameters.Add("@WeaponCategoryID", SqlDbType.Int);
+                comm.Parameters["@WeaponCategoryID"].Direction = ParameterDirection.Output;
 
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
-                int ID = (int)comm.Parameters["@WeaponSubTypeID"].Value;
-                weaponSubType.ID = ID;
+                int ID = (int)comm.Parameters["@WeaponCategoryID"].Value;
+                weaponCategory.ID = ID;
             }
             catch(Exception error) {
                 System.Diagnostics.Debug.WriteLine(error.Message);
@@ -3015,12 +3171,12 @@ namespace PathfinderTracker.Models
         }
 
         /// <summary>
-        /// updates a specific WeaponSubType object in the database
+        /// updates a specific WeaponCategory object in the database
         /// </summary>
-        /// <param name="weaponSubType"></param>
+        /// <param name="weaponCategory"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int UpdateWeaponSubType(WeaponSubType weaponSubType, int id) {
+        public static int UpdateWeaponCategory(WeaponCategory weaponCategory, int id) {
             int retVal = -1;
             if(id < 0) {
                 return retVal;
@@ -3029,10 +3185,10 @@ namespace PathfinderTracker.Models
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
-                SqlCommand comm = new SqlCommand("sproc_WeaponSubTypeUpdate");
+                SqlCommand comm = new SqlCommand("sproc_WeaponCategoryUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@WeaponSubTypeID", id);
-                comm.Parameters.AddWithValue("@Name", weaponSubType.Name);
+                comm.Parameters.AddWithValue("@WeaponCategoryID", id);
+                comm.Parameters.AddWithValue("@Name", weaponCategory.Name);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -3046,19 +3202,19 @@ namespace PathfinderTracker.Models
         }
 
         /// <summary>
-        /// deletes a specific WeaponSubType object from the database
+        /// deletes a specific WeaponCategory object from the database
         /// </summary>
         /// <param name="ID"></param>
         /// <returns></returns>
-        public static int DeleteWeaponSubType(int ID) {
+        public static int DeleteWeaponCategory(int ID) {
             int retVal = -1;
             SqlConnection conn = null;
             try {
                 conn = new SqlConnection(ConnectionString);
                 conn.Open();
-                SqlCommand comm = new SqlCommand("sproc_WeaponSubTypeDelete");
+                SqlCommand comm = new SqlCommand("sproc_WeaponCategoryDelete");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@WeaponSubTypeID", ID);
+                comm.Parameters.AddWithValue("@WeaponCategoryID", ID);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
