@@ -38,6 +38,7 @@ namespace PathfinderTracker
         public ActionResult Create()
         {
             ViewData["ArmorAddonID"] = new SelectList(DAL.GetArmorAddons(), "ID", "Name");
+            ViewData["ArmorCoreTypeID"] = new SelectList(DAL.GetArmorCoreTypes(), "ID", "Name");
             ViewData["ArmorTypeID"] = new SelectList(DAL.GetArmorTypes(), "ID", "Name");
             ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name");
             return View();
@@ -48,7 +49,8 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("GPValue,ACBonus,ArmorCheckPenalty,Weight,MaterialID,ArmorTypeID,ArmorAddonID,SpecialAttributes,Name,ID")] Armor armor)
+        public ActionResult Create([Bind("BaseGPValue,ACBonus,ArmorCheckPenalty,Weight,MaterialID,ArmorTypeID," +
+            "ArmorAddonID,SpecialAttributes,Name,ArmorCoreTypeID,ID")] Armor armor)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +63,7 @@ namespace PathfinderTracker
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ArmorAddonID"] = new SelectList(DAL.GetArmorAddons(), "ID", "Name", armor.ArmorAddonID);
+            ViewData["ArmorCoreTypeID"] = new SelectList(DAL.GetArmorCoreTypes(), "ID", "Name", armor.ArmorCoreTypeID);
             ViewData["ArmorTypeID"] = new SelectList(DAL.GetArmorTypes(), "ID", "Name", armor.ArmorTypeID);
             ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name", armor.MaterialID);
             return View(armor);
@@ -80,6 +83,7 @@ namespace PathfinderTracker
                 return NotFound();
             }
             ViewData["ArmorAddonID"] = new SelectList(DAL.GetArmorAddons(), "ID", "Name", armor.ArmorAddonID);
+            ViewData["ArmorCoreTypeID"] = new SelectList(DAL.GetArmorCoreTypes(), "ID", "Name", armor.ArmorCoreTypeID);
             ViewData["ArmorTypeID"] = new SelectList(DAL.GetArmorTypes(), "ID", "Name", armor.ArmorTypeID);
             ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name", armor.MaterialID);
             return View(armor);
@@ -90,7 +94,8 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("GPValue,ACBonus,ArmorCheckPenalty,Weight,MaterialID,ArmorTypeID,ArmorAddonID,SpecialAttributes,Name,ID")] Armor armor)
+        public ActionResult Edit(int id, [Bind("BaseGPValue,ACBonus,ArmorCheckPenalty,Weight,MaterialID,ArmorTypeID," +
+            "ArmorAddonID,SpecialAttributes,Name,ArmorCoreTypeID,ID")] Armor armor)
         {
             if (id != armor.ID)
             {
@@ -109,6 +114,7 @@ namespace PathfinderTracker
             }
             ViewData["ArmorAddonID"] = new SelectList(DAL.GetArmorAddons(), "ID", "Name", armor.ArmorAddonID);
             ViewData["ArmorTypeID"] = new SelectList(DAL.GetArmorTypes(), "ID", "Name", armor.ArmorTypeID);
+            ViewData["ArmorCoreTypeID"] = new SelectList(DAL.GetArmorCoreTypes(), "ID", "Name", armor.ArmorCoreTypeID);
             ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name", armor.MaterialID);
             return View(armor);
         }
@@ -157,7 +163,7 @@ namespace PathfinderTracker
                 return View("Index", allArmors);
             }
             foreach(Armor armor in allArmors) {
-                if(armor.Name.ToLower().Contains(searchText.ToLower())) {
+                if(armor.Material != null && armor.Material.Name.ToLower().Contains(searchText.ToLower())) {
                     armors.Add(armor);
                 }
             }

@@ -16,8 +16,9 @@ namespace PathfinderTracker.Models
             Name = (string)dr["Name"];
             GPValue = (int)dr["GPValue"];
             Weight = (int)dr["Weight"];
-            CoreTypeID = (int)dr["CoreTypeID"];
+            WeaponCoreTypeID = (int)dr["WeaponCoreTypeID"];
             WeaponCategoryID = (int)dr["WeaponCategoryID"];
+            WeaponCoreTypeID = (int)dr["WeaponCoreTypeID"];
             AttackRange = (int)dr["AttackRange"];
             AttackDiceSmall = (string)dr["AttackDiceSmall"];
             AttackDiceMedium = (string)dr["AttackDiceMedium"];
@@ -30,8 +31,8 @@ namespace PathfinderTracker.Models
         #endregion
 
         private int _AttackRange;
-        private int _CoreTypeID;
-        private CoreType _CoreType;
+        private int _WeaponCoreTypeID;
+        private WeaponCoreType _WeaponCoreType;
         private int _GPValue;
         private int _Weight;
         private string _AttackDiceSmall;
@@ -145,30 +146,30 @@ namespace PathfinderTracker.Models
         }
 
         /// <summary>
-        /// gets and sets the CoreTypeID attribute for the WeaponType object
+        /// gets and sets the WeaponCoreTypeID attribute for the WeaponType object
         /// </summary>
-        public int CoreTypeID {
+        public int WeaponCoreTypeID {
             get {
-                return _CoreTypeID;
+                return _WeaponCoreTypeID;
             }
             set {
-                _CoreTypeID = value;
+                _WeaponCoreTypeID = value;
             }
         }
 
         /// <summary>
-        /// gets and sets the CoreType attribute for the WeaponType object
+        /// gets and sets the WeaponCoreType attribute for the WeaponType object
         /// </summary>
         [Display(Name = "Core Type")]
-        public CoreType CoreType {
+        public WeaponCoreType WeaponCoreType {
             get {
-                if(_CoreType == null && _CoreTypeID > 0) {
-                    _CoreType = DAL.GetCoreType(_CoreTypeID);
+                if(_WeaponCoreType == null && _WeaponCoreTypeID > 0) {
+                    _WeaponCoreType = DAL.GetWeaponCoreType(_WeaponCoreTypeID);
                 }
-                return _CoreType;
+                return _WeaponCoreType;
             }
             set {
-                _CoreType = value;
+                _WeaponCoreType = value;
             }
         }
     }

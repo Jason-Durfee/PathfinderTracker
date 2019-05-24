@@ -14,9 +14,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.ACBonus)
             </th>
             <th>
@@ -34,16 +31,6 @@
     <tbody>
         @foreach(var item in Model) {
         <tr>
-            @if(item.ArmorAddon != null) {
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name) with @Html.DisplayFor(modelItem => item.ArmorAddon.Name)
-                </td>
-            }
-            else {
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-            }
             <td>
                 @Html.DisplayFor(modelItem => item.ACBonus)
             </td>

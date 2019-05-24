@@ -45,7 +45,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Name,ID")] Material material)
+        public ActionResult Create([Bind("Name,AmmoAddedGold,LightAddedGold,MediumAddedGold,HeavyAddedGold,ShieldAddedGold,WeaponAddedGold,ID")] Material material)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("Name,ID")] Material material)
+        public ActionResult Edit(int id, [Bind("Name,AmmoAddedGold,LightAddedGold,MediumAddedGold,HeavyAddedGold,ShieldAddedGold,WeaponAddedGold,ID")] Material material)
         {
             if (id != material.ID)
             {

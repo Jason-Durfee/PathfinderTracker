@@ -36,6 +36,9 @@ namespace PathfinderTracker.Models
         [Display(Name = "Special Attributes")]
         public string SpecialAttributes {
             get {
+                if(_SpecialAttributes == null) {
+                    return "";
+                }
                 return _SpecialAttributes;
             }
             set {
@@ -122,6 +125,21 @@ namespace PathfinderTracker.Models
             get {
                 if(WeaponType != null) {
                     return WeaponType.AttackDiceSmall + "/" + WeaponType.AttackDiceMedium;
+                }
+                else {
+                    return "Unknown";
+                }
+            }
+        }
+
+        /// <summary>
+        /// gets the damage statistics for the weapon object
+        /// </summary>
+        [Display(Name = "Gold Value")]
+        public string GPValue {
+            get {
+                if(WeaponType != null && Material != null) {
+                    return WeaponType.GPValue + Material.WeaponAddedGold + " gp";
                 }
                 else {
                     return "Unknown";

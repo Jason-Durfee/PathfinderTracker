@@ -28,6 +28,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.SpecialAttributes)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GPValue)
+            </th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -48,6 +51,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SpecialAttributes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GPValue)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

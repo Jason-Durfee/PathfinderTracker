@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace PathfinderTracker.Models
 {
-    public class CoreType : NamedObject
+    public class ArmorCoreType : NamedObject
     {
         #region Constructors
-        public CoreType(SqlDataReader dr) {
-            ID = (int)dr["CoreTypeID"];
+        public ArmorCoreType(SqlDataReader dr) {
+            ID = (int)dr["ArmorCoreTypeID"];
             Name = (string)dr["Name"];
         }
 
-        public CoreType() {
+        public ArmorCoreType() {
 
         }
         #endregion

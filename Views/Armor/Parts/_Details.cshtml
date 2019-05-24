@@ -35,7 +35,13 @@
         @Html.DisplayNameFor(model => model.ArmorType)
     </dt>
     <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.ArmorType.ID)
+        @Html.DisplayFor(model => model.ArmorType.Name)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.ArmorCoreType)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ArmorCoreType.Name)
     </dd>
     <dt class="col-sm-2">
         @Html.DisplayNameFor(model => model.ArmorAddon)
@@ -48,11 +54,5 @@
     </dt>
     <dd class="col-sm-10">
         @Html.DisplayFor(model => model.SpecialAttributes)
-    </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.Name)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.Name)
     </dd>
 </dl>
