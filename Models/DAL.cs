@@ -2843,6 +2843,8 @@ namespace PathfinderTracker.Models
                 comm.Parameters.AddWithValue("@HeavyAddedGold", material.HeavyAddedGold);
                 comm.Parameters.AddWithValue("@ShieldAddedGold", material.ShieldAddedGold);
                 comm.Parameters.AddWithValue("@WeaponAddedGold", material.WeaponAddedGold);
+                comm.Parameters.AddWithValue("@WeightGoldMultiplier", material.WeightGoldMultiplier);
+                comm.Parameters.AddWithValue("@BaseGoldMultiplier", material.BaseGoldMultiplier);
 
                 comm.Parameters.Add("@MaterialID", SqlDbType.Int);
                 comm.Parameters["@MaterialID"].Direction = ParameterDirection.Output;
@@ -2886,6 +2888,8 @@ namespace PathfinderTracker.Models
                 comm.Parameters.AddWithValue("@HeavyAddedGold", material.HeavyAddedGold);
                 comm.Parameters.AddWithValue("@ShieldAddedGold", material.ShieldAddedGold);
                 comm.Parameters.AddWithValue("@WeaponAddedGold", material.WeaponAddedGold);
+                comm.Parameters.AddWithValue("@WeightGoldMultiplier", material.WeightGoldMultiplier);
+                comm.Parameters.AddWithValue("@BaseGoldMultiplier", material.BaseGoldMultiplier);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }

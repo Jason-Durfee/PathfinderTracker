@@ -138,8 +138,16 @@ namespace PathfinderTracker.Models
         [Display(Name = "Gold Value")]
         public string GPValue {
             get {
+                int retVal = 0;
                 if(WeaponType != null && Material != null) {
-                    return WeaponType.GPValue + Material.WeaponAddedGold + " gp";
+                    retVal = WeaponType.GPValue + Material.WeaponAddedGold;
+                    if(Material.WeightGoldMultiplier > 1) {
+                        retVal += Material.WeightGoldMultiplier * WeaponType.Weight;
+                    }
+                    if(Material.BaseGoldMultiplier > 1) {
+                        retVal += Material.BaseGoldMultiplier * WeaponType.GPValue;
+                    }
+                    return retVal.ToString() + " gp";
                 }
                 else {
                     return "Unknown";

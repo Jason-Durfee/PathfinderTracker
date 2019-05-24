@@ -20,6 +20,8 @@ namespace PathfinderTracker.Models
             HeavyAddedGold = (int)dr["HeavyAddedGold"];
             WeaponAddedGold = (int)dr["WeaponAddedGold"];
             ShieldAddedGold = (int)dr["ShieldAddedGold"];
+            BaseGoldMultiplier = (int)dr["BaseGoldMultiplier"];
+            WeightGoldMultiplier = (int)dr["WeightGoldMultiplier"];
         }
 
         public Material() {
@@ -33,6 +35,8 @@ namespace PathfinderTracker.Models
         private int _LightAddedGold;
         private int _ShieldAddedGold;
         private int _AmmoAddedGold;
+        private int _WeightGoldMultiplier;
+        private int _BaseGoldMultiplier;
 
 
         /// <summary>
@@ -113,5 +117,30 @@ namespace PathfinderTracker.Models
             }
         }
 
+        /// <summary>
+        /// gets and sets the added gold value for the material object
+        /// </summary>
+        [Display(Name = "Gold Multiplier by Weight")]
+        public int WeightGoldMultiplier {
+            get {
+                return _WeightGoldMultiplier;
+            }
+            set {
+                _WeightGoldMultiplier = value;
+            }
+        }
+
+        /// <summary>
+        /// gets and sets the added gold value for the material object
+        /// </summary>
+        [Display(Name = "Gold Multiplier by Base Cost")]
+        public int BaseGoldMultiplier {
+            get {
+                return _BaseGoldMultiplier;
+            }
+            set {
+                _BaseGoldMultiplier = value;
+            }
+        }
     }
 }

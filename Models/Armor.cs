@@ -225,20 +225,27 @@ namespace PathfinderTracker.Models
         public string GPValue {
             get {
                 if(Material != null) {
-                    string retVal = "";
+                    int retVal = 0;
                     int baseVal = BaseGPValue;
                     if(ArmorCoreType.Name == "Heavy") {
-                        retVal = baseVal + Material.HeavyAddedGold + "";
+                        retVal = baseVal + Material.HeavyAddedGold;
                     }
                     else if(ArmorCoreType.Name == "Medium") {
-                        retVal = baseVal + Material.MediumAddedGold + "";
+                        retVal = baseVal + Material.MediumAddedGold;
                     }
                     else if(ArmorCoreType.Name == "Light") {
-                        retVal = baseVal + Material.LightAddedGold + "";
+                        retVal = baseVal + Material.LightAddedGold;
                     }
                     else if(ArmorCoreType.Name == "Shield") {
-                        retVal = baseVal + Material.ShieldAddedGold + "";
+                        retVal = baseVal + Material.ShieldAddedGold;
                     }
+                    if(Material.WeightGoldMultiplier > 1) {
+                        retVal = Material.WeightGoldMultiplier * Weight;
+                    }
+                    if(Material.BaseGoldMultiplier > 1) {
+                        retVal = Material.BaseGoldMultiplier * BaseGPValue;
+                    }
+                    return retVal.ToString() + " gp";
                 }
                 return "Unknown";
             }
