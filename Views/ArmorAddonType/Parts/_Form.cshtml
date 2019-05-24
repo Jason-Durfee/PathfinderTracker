@@ -1,4 +1,4 @@
-﻿@model ArmorType
+﻿@model ArmorAddonType
 
 <div class="form-group">
     <label asp-for="Name" class="control-label"></label>
@@ -6,23 +6,14 @@
     <span asp-validation-for="Name" class="text-danger"></span>
 </div>
 <div class="form-group">
-    <label asp-for="ArmorCoreType" class="control-label"></label>
-    <select asp-for="ArmorCoreTypeID" class="form-control" asp-items="ViewBag.ArmorCoreTypeID"></select>
-</div>
-<div class="form-group">
-    <label asp-for="ACBonus" class="control-label"></label>
-    <input asp-for="ACBonus" class="form-control" />
-    <span asp-validation-for="ACBonus" class="text-danger"></span>
+    <label asp-for="BaseGPValue" class="control-label"></label>
+    <input asp-for="BaseGPValue" class="form-control" />
+    <span asp-validation-for="BaseGPValue" class="text-danger"></span>
 </div>
 <div class="form-group">
     <label asp-for="ArmorCheckPenalty" class="control-label"></label>
     <input asp-for="ArmorCheckPenalty" class="form-control" />
     <span asp-validation-for="ArmorCheckPenalty" class="text-danger"></span>
-</div>
-<div class="form-group">
-    <label asp-for="BaseGPValue" class="control-label"></label>
-    <input asp-for="BaseGPValue" class="form-control" />
-    <span asp-validation-for="BaseGPValue" class="text-danger"></span>
 </div>
 <div class="form-group">
     <label asp-for="Weight" class="control-label"></label>

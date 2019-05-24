@@ -1,6 +1,6 @@
-﻿@model IEnumerable<PathfinderTracker.Models.ArmorAddon>
+﻿@model IEnumerable<PathfinderTracker.Models.ArmorAddonType>
 
-<h1>Armor Addons</h1>
+<h1>Armor Addon Types</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -12,13 +12,13 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ArmorAddonType.ArmorCheckPenalty)
+                @Html.DisplayNameFor(model => model.ArmorCheckPenalty)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ArmorAddonType.Weight)
+                @Html.DisplayNameFor(model => model.Weight)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.GPValue)
+                @Html.DisplayNameFor(model => model.BaseGPValue)
             </th>
             <th>Actions</th>
         </tr>
@@ -30,13 +30,13 @@
                 @Html.DisplayFor(model => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(model => item.ArmorAddonType.ArmorCheckPenalty)
+                @Html.DisplayFor(model => item.ArmorCheckPenalty)
             </td>
             <td>
-                @Html.DisplayFor(model => item.ArmorAddonType.Weight)
+                @Html.DisplayFor(model => item.Weight)
             </td>
             <td>
-                @Html.DisplayFor(model => item.GPValue)
+                @Html.DisplayFor(model => item.BaseGPValue) gp
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

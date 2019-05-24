@@ -321,10 +321,6 @@ namespace PathfinderTracker.Models
                 conn.Open();
                 SqlCommand comm = new SqlCommand("sproc_ArmorAdd");
                 comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@BaseGPValue", armor.BaseGPValue);
-                comm.Parameters.AddWithValue("@ACBonus", armor.ACBonus);
-                comm.Parameters.AddWithValue("@ArmorCheckPenalty", armor.ArmorCheckPenalty);
-                comm.Parameters.AddWithValue("@Weight", armor.Weight);
                 comm.Parameters.AddWithValue("@MaterialID", armor.MaterialID);
                 comm.Parameters.AddWithValue("@ArmorTypeID", armor.ArmorTypeID);
                 comm.Parameters.AddWithValue("@ArmorAddonID", armor.ArmorAddonID);
@@ -365,10 +361,6 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_ArmorUpdate");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@ArmorID", id);
-                comm.Parameters.AddWithValue("@BaseGPValue", Armor.BaseGPValue);
-                comm.Parameters.AddWithValue("@ACBonus", Armor.ACBonus);
-                comm.Parameters.AddWithValue("@ArmorCheckPenalty", Armor.ArmorCheckPenalty);
-                comm.Parameters.AddWithValue("@Weight", Armor.Weight);
                 comm.Parameters.AddWithValue("@MaterialID", Armor.MaterialID);
                 comm.Parameters.AddWithValue("@ArmorTypeID", Armor.ArmorTypeID);
                 comm.Parameters.AddWithValue("@ArmorAddonID", Armor.ArmorAddonID);
@@ -479,10 +471,7 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_ArmorAddonAdd");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@Name", armorAddon.Name);
-                comm.Parameters.AddWithValue("@GPValue", armorAddon.GPValue);
-                comm.Parameters.AddWithValue("@Weight", armorAddon.Weight);
                 comm.Parameters.AddWithValue("@MaterialID", armorAddon.MaterialID);
-                comm.Parameters.AddWithValue("@ArmorCheckPenalty", armorAddon.ArmorCheckPenalty);
 
                 comm.Parameters.Add("@ArmorAddonID", SqlDbType.Int);
                 comm.Parameters["@ArmorAddonID"].Direction = ParameterDirection.Output;
@@ -520,10 +509,7 @@ namespace PathfinderTracker.Models
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@ArmorAddonID", id);
                 comm.Parameters.AddWithValue("@Name", armorAddon.Name);
-                comm.Parameters.AddWithValue("@GPValue", armorAddon.GPValue);
-                comm.Parameters.AddWithValue("@Weight", armorAddon.Weight);
                 comm.Parameters.AddWithValue("@MaterialID", armorAddon.MaterialID);
-                comm.Parameters.AddWithValue("@ArmorCheckPenalty", armorAddon.ArmorCheckPenalty);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -550,6 +536,155 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_ArmorAddonDelete");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@ArmorAddonID", ID);
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+        #endregion
+
+        #region ArmorAddonTypes
+        /// <summary>
+        /// Gets all ArmorAddonType objects from the database
+        /// </summary>
+        /// <returns></returns>
+        public static List<ArmorAddonType> GetArmorAddonTypes() {
+            List<ArmorAddonType> armorAddonTypes = new List<ArmorAddonType>();
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sprocArmorAddonTypesGetAll");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Connection = conn;
+                SqlDataReader dr = comm.ExecuteReader();
+                while(dr.Read()) {
+                    ArmorAddonType armorAddonType = new ArmorAddonType(dr);
+                    armorAddonTypes.Add(armorAddonType);
+                }
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return armorAddonTypes;
+        }
+
+        /// <summary>
+        /// gets a specific ArmorAddonType from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static ArmorAddonType GetArmorAddonType(int id) {
+            SqlCommand comm = new SqlCommand("sprocArmorAddonTypeGet");
+            ArmorAddonType retObj = null;
+            try {
+                comm.Parameters.AddWithValue("@ArmorAddonTypeID", id);
+                SqlDataReader dr = GetDataReader(comm);
+                while(dr.Read()) {
+                    retObj = new ArmorAddonType(dr);
+                }
+                comm.Connection.Close();
+            }
+            catch(Exception ex) {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+
+        }
+
+        /// <summary>
+        /// inserts an ArmorAddonType object in the database
+        /// </summary>
+        /// <param name="armorAddonType"></param>
+        /// <returns></returns>
+        public static int CreateArmorAddonType(ArmorAddonType armorAddonType) {
+            int retVal = -1;
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_ArmorAddonTypeAdd");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@Name", armorAddonType.Name);
+                comm.Parameters.AddWithValue("@BaseGPValue", armorAddonType.BaseGPValue);
+                comm.Parameters.AddWithValue("@Weight", armorAddonType.Weight);
+                comm.Parameters.AddWithValue("@ArmorCheckPenalty", armorAddonType.ArmorCheckPenalty);
+
+                comm.Parameters.Add("@ArmorAddonTypeID", SqlDbType.Int);
+                comm.Parameters["@ArmorAddonTypeID"].Direction = ParameterDirection.Output;
+
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+                int ID = (int)comm.Parameters["@ArmorAddonTypeID"].Value;
+                armorAddonType.ID = ID;
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// updates a specific ArmorAddonType object in the database
+        /// </summary>
+        /// <param name="armorAddonType"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static int UpdateArmorAddonType(ArmorAddonType armorAddonType, int id) {
+            int retVal = -1;
+            if(id < 0) {
+                return retVal;
+            }
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_ArmorAddonTypeUpdate");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@ArmorAddonTypeID", id);
+                comm.Parameters.AddWithValue("@Name", armorAddonType.Name);
+                comm.Parameters.AddWithValue("@BaseGPValue", armorAddonType.BaseGPValue);
+                comm.Parameters.AddWithValue("@Weight", armorAddonType.Weight);
+                comm.Parameters.AddWithValue("@ArmorCheckPenalty", armorAddonType.ArmorCheckPenalty);
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// deletes a specific ArmorAddonType object from the database
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public static int DeleteArmorAddonType(int ID) {
+            int retVal = -1;
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_ArmorAddonTypeDelete");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@ArmorAddonTypeID", ID);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -773,6 +908,10 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_ArmorTypeAdd");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@Name", armorType.Name);
+                comm.Parameters.AddWithValue("@BaseGPValue", armorType.BaseGPValue);
+                comm.Parameters.AddWithValue("@ACBonus", armorType.ACBonus);
+                comm.Parameters.AddWithValue("@ArmorCheckPenalty", armorType.ArmorCheckPenalty);
+                comm.Parameters.AddWithValue("@Weight", armorType.Weight);
 
                 comm.Parameters.Add("@ArmorTypeID", SqlDbType.Int);
                 comm.Parameters["@ArmorTypeID"].Direction = ParameterDirection.Output;
@@ -810,6 +949,10 @@ namespace PathfinderTracker.Models
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@ArmorTypeID", id);
                 comm.Parameters.AddWithValue("@Name", armorType.Name);
+                comm.Parameters.AddWithValue("@BaseGPValue", armorType.BaseGPValue);
+                comm.Parameters.AddWithValue("@ACBonus", armorType.ACBonus);
+                comm.Parameters.AddWithValue("@ArmorCheckPenalty", armorType.ArmorCheckPenalty);
+                comm.Parameters.AddWithValue("@Weight", armorType.Weight);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }

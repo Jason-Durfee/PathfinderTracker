@@ -1,4 +1,4 @@
-﻿@model ArmorType
+﻿@model ArmorAddonType
 
 <dl class="row">
     <dt class="col-sm-2">
@@ -8,16 +8,10 @@
         @Html.DisplayFor(model => model.Name)
     </dd>
     <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.ArmorCoreType)
+        @Html.DisplayNameFor(model => model.BaseGPValue)
     </dt>
     <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.ArmorCoreType.Name)
-    </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.ACBonus)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.ACBonus)
+        @Html.DisplayFor(model => model.BaseGPValue)
     </dd>
     <dt class="col-sm-2">
         @Html.DisplayNameFor(model => model.ArmorCheckPenalty)

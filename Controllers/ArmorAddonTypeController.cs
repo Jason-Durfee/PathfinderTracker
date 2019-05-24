@@ -9,15 +9,15 @@ using PathfinderTracker.Models;
 
 namespace PathfinderTracker
 {
-    public class ArmorAddonController : Controller
+    public class ArmorAddonTypeController : Controller
     {
-        // GET: ArmorAddon
+        // GET: ArmorAddonType
         public ActionResult Index()
         {
-            return View(DAL.GetArmorAddons());
+            return View(DAL.GetArmorAddonTypes());
         }
 
-        // GET: ArmorAddon/Details/5
+        // GET: ArmorAddonType/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -25,33 +25,30 @@ namespace PathfinderTracker
                 return NotFound();
             }
 
-            ArmorAddon armorAddon = DAL.GetArmorAddon((int)id);
-            if (armorAddon == null)
+            ArmorAddonType armorAddonType = DAL.GetArmorAddonType((int)id);
+            if (armorAddonType == null)
             {
                 return NotFound();
             }
-
-            return View(armorAddon);
+            return View(armorAddonType);
         }
 
-        // GET: ArmorAddon/Create
-        public ActionResult Create()
+        // GET: ArmorAddonType/Create
+        public IActionResult Create()
         {
-            ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name");
-            ViewData["ArmorAddonTypeID"] = new SelectList(DAL.GetArmorAddonTypes(), "ID", "Name");
             return View();
         }
 
-        // POST: ArmorAddon/Create
+        // POST: ArmorAddonType/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("MaterialID,ArmorAddonTypeID,ID")] ArmorAddon armorAddon)
+        public ActionResult Create([Bind("Name,GPValue,ArmorCheckPenalty,Weight,ID")] ArmorAddonType armorAddonType)
         {
             if (ModelState.IsValid)
             {
-                if(DAL.CreateArmorAddon(armorAddon) > 0) {
+                if(DAL.CreateArmorAddonType(armorAddonType) > 0) {
                     //success
                 }
                 else {
@@ -59,12 +56,10 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name", armorAddon.MaterialID);
-            ViewData["ArmorAddonTypeID"] = new SelectList(DAL.GetArmorAddonTypes(), "ID", "Name", armorAddon.ArmorAddonTypeID);
-            return View(armorAddon);
+            return View(armorAddonType);
         }
 
-        // GET: ArmorAddon/Edit/5
+        // GET: ArmorAddonType/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -72,31 +67,29 @@ namespace PathfinderTracker
                 return NotFound();
             }
 
-            ArmorAddon armorAddon = DAL.GetArmorAddon((int)id);
-            if (armorAddon == null)
+            ArmorAddonType armorAddonType = DAL.GetArmorAddonType((int)id);
+            if (armorAddonType == null)
             {
                 return NotFound();
             }
-            ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name", armorAddon.MaterialID);
-            ViewData["ArmorAddonTypeID"] = new SelectList(DAL.GetArmorAddonTypes(), "ID", "Name", armorAddon.ArmorAddonTypeID);
-            return View(armorAddon);
+            return View(armorAddonType);
         }
 
-        // POST: ArmorAddon/Edit/5
+        // POST: ArmorAddonType/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("MaterialID,ArmorAddonTypeID,ID")] ArmorAddon armorAddon)
+        public ActionResult Edit(int id, [Bind("Name,ID")] ArmorAddonType armorAddonType)
         {
-            if (id != armorAddon.ID)
+            if (id != armorAddonType.ID)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                if(DAL.UpdateArmorAddon(armorAddon, id) > 0) {
+                if(DAL.UpdateArmorAddonType(armorAddonType, id) > 0) {
                     //success
                 }
                 else {
@@ -104,12 +97,10 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name", armorAddon.MaterialID);
-            ViewData["ArmorAddonTypeID"] = new SelectList(DAL.GetArmorAddonTypes(), "ID", "Name", armorAddon.ArmorAddonTypeID);
-            return View(armorAddon);
+            return View(armorAddonType);
         }
 
-        // GET: ArmorAddon/Delete/5
+        // GET: ArmorAddonType/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -117,21 +108,21 @@ namespace PathfinderTracker
                 return NotFound();
             }
 
-            ArmorAddon armorAddon = DAL.GetArmorAddon((int)id);
-            if (armorAddon == null)
+            ArmorAddonType armorAddonType = DAL.GetArmorAddonType((int)id);
+            if (armorAddonType == null)
             {
                 return NotFound();
             }
 
-            return View(armorAddon);
+            return View(armorAddonType);
         }
 
-        // POST: ArmorAddon/Delete/5
+        // POST: ArmorAddonType/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if(DAL.DeleteArmorAddon(id) > 0) {
+            if(DAL.DeleteArmorAddonType(id) > 0) {
                 //success
             }
             else {

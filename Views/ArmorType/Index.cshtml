@@ -11,6 +11,21 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ACBonus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArmorCheckPenalty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArmorCoreType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BaseGPValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Weight)
+            </th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -19,6 +34,21 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ACBonus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArmorCheckPenalty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArmorCoreType.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BaseGPValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Weight)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

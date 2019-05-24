@@ -61,5 +61,7 @@ namespace PathfinderTracker.Models
         public DbSet<PathfinderTracker.Models.Item> Item { get; set; }
 
         public DbSet<PathfinderTracker.Models.Slot> Slot { get; set; }
+
+        public DbSet<PathfinderTracker.Models.ArmorAddonType> ArmorAddonType { get; set; }
     }
 }

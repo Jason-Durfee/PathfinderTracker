@@ -30,13 +30,13 @@ namespace PathfinderTracker
             {
                 return NotFound();
             }
-
             return View(armorType);
         }
 
         // GET: ArmorType/Create
         public IActionResult Create()
         {
+            ViewData["ArmorCoreTypeID"] = new SelectList(DAL.GetArmorCoreTypes(), "ID", "Name");
             return View();
         }
 
@@ -45,7 +45,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Name,ID")] ArmorType armorType)
+        public ActionResult Create([Bind("Name,BaseGPValue,ACBonus,ArmorCheckPenalty,Weight,ArmorCoreTypeID,ID")] ArmorType armorType)
         {
             if (ModelState.IsValid)
             {
@@ -57,6 +57,7 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ArmorCoreTypeID"] = new SelectList(DAL.GetArmorCoreTypes(), "ID", "Name", armorType.ArmorCoreTypeID);
             return View(armorType);
         }
 
@@ -73,6 +74,7 @@ namespace PathfinderTracker
             {
                 return NotFound();
             }
+            ViewData["ArmorCoreTypeID"] = new SelectList(DAL.GetArmorCoreTypes(), "ID", "Name", armorType.ArmorCoreTypeID);
             return View(armorType);
         }
 
@@ -81,7 +83,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("Name,ID")] ArmorType armorType)
+        public ActionResult Edit(int id, [Bind("Name,BaseGPValue,ACBonus,ArmorCheckPenalty,Weight,ArmorCoreTypeID,ID")] ArmorType armorType)
         {
             if (id != armorType.ID)
             {
@@ -98,6 +100,7 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ArmorCoreTypeID"] = new SelectList(DAL.GetArmorCoreTypes(), "ID", "Name", armorType.ArmorCoreTypeID);
             return View(armorType);
         }
 

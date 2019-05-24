@@ -14,16 +14,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ACBonus)
+                @Html.DisplayNameFor(model => model.ArmorType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Material)
+                @Html.DisplayNameFor(model => model.ArmorCheckPenalty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ACBonus)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.GPValue)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ArmorType)
+                @Html.DisplayNameFor(model => model.SpecialAttributes)
             </th>
             <th>Actions</th>
         </tr>
@@ -32,16 +35,19 @@
         @foreach(var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ACBonus)
+                @Html.DisplayFor(modelItem => item.Material.Name) @Html.DisplayFor(modelItem => item.ArmorType.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Material.ID)
+                @Html.DisplayFor(modelItem => item.ArmorCheckPenalty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ACBonus)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.GPValue)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ArmorType.ID)
+                @Html.DisplayFor(modelItem => item.SpecialAttributes)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

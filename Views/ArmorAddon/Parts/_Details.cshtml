@@ -2,22 +2,10 @@
 
 <dl class="row">
     <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.GPValue)
+        @Html.DisplayNameFor(model => model.ArmorAddonType)
     </dt>
     <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.GPValue)
-    </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.ArmorCheckPenalty)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.ArmorCheckPenalty)
-    </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.Weight)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.Weight)
+        @Html.DisplayFor(model => model.ArmorAddonType.Name)
     </dd>
     <dt class="col-sm-2">
         @Html.DisplayNameFor(model => model.Material)
@@ -26,9 +14,9 @@
         @Html.DisplayFor(model => model.Material.ID)
     </dd>
     <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.Name)
+        @Html.DisplayNameFor(model => model.GPValue)
     </dt>
     <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.Name)
+        @Html.DisplayFor(model => model.GPValue) gp
     </dd>
 </dl>
