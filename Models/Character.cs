@@ -238,6 +238,9 @@ namespace PathfinderTracker.Models
         /// </summary>
         public string Bonuses {
             get {
+                if(_Bonuses == null) {
+                    return "";
+                }
                 return _Bonuses;
             }
             set {

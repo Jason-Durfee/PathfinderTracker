@@ -58,6 +58,9 @@ namespace PathfinderTracker.Models
         /// </summary>
         public string Description {
             get {
+                if(_Description == null) {
+                    return "";
+                }
                 return _Description;
             }
             set {

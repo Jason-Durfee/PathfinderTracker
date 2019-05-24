@@ -71,6 +71,7 @@ namespace PathfinderTracker.Models
         /// gets and sets the AttackDiceSmall attribute for the WeaponType object
         /// </summary>
         [Display(Name = "Attack Dice Small")]
+        [Required]
         public string AttackDiceSmall {
             get {
                 return _AttackDiceSmall;
@@ -84,6 +85,7 @@ namespace PathfinderTracker.Models
         /// gets and sets the AttackDiceMedium attribute for the WeaponType object
         /// </summary>
         [Display(Name = "Attack Dice Medium")]
+        [Required]
         public string AttackDiceMedium {
             get {
                 return _AttackDiceMedium;
@@ -96,6 +98,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the Critical attribute for the WeaponType object
         /// </summary>
+        [Required]
         public string Critical {
             get {
                 return _Critical;

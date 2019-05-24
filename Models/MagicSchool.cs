@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -27,6 +28,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the Description attribute for the MagicSchool object
         /// </summary>
+        [Required]
         public string Description {
             get {
                 return _Description;

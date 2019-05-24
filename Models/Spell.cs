@@ -70,6 +70,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the Description attribute for the Spell object
         /// </summary>
+        [Required]
         public string Description {
             get {
                 return _Description;
@@ -83,6 +84,7 @@ namespace PathfinderTracker.Models
         /// gets and sets the CastingTime attribute for the Spell object
         /// </summary>
         [Display( Name = "Casting Time")]
+        [Required]
         public string CastingTime {
             get {
                 return _CastingTime;
@@ -96,6 +98,7 @@ namespace PathfinderTracker.Models
         /// gets and sets the RangeDistance attribute for the Spell object
         /// </summary>
         [Display( Name = "Range")]
+        [Required]
         public string RangeDistance {
             get {
                 return _RangeDistance;
@@ -108,6 +111,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the Target attribute for the Spell object
         /// </summary>
+        [Required]
         public string Target {
             get {
                 return _Target;
@@ -120,6 +124,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the Duration attribute for the Spell object
         /// </summary>
+        [Required]
         public string Duration {
             get {
                 return _Duration;
@@ -133,6 +138,7 @@ namespace PathfinderTracker.Models
         /// gets and sets the SavingThrow attribute for the Spell object
         /// </summary>
         [Display( Name = "Saving Throw")]
+        [Required]
         public string SavingThrow {
             get {
                 return _SavingThrow;
@@ -146,6 +152,7 @@ namespace PathfinderTracker.Models
         /// gets and sets the SpellResistance attribute for the Spell object
         /// </summary>
         [Display( Name = "Spell Resistance")]
+        [Required]
         public string SpellResistance {
             get {
                 return _SpellResistance;

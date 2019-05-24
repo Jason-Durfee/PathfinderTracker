@@ -124,6 +124,9 @@ namespace PathfinderTracker.Models
         [Display(Name = "Special Attributes")]
         public string SpecialAttributes {
             get {
+                if(_SpecialAttributes == null) {
+                    return "";
+                }
                 return _SpecialAttributes;
             }
             set {

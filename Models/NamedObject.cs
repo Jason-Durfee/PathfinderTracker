@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the Name for the NamedObject object
         /// </summary>
+        [Required]
         public string Name {
             get {
                 return _Name;

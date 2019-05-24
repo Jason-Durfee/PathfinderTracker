@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the abbreviation for the Alignment object
         /// </summary>
+        [Required]
         public string Abbreviation {
             get {
                 return _Abbreviation;
@@ -40,6 +42,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the Description for the Alignment object
         /// </summary>
+        [Required]
         public string Description {
             get {
                 return _Description;

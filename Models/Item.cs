@@ -35,6 +35,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the Description attribute for the Item object
         /// </summary>
+        [Required]
         public string Description {
             get {
                 return _Description;
@@ -50,6 +51,9 @@ namespace PathfinderTracker.Models
         [Display(Name = "Construction Requirements")]
         public string ConstructionRequirements {
             get {
+                if(_ConstructionRequirements == null) {
+                    return "";
+                }
                 return _ConstructionRequirements;
             }
             set {

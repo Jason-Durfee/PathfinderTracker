@@ -32,6 +32,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the Description attribute for the Feat object
         /// </summary>
+        [Required]
         public string Description {
             get {
                 return _Description;
@@ -44,6 +45,7 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets and sets the Prerequisites attribute for the Feat object
         /// </summary>
+        [Required]
         public string Prerequisites {
             get {
                 return _Prerequisites;
