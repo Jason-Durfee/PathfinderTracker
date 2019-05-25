@@ -23,6 +23,8 @@ namespace PathfinderTracker.Models
             AttackDiceSmall = (string)dr["AttackDiceSmall"];
             AttackDiceMedium = (string)dr["AttackDiceMedium"];
             Critical = (string)dr["Critical"];
+            DamageType = (string)dr["DamageType"];
+            HasReach = (bool)dr["HasReach"];
         }
 
         public WeaponType() {
@@ -36,6 +38,8 @@ namespace PathfinderTracker.Models
         private int _GPValue;
         private int _Weight;
         private string _AttackDiceSmall;
+        private string _DamageType;
+        private bool _HasReach;
         private string _AttackDiceMedium;
         private string _Critical;
         private int _WeaponCategoryID;
@@ -105,6 +109,33 @@ namespace PathfinderTracker.Models
             }
             set {
                 _Critical = value;
+            }
+        }
+
+        /// <summary>
+        /// gets and sets the DamageType attribute for the WeaponType object
+        /// </summary>
+        [Required]
+        [Display( Name = "Damage Type")]
+        public string DamageType {
+            get {
+                return _DamageType;
+            }
+            set {
+                _DamageType = value;
+            }
+        }
+
+        /// <summary>
+        /// gets and sets the HasReach attribute for the WeaponType object
+        /// </summary>
+        [Display( Name = "Has Reach")]
+        public bool HasReach {
+            get {
+                return _HasReach;
+            }
+            set {
+                _HasReach = value;
             }
         }
 

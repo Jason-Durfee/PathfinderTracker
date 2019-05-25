@@ -37,9 +37,13 @@ namespace PathfinderTracker
         // GET: Armor/Create
         public ActionResult Create()
         {
-            ViewData["ArmorAddonID"] = new SelectList(DAL.GetArmorAddons(), "ID", "Name");
+            List<ArmorAddon> armorAddons = DAL.GetArmorAddons();
+            armorAddons.Add(new ArmorAddon { ID = -1 });
+            List<Material> materials = DAL.GetMaterials();
+            materials.Add(new Material { ID = -1, Name = "Default"});
+            ViewData["ArmorAddonID"] = new SelectList(armorAddons, "ID", "Name", -1);
             ViewData["ArmorTypeID"] = new SelectList(DAL.GetArmorTypes(), "ID", "Name");
-            ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name");
+            ViewData["MaterialID"] = new SelectList(materials, "ID", "Name", -1);
             return View();
         }
 
@@ -60,9 +64,13 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ArmorAddonID"] = new SelectList(DAL.GetArmorAddons(), "ID", "Name", armor.ArmorAddonID);
+            List<ArmorAddon> armorAddons = DAL.GetArmorAddons();
+            armorAddons.Add(new ArmorAddon { ID = -1 });
+            List<Material> materials = DAL.GetMaterials();
+            materials.Add(new Material { ID = -1, Name = "Default" });
+            ViewData["ArmorAddonID"] = new SelectList(armorAddons, "ID", "Name", armor.ArmorAddonID);
             ViewData["ArmorTypeID"] = new SelectList(DAL.GetArmorTypes(), "ID", "Name", armor.ArmorTypeID);
-            ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name", armor.MaterialID);
+            ViewData["MaterialID"] = new SelectList(materials, "ID", "Name", armor.MaterialID);
             return View(armor);
         }
 
@@ -79,9 +87,13 @@ namespace PathfinderTracker
             {
                 return NotFound();
             }
-            ViewData["ArmorAddonID"] = new SelectList(DAL.GetArmorAddons(), "ID", "Name", armor.ArmorAddonID);
+            List<ArmorAddon> armorAddons = DAL.GetArmorAddons();
+            armorAddons.Add(new ArmorAddon { ID = -1 });
+            List<Material> materials = DAL.GetMaterials();
+            materials.Add(new Material { ID = -1, Name = "Default" });
+            ViewData["ArmorAddonID"] = new SelectList(armorAddons, "ID", "Name", armor.ArmorAddonID);
             ViewData["ArmorTypeID"] = new SelectList(DAL.GetArmorTypes(), "ID", "Name", armor.ArmorTypeID);
-            ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name", armor.MaterialID);
+            ViewData["MaterialID"] = new SelectList(materials, "ID", "Name", armor.MaterialID);
             return View(armor);
         }
 
@@ -107,9 +119,13 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ArmorAddonID"] = new SelectList(DAL.GetArmorAddons(), "ID", "Name", armor.ArmorAddonID);
+            List<ArmorAddon> armorAddons = DAL.GetArmorAddons();
+            armorAddons.Add(new ArmorAddon { ID = -1 });
+            List<Material> materials = DAL.GetMaterials();
+            materials.Add(new Material { ID = -1, Name = "Default" });
+            ViewData["ArmorAddonID"] = new SelectList(armorAddons, "ID", "Name", armor.ArmorAddonID);
             ViewData["ArmorTypeID"] = new SelectList(DAL.GetArmorTypes(), "ID", "Name", armor.ArmorTypeID);
-            ViewData["MaterialID"] = new SelectList(DAL.GetMaterials(), "ID", "Name", armor.MaterialID);
+            ViewData["MaterialID"] = new SelectList(materials, "ID", "Name", armor.MaterialID);
             return View(armor);
         }
 

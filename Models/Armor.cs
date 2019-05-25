@@ -32,7 +32,7 @@ namespace PathfinderTracker.Models
         private ArmorAddon _ArmorAddon;
         private string _SpecialAttributes;
 
-       
+
 
         /// <summary>
         /// gets and sets the MaterialID attribute for the Armor object
@@ -140,19 +140,19 @@ namespace PathfinderTracker.Models
         [Display(Name = "Gold Value")]
         public string GPValue {
             get {
-                if(Material != null && ArmorType != null && ArmorType.ArmorCoreType != null) {
-                    int retVal = 0;
-                    int baseVal = ArmorType.BaseGPValue;
-                    if(ArmorType.ArmorCoreType.Name == "Heavy") {
+                int retVal = 0;
+                int baseVal = ArmorType.BaseGPValue;
+                if(Material != null) {
+                    if(ArmorType != null && ArmorType.ArmorCoreType != null && ArmorType.ArmorCoreType.Name == "Heavy") {
                         retVal = baseVal + Material.HeavyAddedGold;
                     }
-                    else if(ArmorType.ArmorCoreType.Name == "Medium") {
+                    else if(ArmorType != null && ArmorType.ArmorCoreType != null && ArmorType.ArmorCoreType.Name == "Medium") {
                         retVal = baseVal + Material.MediumAddedGold;
                     }
-                    else if(ArmorType.ArmorCoreType.Name == "Light") {
+                    else if(ArmorType != null && ArmorType.ArmorCoreType != null && ArmorType.ArmorCoreType.Name == "Light") {
                         retVal = baseVal + Material.LightAddedGold;
                     }
-                    else if(ArmorType.ArmorCoreType.Name == "Shield") {
+                    else if(ArmorType != null && ArmorType.ArmorCoreType != null && ArmorType.ArmorCoreType.Name == "Shield") {
                         retVal = baseVal + Material.ShieldAddedGold;
                     }
                     if(Material.WeightGoldMultiplier > 1) {
@@ -161,15 +161,16 @@ namespace PathfinderTracker.Models
                     if(Material.BaseGoldMultiplier > 1) {
                         retVal += Material.BaseGoldMultiplier * ArmorType.BaseGPValue;
                     }
+                }
+                else {
                     if(ArmorAddon != null) {
                         retVal += ArmorAddon.GPValue;
                     }
-                    if(ArmorAddon != null && ArmorAddon.Material != null && ArmorAddon.Material.WeightGoldMultiplier > 1) {
-                        retVal += ArmorAddon.GPValue;
+                    if(ArmorType != null) {
+                        retVal += ArmorType.BaseGPValue;
                     }
-                    return retVal.ToString() + " gp";
                 }
-                return "Unknown";
+                return retVal + " gp";
             }
         }
 

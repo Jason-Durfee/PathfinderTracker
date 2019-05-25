@@ -30,8 +30,6 @@ namespace PathfinderTracker.Models
 
         public DbSet<PathfinderTracker.Models.ClassesToCharacter> ClassesToCharacter { get; set; }
 
-        public DbSet<PathfinderTracker.Models.DamageType> DamageType { get; set; }
-
         public DbSet<PathfinderTracker.Models.Deity> Deity { get; set; }
 
         public DbSet<PathfinderTracker.Models.Feat> Feat { get; set; }

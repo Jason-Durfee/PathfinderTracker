@@ -120,11 +120,11 @@ namespace PathfinderTracker.Models
         /// <summary>
         /// gets the damage statistics for the weapon object
         /// </summary>
-        [Display(Name = "Attack Dice S/M")]
+        [Display(Name = "Attack Dice S|M")]
         public string Damage {
             get {
                 if(WeaponType != null) {
-                    return WeaponType.AttackDiceSmall + "/" + WeaponType.AttackDiceMedium;
+                    return WeaponType.AttackDiceSmall + " | " + WeaponType.AttackDiceMedium;
                 }
                 else {
                     return "Unknown";
@@ -133,7 +133,7 @@ namespace PathfinderTracker.Models
         }
 
         /// <summary>
-        /// gets the damage statistics for the weapon object
+        /// gets the GPValue for the weapon object
         /// </summary>
         [Display(Name = "Gold Value")]
         public string GPValue {
@@ -151,6 +151,36 @@ namespace PathfinderTracker.Models
                 }
                 else {
                     return "Unknown";
+                }
+            }
+        }
+
+        /// <summary>
+        /// gets the HasReach for the weapon object
+        /// </summary>
+        [Display(Name = "Reach")]
+        public string HasReach {
+            get {
+                if(WeaponType != null && WeaponType.HasReach) {
+                    return "Yes";
+                }
+                else {
+                    return "No";
+                }
+            }
+        }
+
+        /// <summary>
+        /// gets the DamageType for the weapon object
+        /// </summary>
+        [Display(Name = "Damage Type")]
+        public string DamageType {
+            get {
+                if(WeaponType != null) {
+                    return WeaponType.DamageType;
+                }
+                else {
+                    return "Unkown";
                 }
             }
         }

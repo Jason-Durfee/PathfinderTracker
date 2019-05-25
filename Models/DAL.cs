@@ -1890,149 +1890,6 @@ namespace PathfinderTracker.Models
         }
         #endregion
 
-        #region DamageTypes
-        /// <summary>
-        /// Gets all DamageType objects from the database
-        /// </summary>
-        /// <returns></returns>
-        public static List<DamageType> GetDamageTypes() {
-            List<DamageType> damageTypes = new List<DamageType>();
-            SqlConnection conn = null;
-            try {
-                conn = new SqlConnection(ConnectionString);
-                conn.Open();
-                SqlCommand comm = new SqlCommand("sprocDamageTypesGetAll");
-                comm.CommandType = CommandType.StoredProcedure;
-                comm.Connection = conn;
-                SqlDataReader dr = comm.ExecuteReader();
-                while(dr.Read()) {
-                    DamageType damageType = new DamageType(dr);
-                    damageTypes.Add(damageType);
-                }
-            }
-            catch(Exception error) {
-                System.Diagnostics.Debug.WriteLine(error.Message);
-            }
-            finally {
-                if(conn != null) conn.Close();
-            }
-            return damageTypes;
-        }
-
-        /// <summary>
-        /// gets a specific DamageType from the database
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public static DamageType GetDamageType(int id) {
-            SqlCommand comm = new SqlCommand("sprocDamageTypeGet");
-            DamageType retObj = null;
-            try {
-                comm.Parameters.AddWithValue("@DamageTypeID", id);
-                SqlDataReader dr = GetDataReader(comm);
-                while(dr.Read()) {
-                    retObj = new DamageType(dr);
-                }
-                comm.Connection.Close();
-            }
-            catch(Exception ex) {
-                comm.Connection.Close();
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-            }
-            return retObj;
-
-        }
-
-        /// <summary>
-        /// inserts an DamageType object in the database
-        /// </summary>
-        /// <param name="damageType"></param>
-        /// <returns></returns>
-        public static int CreateDamageType(DamageType damageType) {
-            int retVal = -1;
-            SqlConnection conn = null;
-            try {
-                conn = new SqlConnection(ConnectionString);
-                conn.Open();
-                SqlCommand comm = new SqlCommand("sproc_DamageTypeAdd");
-                comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", damageType.Name);
-
-                comm.Parameters.Add("@DamageTypeID", SqlDbType.Int);
-                comm.Parameters["@DamageTypeID"].Direction = ParameterDirection.Output;
-
-                comm.Connection = conn;
-                retVal = comm.ExecuteNonQuery();
-                int ID = (int)comm.Parameters["@DamageTypeID"].Value;
-                damageType.ID = ID;
-            }
-            catch(Exception error) {
-                System.Diagnostics.Debug.WriteLine(error.Message);
-            }
-            finally {
-                if(conn != null) conn.Close();
-            }
-            return retVal;
-        }
-
-        /// <summary>
-        /// updates a specific DamageType object in the database
-        /// </summary>
-        /// <param name="damageType"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public static int UpdateDamageType(DamageType damageType, int id) {
-            int retVal = -1;
-            if(id < 0) {
-                return retVal;
-            }
-            SqlConnection conn = null;
-            try {
-                conn = new SqlConnection(ConnectionString);
-                conn.Open();
-                SqlCommand comm = new SqlCommand("sproc_DamageTypeUpdate");
-                comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@DamageTypeID", id);
-                comm.Parameters.AddWithValue("@Name", damageType.Name);
-                comm.Connection = conn;
-                retVal = comm.ExecuteNonQuery();
-            }
-            catch(Exception error) {
-                System.Diagnostics.Debug.WriteLine(error.Message);
-            }
-            finally {
-                if(conn != null) conn.Close();
-            }
-            return retVal;
-        }
-
-        /// <summary>
-        /// deletes a specific DamageType object from the database
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <returns></returns>
-        public static int DeleteDamageType(int ID) {
-            int retVal = -1;
-            SqlConnection conn = null;
-            try {
-                conn = new SqlConnection(ConnectionString);
-                conn.Open();
-                SqlCommand comm = new SqlCommand("sproc_DamageTypeDelete");
-                comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@DamageTypeID", ID);
-                comm.Connection = conn;
-                retVal = comm.ExecuteNonQuery();
-            }
-            catch(Exception error) {
-                System.Diagnostics.Debug.WriteLine(error.Message);
-            }
-            finally {
-                if(conn != null) conn.Close();
-            }
-            return retVal;
-        }
-        #endregion
-
         #region Deitys
         /// <summary>
         /// Gets all Deity objects from the database
@@ -4166,6 +4023,8 @@ namespace PathfinderTracker.Models
                 comm.Parameters.AddWithValue("@Critical", weaponType.Critical);
                 comm.Parameters.AddWithValue("@GPValue", weaponType.GPValue);
                 comm.Parameters.AddWithValue("@Weight", weaponType.Weight);
+                comm.Parameters.AddWithValue("@HasReach", weaponType.HasReach);
+                comm.Parameters.AddWithValue("@DamageType", weaponType.DamageType);
                 comm.Parameters.AddWithValue("@WeaponCategoryID", weaponType.WeaponCategoryID);
                 comm.Parameters.AddWithValue("@WeaponCoreTypeID", weaponType.WeaponCoreTypeID);
 
@@ -4210,6 +4069,8 @@ namespace PathfinderTracker.Models
                 comm.Parameters.AddWithValue("@AttackRange", weaponType.AttackRange);
                 comm.Parameters.AddWithValue("@Critical", weaponType.Critical);
                 comm.Parameters.AddWithValue("@GPValue", weaponType.GPValue);
+                comm.Parameters.AddWithValue("@HasReach", weaponType.HasReach);
+                comm.Parameters.AddWithValue("@DamageType", weaponType.DamageType);
                 comm.Parameters.AddWithValue("@Weight", weaponType.Weight);
                 comm.Parameters.AddWithValue("@WeaponCategoryID", weaponType.WeaponCategoryID);
                 comm.Parameters.AddWithValue("@WeaponCoreTypeID", weaponType.WeaponCoreTypeID);

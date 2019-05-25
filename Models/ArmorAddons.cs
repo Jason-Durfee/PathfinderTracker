@@ -91,7 +91,7 @@ namespace PathfinderTracker.Models
                 if(ArmorAddonType != null && Material != null) {
                     return Material.Name + " " + ArmorAddonType.Name;
                 }
-                return "Unknown";
+                return "None";
             }
         }
 

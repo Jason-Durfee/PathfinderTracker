@@ -20,13 +20,16 @@
                 @Html.DisplayNameFor(model => model.Damage)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.DamageType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HasReach)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.WeaponType.AttackRange)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.WeaponType.Critical)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SpecialAttributes)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.GPValue)
@@ -44,13 +47,16 @@
                 @Html.DisplayFor(modelItem => item.Damage)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.DamageType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HasReach)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.WeaponType.AttackRange)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.WeaponType.Critical)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpecialAttributes)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.GPValue)
