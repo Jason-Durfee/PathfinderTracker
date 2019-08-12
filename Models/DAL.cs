@@ -1204,6 +1204,7 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_CampaignAdd");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@Name", campaign.Name);
+                comm.Parameters.AddWithValue("@CurrentTime", campaign.CurrentTime);
 
                 comm.Parameters.Add("@CampaignID", SqlDbType.Int);
                 comm.Parameters["@CampaignID"].Direction = ParameterDirection.Output;
@@ -1241,6 +1242,7 @@ namespace PathfinderTracker.Models
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@CampaignID", id);
                 comm.Parameters.AddWithValue("@Name", campaign.Name);
+                comm.Parameters.AddWithValue("@CurrentTime", campaign.CurrentTime);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }

@@ -163,12 +163,12 @@ namespace PathfinderTracker.Models
                     }
                 }
                 else {
-                    if(ArmorAddon != null) {
-                        retVal += ArmorAddon.GPValue;
-                    }
                     if(ArmorType != null) {
                         retVal += ArmorType.BaseGPValue;
                     }
+                }
+                if(ArmorAddon != null) {
+                    retVal += ArmorAddon.GPValue;
                 }
                 return retVal + " gp";
             }
