@@ -1,0 +1,17 @@
+﻿@model WeatherType
+
+<div class="form-group">
+    <label asp-for="Name" class="control-label"></label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="MinSelector" class="control-label"></label>
+    <input asp-for="MinSelector" class="form-control" />
+    <span asp-validation-for="MinSelector" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="MaxSelector" class="control-label"></label>
+    <input asp-for="MaxSelector" class="form-control" />
+    <span asp-validation-for="MaxSelector" class="text-danger"></span>
+</div>

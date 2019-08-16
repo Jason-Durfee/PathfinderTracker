@@ -1,0 +1,22 @@
+﻿@model WeatherType
+
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Name)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.MinSelector)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.MinSelector)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.MaxSelector)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.MaxSelector)
+    </dd>
+</dl>

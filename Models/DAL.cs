@@ -1205,6 +1205,7 @@ namespace PathfinderTracker.Models
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@Name", campaign.Name);
                 comm.Parameters.AddWithValue("@CurrentTime", campaign.CurrentTime);
+                comm.Parameters.AddWithValue("@OriginalStartDate", campaign.CurrentTime);
 
                 comm.Parameters.Add("@CampaignID", SqlDbType.Int);
                 comm.Parameters["@CampaignID"].Direction = ParameterDirection.Output;
@@ -1243,6 +1244,7 @@ namespace PathfinderTracker.Models
                 comm.Parameters.AddWithValue("@CampaignID", id);
                 comm.Parameters.AddWithValue("@Name", campaign.Name);
                 comm.Parameters.AddWithValue("@CurrentTime", campaign.CurrentTime);
+                comm.Parameters.AddWithValue("@OriginalStartDate", campaign.OriginalStartDate);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -1349,16 +1351,9 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_CharacterAdd");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@Name", character.Name);
-                comm.Parameters.AddWithValue("@AlignmentID", character.AlignmentID);
-                comm.Parameters.AddWithValue("@Bonuses", character.Bonuses);
                 comm.Parameters.AddWithValue("@CampaignID", character.CampaignID);
-                comm.Parameters.AddWithValue("@DeityID", character.DeityID);
-                comm.Parameters.AddWithValue("@IsNPC", character.IsNPC);
                 comm.Parameters.AddWithValue("@Level", character.Level);
                 comm.Parameters.AddWithValue("@RaceID", character.RaceID);
-                comm.Parameters.AddWithValue("@CharacterID", character.PlayerID);
-                comm.Parameters.AddWithValue("@HPCurrent", character.HPCurrent);
-                comm.Parameters.AddWithValue("@HPMax", character.HPMax);
 
                 comm.Parameters.Add("@CharacterID", SqlDbType.Int);
                 comm.Parameters["@CharacterID"].Direction = ParameterDirection.Output;
@@ -1396,16 +1391,9 @@ namespace PathfinderTracker.Models
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@CharacterID", id);
                 comm.Parameters.AddWithValue("@Name", character.Name);
-                comm.Parameters.AddWithValue("@AlignmentID", character.AlignmentID);
-                comm.Parameters.AddWithValue("@Bonuses", character.Bonuses);
                 comm.Parameters.AddWithValue("@CampaignID", character.CampaignID);
-                comm.Parameters.AddWithValue("@DeityID", character.DeityID);
-                comm.Parameters.AddWithValue("@IsNPC", character.IsNPC);
                 comm.Parameters.AddWithValue("@Level", character.Level);
                 comm.Parameters.AddWithValue("@RaceID", character.RaceID);
-                comm.Parameters.AddWithValue("@CharacterID", character.PlayerID);
-                comm.Parameters.AddWithValue("@HPCurrent", character.HPCurrent);
-                comm.Parameters.AddWithValue("@HPMax", character.HPMax);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -2931,149 +2919,6 @@ namespace PathfinderTracker.Models
         }
         #endregion
 
-        #region Players
-        /// <summary>
-        /// Gets all Player objects from the database
-        /// </summary>
-        /// <returns></returns>
-        public static List<Player> GetPlayers() {
-            List<Player> players = new List<Player>();
-            SqlConnection conn = null;
-            try {
-                conn = new SqlConnection(ConnectionString);
-                conn.Open();
-                SqlCommand comm = new SqlCommand("sprocPlayersGetAll");
-                comm.CommandType = CommandType.StoredProcedure;
-                comm.Connection = conn;
-                SqlDataReader dr = comm.ExecuteReader();
-                while(dr.Read()) {
-                    Player player = new Player(dr);
-                    players.Add(player);
-                }
-            }
-            catch(Exception error) {
-                System.Diagnostics.Debug.WriteLine(error.Message);
-            }
-            finally {
-                if(conn != null) conn.Close();
-            }
-            return players;
-        }
-
-        /// <summary>
-        /// gets a specific Player from the database
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public static Player GetPlayer(int id) {
-            SqlCommand comm = new SqlCommand("sprocPlayerGet");
-            Player retObj = null;
-            try {
-                comm.Parameters.AddWithValue("@PlayerID", id);
-                SqlDataReader dr = GetDataReader(comm);
-                while(dr.Read()) {
-                    retObj = new Player(dr);
-                }
-                comm.Connection.Close();
-            }
-            catch(Exception ex) {
-                comm.Connection.Close();
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-            }
-            return retObj;
-
-        }
-
-        /// <summary>
-        /// inserts an Player object in the database
-        /// </summary>
-        /// <param name="player"></param>
-        /// <returns></returns>
-        public static int CreatePlayer(Player player) {
-            int retVal = -1;
-            SqlConnection conn = null;
-            try {
-                conn = new SqlConnection(ConnectionString);
-                conn.Open();
-                SqlCommand comm = new SqlCommand("sproc_PlayerAdd");
-                comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@Name", player.Name);
-
-                comm.Parameters.Add("@PlayerID", SqlDbType.Int);
-                comm.Parameters["@PlayerID"].Direction = ParameterDirection.Output;
-
-                comm.Connection = conn;
-                retVal = comm.ExecuteNonQuery();
-                int ID = (int)comm.Parameters["@PlayerID"].Value;
-                player.ID = ID;
-            }
-            catch(Exception error) {
-                System.Diagnostics.Debug.WriteLine(error.Message);
-            }
-            finally {
-                if(conn != null) conn.Close();
-            }
-            return retVal;
-        }
-
-        /// <summary>
-        /// updates a specific Player object in the database
-        /// </summary>
-        /// <param name="player"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public static int UpdatePlayer(Player player, int id) {
-            int retVal = -1;
-            if(id < 0) {
-                return retVal;
-            }
-            SqlConnection conn = null;
-            try {
-                conn = new SqlConnection(ConnectionString);
-                conn.Open();
-                SqlCommand comm = new SqlCommand("sproc_PlayerUpdate");
-                comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@PlayerID", id);
-                comm.Parameters.AddWithValue("@Name", player.Name);
-                comm.Connection = conn;
-                retVal = comm.ExecuteNonQuery();
-            }
-            catch(Exception error) {
-                System.Diagnostics.Debug.WriteLine(error.Message);
-            }
-            finally {
-                if(conn != null) conn.Close();
-            }
-            return retVal;
-        }
-
-        /// <summary>
-        /// deletes a specific Player object from the database
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <returns></returns>
-        public static int DeletePlayer(int ID) {
-            int retVal = -1;
-            SqlConnection conn = null;
-            try {
-                conn = new SqlConnection(ConnectionString);
-                conn.Open();
-                SqlCommand comm = new SqlCommand("sproc_PlayerDelete");
-                comm.CommandType = CommandType.StoredProcedure;
-                comm.Parameters.AddWithValue("@PlayerID", ID);
-                comm.Connection = conn;
-                retVal = comm.ExecuteNonQuery();
-            }
-            catch(Exception error) {
-                System.Diagnostics.Debug.WriteLine(error.Message);
-            }
-            finally {
-                if(conn != null) conn.Close();
-            }
-            return retVal;
-        }
-        #endregion
-
         #region Races
         /// <summary>
         /// Gets all Race objects from the database
@@ -4102,6 +3947,153 @@ namespace PathfinderTracker.Models
                 SqlCommand comm = new SqlCommand("sproc_WeaponTypeDelete");
                 comm.CommandType = CommandType.StoredProcedure;
                 comm.Parameters.AddWithValue("@WeaponTypeID", ID);
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+        #endregion
+
+        #region WeatherTypes
+        /// <summary>
+        /// Gets all WeatherType objects from the database
+        /// </summary>
+        /// <returns></returns>
+        public static List<WeatherType> GetWeatherTypes() {
+            List<WeatherType> weatherTypes = new List<WeatherType>();
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sprocWeatherTypesGetAll");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Connection = conn;
+                SqlDataReader dr = comm.ExecuteReader();
+                while(dr.Read()) {
+                    WeatherType weatherType = new WeatherType(dr);
+                    weatherTypes.Add(weatherType);
+                }
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return weatherTypes;
+        }
+
+        /// <summary>
+        /// gets a specific WeatherType from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static WeatherType GetWeatherType(int id) {
+            SqlCommand comm = new SqlCommand("sprocWeatherTypeGet");
+            WeatherType retObj = null;
+            try {
+                comm.Parameters.AddWithValue("@WeatherTypeID", id);
+                SqlDataReader dr = GetDataReader(comm);
+                while(dr.Read()) {
+                    retObj = new WeatherType(dr);
+                }
+                comm.Connection.Close();
+            }
+            catch(Exception ex) {
+                comm.Connection.Close();
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+            return retObj;
+
+        }
+
+        /// <summary>
+        /// inserts an WeatherType object in the database
+        /// </summary>
+        /// <param name="weatherType"></param>
+        /// <returns></returns>
+        public static int CreateWeatherType(WeatherType weatherType) {
+            int retVal = -1;
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_WeatherTypeAdd");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@Name", weatherType.Name);
+                comm.Parameters.AddWithValue("@MinSelector", weatherType.MinSelector);
+                comm.Parameters.AddWithValue("@MaxSelector", weatherType.MaxSelector);
+
+                comm.Parameters.Add("@WeatherTypeID", SqlDbType.Int);
+                comm.Parameters["@WeatherTypeID"].Direction = ParameterDirection.Output;
+
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+                int ID = (int)comm.Parameters["@WeatherTypeID"].Value;
+                weatherType.ID = ID;
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// updates a specific WeatherType object in the database
+        /// </summary>
+        /// <param name="weatherType"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static int UpdateWeatherType(WeatherType weatherType, int id) {
+            int retVal = -1;
+            if(id < 0) {
+                return retVal;
+            }
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_WeatherTypeUpdate");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@WeatherTypeID", id);
+                comm.Parameters.AddWithValue("@Name", weatherType.Name);
+                comm.Parameters.AddWithValue("@MinSelector", weatherType.MinSelector);
+                comm.Parameters.AddWithValue("@MaxSelector", weatherType.MaxSelector);
+                comm.Connection = conn;
+                retVal = comm.ExecuteNonQuery();
+            }
+            catch(Exception error) {
+                System.Diagnostics.Debug.WriteLine(error.Message);
+            }
+            finally {
+                if(conn != null) conn.Close();
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// deletes a specific WeatherType object from the database
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public static int DeleteWeatherType(int ID) {
+            int retVal = -1;
+            SqlConnection conn = null;
+            try {
+                conn = new SqlConnection(ConnectionString);
+                conn.Open();
+                SqlCommand comm = new SqlCommand("sproc_WeatherTypeDelete");
+                comm.CommandType = CommandType.StoredProcedure;
+                comm.Parameters.AddWithValue("@WeatherTypeID", ID);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }

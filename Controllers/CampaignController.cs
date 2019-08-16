@@ -45,7 +45,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Name,ID")] Campaign campaign)
+        public ActionResult Create([Bind("Name,ID,CurrentTime")] Campaign campaign)
         {
             if (ModelState.IsValid)
             {
@@ -58,6 +58,33 @@ namespace PathfinderTracker
                 return RedirectToAction(nameof(Index));
             }
             return View(campaign);
+        }
+
+        public ActionResult AddHours(int hours) {
+            Campaign campaign = CurrentVariables.CurrentCampaign;
+            if(campaign == null) {
+                return NotFound();
+            }
+            campaign.AddHours(hours);
+            CurrentVariables.TimeSinceWeatherChange += hours;
+            if(CurrentVariables.TimeSinceWeatherChange >= 3) {
+                //change weather type
+                RandomWeatherSelect();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        private static void RandomWeatherSelect() {
+            List<WeatherType> weatherTypes = DAL.GetWeatherTypes();
+            int currentSeed = DateTime.Now.Millisecond;
+            Random rand = new Random(currentSeed);
+            int randNumber = rand.Next(0, 101);
+            foreach(WeatherType weatherType in weatherTypes) {
+                if(randNumber >= weatherType.MinSelector && randNumber <= weatherType.MaxSelector) {
+                    CurrentVariables.CurrentWeatherType = weatherType;
+                }
+            }
+            CurrentVariables.TimeSinceWeatherChange = 0;
         }
 
         // GET: Campaign/Edit/5
@@ -81,7 +108,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("Name,ID")] Campaign campaign)
+        public ActionResult Edit(int id, [Bind("Name,ID,CurrentTime,OriginalStartDate")] Campaign campaign)
         {
             if (id != campaign.ID)
             {
@@ -144,6 +171,7 @@ namespace PathfinderTracker
             if(id > 0) {
                 CurrentVariables.CurrentCampaign = null;
                 CurrentVariables.CurrentCampaignID = id;
+                RandomWeatherSelect();
             }
             return RedirectToAction("Index", "Home");
         }

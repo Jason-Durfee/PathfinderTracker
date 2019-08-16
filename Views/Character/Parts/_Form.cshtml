@@ -13,27 +13,9 @@ else {
     </div>
 }
 <div class="form-group">
-    <label asp-for="Player" class="control-label"></label>
-    <select asp-for="PlayerID" class="form-control" asp-items="ViewBag.PlayerID"></select>
-    <span asp-validation-for="PlayerID" class="text-danger"></span>
-</div>
-<div class="form-group">
     <label asp-for="Level" class="control-label"></label>
     <input asp-for="Level" class="form-control" />
     <span asp-validation-for="Level" class="text-danger"></span>
-</div>
-<div class="form-group form-check">
-    <label class="form-check-label">
-        <input class="form-check-input" asp-for="IsNPC" /> @Html.DisplayNameFor(model => model.IsNPC)
-    </label>
-</div>
-<div class="form-group">
-    <label asp-for="Alignment" class="control-label"></label>
-    <select asp-for="AlignmentID" class="form-control" asp-items="ViewBag.AlignmentID"></select>
-</div>
-<div class="form-group">
-    <label asp-for="Deity" class="control-label"></label>
-    <select asp-for="DeityID" class="form-control" asp-items="ViewBag.DeityID"></select>
 </div>
 <div class="form-group">
     <label asp-for="Race" class="control-label"></label>
@@ -43,19 +25,4 @@ else {
     <label asp-for="Name" class="control-label"></label>
     <input asp-for="Name" class="form-control" />
     <span asp-validation-for="Name" class="text-danger"></span>
-</div>
-<div class="form-group">
-    <label asp-for="HPMax" class="control-label"></label>
-    <input asp-for="HPMax" class="form-control" />
-    <span asp-validation-for="HPMax" class="text-danger"></span>
-</div>
-<div class="form-group">
-    <label asp-for="HPCurrent" class="control-label"></label>
-    <input asp-for="HPCurrent" class="form-control" />
-    <span asp-validation-for="HPCurrent" class="text-danger"></span>
-</div>
-<div class="form-group">
-    <label asp-for="Bonuses" class="control-label"></label>
-    <input asp-for="Bonuses" class="form-control" />
-    <span asp-validation-for="Bonuses" class="text-danger"></span>
 </div>

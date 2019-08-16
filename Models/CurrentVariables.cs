@@ -9,6 +9,9 @@ namespace PathfinderTracker.Models
     {
         private static int _CurrentCampaignID;
         private static Campaign _CurrentCampaign;
+        private static int _CurrentWeatherTypeID;
+        private static WeatherType _CurrentWeatherType;
+        private static int _TimeSinceWeatherChange;
 
         public static int CurrentCampaignID {
             get {
@@ -16,6 +19,24 @@ namespace PathfinderTracker.Models
             }
             set {
                 _CurrentCampaignID = value;
+            }
+        }
+
+        public static int CurrentWeatherTypeID {
+            get {
+                return _CurrentWeatherTypeID;
+            }
+            set {
+                _CurrentWeatherTypeID = value;
+            }
+        }
+
+        public static int TimeSinceWeatherChange {
+            get {
+                return _TimeSinceWeatherChange;
+            }
+            set {
+                _TimeSinceWeatherChange = value;
             }
         }
 
@@ -34,6 +55,24 @@ namespace PathfinderTracker.Models
             }
             set {
                 _CurrentCampaign = value;
+            }
+        }
+
+        public static WeatherType CurrentWeatherType {
+            get {
+                if(_CurrentWeatherType == null && _CurrentWeatherTypeID > 0) {
+                    _CurrentWeatherType = DAL.GetWeatherType(_CurrentWeatherTypeID);
+                }
+                if(_CurrentWeatherType != null) {
+                    return _CurrentWeatherType;
+                }
+                WeatherType blankWeatherType = new WeatherType();
+                blankWeatherType.Name = "";
+                blankWeatherType.ID = -1;
+                return blankWeatherType;
+            }
+            set {
+                _CurrentWeatherType = value;
             }
         }
 

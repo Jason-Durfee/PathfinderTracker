@@ -9,15 +9,15 @@ using PathfinderTracker.Models;
 
 namespace PathfinderTracker
 {
-    public class PlayerController : Controller
+    public class WeatherTypeController : Controller
     {
-        // GET: Player
+        // GET: WeatherType
         public ActionResult Index()
         {
-            return View(DAL.GetPlayers());
+            return View(DAL.GetWeatherTypes());
         }
 
-        // GET: Player/Details/5
+        // GET: WeatherType/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -25,31 +25,31 @@ namespace PathfinderTracker
                 return NotFound();
             }
 
-            Player player = DAL.GetPlayer((int)id);
-            if (player == null)
+            WeatherType WeatherType = DAL.GetWeatherType((int)id);
+            if (WeatherType == null)
             {
                 return NotFound();
             }
 
-            return View(player);
+            return View(WeatherType);
         }
 
-        // GET: Player/Create
+        // GET: WeatherType/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Player/Create
+        // POST: WeatherType/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Name,ID")] Player player)
+        public ActionResult Create([Bind("Name,ID,MinSelector,MaxSelector")] WeatherType WeatherType)
         {
             if (ModelState.IsValid)
             {
-                if(DAL.CreatePlayer(player) > 0) {
+                if(DAL.CreateWeatherType(WeatherType) > 0) {
                     //success
                 }
                 else {
@@ -57,10 +57,10 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(player);
+            return View(WeatherType);
         }
 
-        // GET: Player/Edit/5
+        // GET: WeatherType/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -68,29 +68,29 @@ namespace PathfinderTracker
                 return NotFound();
             }
 
-            Player player = DAL.GetPlayer((int)id);
-            if (player == null)
+            WeatherType WeatherType = DAL.GetWeatherType((int)id);
+            if(WeatherType == null)
             {
                 return NotFound();
             }
-            return View(player);
+            return View(WeatherType);
         }
 
-        // POST: Player/Edit/5
+        // POST: WeatherType/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("Name,ID")] Player player)
+        public ActionResult Edit(int id, [Bind("Name,ID,MinSelector,MaxSelector")] WeatherType WeatherType)
         {
-            if (id != player.ID)
+            if (id != WeatherType.ID)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                if(DAL.UpdatePlayer(player, id) > 0) {
+                if(DAL.UpdateWeatherType(WeatherType, id) > 0) {
                     //success
                 }
                 else {
@@ -98,10 +98,10 @@ namespace PathfinderTracker
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(player);
+            return View(WeatherType);
         }
 
-        // GET: Player/Delete/5
+        // GET: WeatherType/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,46 +109,27 @@ namespace PathfinderTracker
                 return NotFound();
             }
 
-            Player player = DAL.GetPlayer((int)id);
-            if (player == null)
+            WeatherType WeatherType = DAL.GetWeatherType((int)id);
+            if(WeatherType == null)
             {
                 return NotFound();
             }
 
-            return View(player);
+            return View(WeatherType);
         }
 
-        // POST: Player/Delete/5
+        // POST: WeatherType/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if(DAL.DeletePlayer(id) > 0) {
+            if(DAL.DeleteWeatherType(id) > 0) {
                 //success
             }
             else {
                 //error
             }
             return RedirectToAction(nameof(Index));
-        }
-
-        /// <summary>
-        /// searches for a list of Players containing the search text
-        /// </summary>
-        /// <param name="searchText"></param>
-        /// <returns></returns>
-        public IActionResult Search(string searchText) {
-            List<Player> players = new List<Player>();
-            List<Player> allPlayers = DAL.GetPlayers();
-            if(searchText == null || searchText == "") {
-                return View("Index", allPlayers);
-            }
-            foreach(Player player in allPlayers) {
-                if(player.Name.ToLower().Contains(searchText.ToLower())) {
-                    players.Add(player);
-                }
-            }
-            return View("Index", players);
         }
     }
 }

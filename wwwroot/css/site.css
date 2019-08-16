@@ -63,3 +63,8 @@ body {
 #txtSearchBox {
     border-radius: 3px;
 }
+
+#hourAdder {
+    text-align: center;
+    margin-left: 5px;
+}

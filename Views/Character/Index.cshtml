@@ -20,16 +20,7 @@
                 @Html.DisplayNameFor(model => model.Level)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Player)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Race)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Deity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Alignment)
             </th>
             <th>Actions</th>
         </tr>
@@ -44,16 +35,7 @@
                 @Html.DisplayFor(modelItem => item.Level)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Player.Name)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Race.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Deity.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Alignment.Abbreviation)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

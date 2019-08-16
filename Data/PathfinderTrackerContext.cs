@@ -38,8 +38,6 @@ namespace PathfinderTracker.Models
 
         public DbSet<PathfinderTracker.Models.Material> Material { get; set; }
 
-        public DbSet<PathfinderTracker.Models.Player> Player { get; set; }
-
         public DbSet<PathfinderTracker.Models.Race> Race { get; set; }
 
         public DbSet<PathfinderTracker.Models.Spell> Spell { get; set; }

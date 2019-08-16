@@ -77,11 +77,6 @@ C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\ne
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Material\Details.g.cshtml.cs
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Material\Edit.g.cshtml.cs
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Material\Index.g.cshtml.cs
-C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Player\Create.g.cshtml.cs
-C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Player\Delete.g.cshtml.cs
-C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Player\Details.g.cshtml.cs
-C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Player\Edit.g.cshtml.cs
-C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Player\Index.g.cshtml.cs
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Race\Create.g.cshtml.cs
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Race\Delete.g.cshtml.cs
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Race\Details.g.cshtml.cs
@@ -122,8 +117,6 @@ C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\ne
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\MagicSchool\Parts\_Form.g.cshtml.cs
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Material\Parts\_Details.g.cshtml.cs
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Material\Parts\_Form.g.cshtml.cs
-C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Player\Parts\_Details.g.cshtml.cs
-C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Player\Parts\_Form.g.cshtml.cs
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Race\Parts\_Details.g.cshtml.cs
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Race\Parts\_Form.g.cshtml.cs
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\Spell\Parts\_Details.g.cshtml.cs
@@ -195,3 +188,10 @@ C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\ne
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\ArmorAddonType\Index.g.cshtml.cs
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\ArmorAddonType\Parts\_Details.g.cshtml.cs
 C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\ArmorAddonType\Parts\_Form.g.cshtml.cs
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\WeatherType\Create.g.cshtml.cs
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\WeatherType\Delete.g.cshtml.cs
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\WeatherType\Details.g.cshtml.cs
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\WeatherType\Edit.g.cshtml.cs
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\WeatherType\Index.g.cshtml.cs
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\WeatherType\Parts\_Details.g.cshtml.cs
+C:\Users\profd\Desktop\Projects\PathfinderTracker\PathfinderTracker\obj\Debug\netcoreapp2.2\Razor\Views\WeatherType\Parts\_Form.g.cshtml.cs
