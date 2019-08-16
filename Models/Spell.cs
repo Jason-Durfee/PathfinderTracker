@@ -19,6 +19,7 @@ namespace PathfinderTracker.Models
             CastingTime = (string)dr["CastingTime"];
             RangeDistance = (string)dr["RangeDistance"];
             Target = (string)dr["Target"];
+            Area = (string)dr["Area"];
             Duration = (string)dr["Duration"];
             SavingThrow = (string)dr["SavingThrow"];
             SpellResistance = (string)dr["SpellResistance"];
@@ -35,6 +36,7 @@ namespace PathfinderTracker.Models
         private string _CastingTime;
         private string _RangeDistance;
         private string _Target;
+        private string _Area;
         private string _Duration;
         private string _SavingThrow;
         private string _SpellResistance;
@@ -105,6 +107,21 @@ namespace PathfinderTracker.Models
             }
             set {
                 _RangeDistance = value;
+            }
+        }
+
+
+        /// <summary>
+        /// gets and sets the Area attribute for the Spell object
+        /// </summary>
+        [Display(Name = "Area Of Effect")]
+        [Required]
+        public string Area {
+            get {
+                return _Area;
+            }
+            set {
+                _Area = value;
             }
         }
 

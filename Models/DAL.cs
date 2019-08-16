@@ -1206,6 +1206,7 @@ namespace PathfinderTracker.Models
                 comm.Parameters.AddWithValue("@Name", campaign.Name);
                 comm.Parameters.AddWithValue("@CurrentTime", campaign.CurrentTime);
                 comm.Parameters.AddWithValue("@OriginalStartDate", campaign.CurrentTime);
+                comm.Parameters.AddWithValue("@Notes", campaign.Notes);
 
                 comm.Parameters.Add("@CampaignID", SqlDbType.Int);
                 comm.Parameters["@CampaignID"].Direction = ParameterDirection.Output;
@@ -1245,6 +1246,7 @@ namespace PathfinderTracker.Models
                 comm.Parameters.AddWithValue("@Name", campaign.Name);
                 comm.Parameters.AddWithValue("@CurrentTime", campaign.CurrentTime);
                 comm.Parameters.AddWithValue("@OriginalStartDate", campaign.OriginalStartDate);
+                comm.Parameters.AddWithValue("@Notes", campaign.Notes);
                 comm.Connection = conn;
                 retVal = comm.ExecuteNonQuery();
             }
@@ -3132,6 +3134,7 @@ namespace PathfinderTracker.Models
                 comm.Parameters.AddWithValue("@CastingTime", spell.CastingTime);
                 comm.Parameters.AddWithValue("@Description", spell.Description);
                 comm.Parameters.AddWithValue("@Duration", spell.Duration);
+                comm.Parameters.AddWithValue("@Area", spell.Area);
                 comm.Parameters.AddWithValue("@MagicSchoolID", spell.MagicSchoolID);
                 comm.Parameters.AddWithValue("@RangeDistance", spell.RangeDistance);
                 comm.Parameters.AddWithValue("@SavingThrow", spell.SavingThrow);
@@ -3176,6 +3179,7 @@ namespace PathfinderTracker.Models
                 comm.Parameters.AddWithValue("@Name", spell.Name);
                 comm.Parameters.AddWithValue("@CastingTime", spell.CastingTime);
                 comm.Parameters.AddWithValue("@Description", spell.Description);
+                comm.Parameters.AddWithValue("@Area", spell.Area);
                 comm.Parameters.AddWithValue("@Duration", spell.Duration);
                 comm.Parameters.AddWithValue("@MagicSchoolID", spell.MagicSchoolID);
                 comm.Parameters.AddWithValue("@RangeDistance", spell.RangeDistance);

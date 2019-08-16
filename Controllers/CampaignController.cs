@@ -45,10 +45,13 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("Name,ID,CurrentTime")] Campaign campaign)
+        public ActionResult Create([Bind("Name,ID,CurrentTime,Notes")] Campaign campaign)
         {
             if (ModelState.IsValid)
             {
+                if(campaign.Notes == null) {
+                    campaign.Notes = "";
+                }
                 if(DAL.CreateCampaign(campaign) > 0) {
                     //success
                 }
@@ -108,7 +111,7 @@ namespace PathfinderTracker
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind("Name,ID,CurrentTime,OriginalStartDate")] Campaign campaign)
+        public ActionResult Edit(int id, [Bind("Name,ID,CurrentTime,Notes")] Campaign campaign)
         {
             if (id != campaign.ID)
             {
@@ -117,6 +120,11 @@ namespace PathfinderTracker
 
             if (ModelState.IsValid)
             {
+                if(campaign.Notes == null) {
+                    campaign.Notes = "";
+                }
+                Campaign tempCampaign = DAL.GetCampaign(id);
+                campaign.OriginalStartDate = tempCampaign.OriginalStartDate;
                 if(DAL.UpdateCampaign(campaign, id) > 0) {
                     //success
                 }

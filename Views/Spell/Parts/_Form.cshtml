@@ -1,8 +1,13 @@
 ﻿@model Spell
 
 <div class="form-group">
+    <label asp-for="Name" class="control-label"></label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+<div class="form-group">
     <label asp-for="MagicSchoolID" class="control-label"></label>
-    <select asp-for="MagicSchoolID" class="form-control" asp-items="ViewBag.MagicSchoolID"></select>
+    <select asp-for="MagicSchoolID" class="form-control chosen-select" asp-items="ViewBag.MagicSchoolID"></select>
     <span asp-validation-for="MagicSchoolID" class="text-danger"></span>
 </div>
 <div class="form-group">
@@ -19,6 +24,11 @@
     <label asp-for="RangeDistance" class="control-label"></label>
     <input asp-for="RangeDistance" class="form-control" />
     <span asp-validation-for="RangeDistance" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Area" class="control-label"></label>
+    <input asp-for="Area" class="form-control" />
+    <span asp-validation-for="Area" class="text-danger"></span>
 </div>
 <div class="form-group">
     <label asp-for="Target" class="control-label"></label>
@@ -39,9 +49,4 @@
     <label asp-for="SpellResistance" class="control-label"></label>
     <input asp-for="SpellResistance" class="form-control" />
     <span asp-validation-for="SpellResistance" class="text-danger"></span>
-</div>
-<div class="form-group">
-    <label asp-for="Name" class="control-label"></label>
-    <input asp-for="Name" class="form-control" />
-    <span asp-validation-for="Name" class="text-danger"></span>
 </div>

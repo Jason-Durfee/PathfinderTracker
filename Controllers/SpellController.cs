@@ -151,9 +151,6 @@ namespace PathfinderTracker
                 if(spell.Name.ToLower().Contains(searchText.ToLower())) {
                     spells.Add(spell);
                 }
-                else if(spell.MagicSchool.Name.ToLower().Contains(searchText.ToLower())) {
-                    spells.Add(spell);
-                }
             }
             return View("Index", spells);
         }

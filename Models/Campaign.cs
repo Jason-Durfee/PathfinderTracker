@@ -12,6 +12,7 @@ namespace PathfinderTracker.Models
     {
         private DateTime _CurrentTime;
         private DateTime _OriginalStartDate;
+        private string _Notes;
 
         //gets the number of days since the start of the campaign
         [Display(Name = "Days Played")]
@@ -23,8 +24,9 @@ namespace PathfinderTracker.Models
             }
         }
 
-
+        //gets and sets the current time of the campaign
         [Display(Name = "Current Time")]
+        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime CurrentTime {
             get {
                 return _CurrentTime;
@@ -34,13 +36,25 @@ namespace PathfinderTracker.Models
             }
         }
 
+        //gets and sets the original start date of the campaign
         [Display(Name = "Original Start Date")]
+        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime OriginalStartDate {
             get {
                 return _OriginalStartDate;
             }
             set {
                 _OriginalStartDate = value;
+            }
+        }
+
+        //gets and sets the notes for the campaign
+        public string Notes {
+            get {
+                return _Notes;
+            }
+            set {
+                _Notes = value;
             }
         }
 
@@ -59,17 +73,13 @@ namespace PathfinderTracker.Models
             Name = (string)dr["Name"];
             CurrentTime = (DateTime)dr["CurrentTime"];
             OriginalStartDate = (DateTime)dr["OriginalStartDate"];
+            Notes = (string)dr["Notes"];
         }
 
         public Campaign() {
 
         }
         #endregion
-
-        public void Add24Hours() {
-            CurrentTime = CurrentTime.AddHours(24);
-            DAL.UpdateCampaign(this, this.ID);
-        }
 
         public void AddHours(int hours) {
             CurrentTime = CurrentTime.AddHours(hours);

@@ -11,7 +11,7 @@ namespace PathfinderTracker.Models
     {
         #region Constructors
         public FeatType(SqlDataReader dr) {
-            ID = (int)dr["ClassID"];
+            ID = (int)dr["FeatTypeID"];
             Name = (string)dr["Name"];
         }
 
